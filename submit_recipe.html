@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    
+    
+    
+    <body onload="initTab()">
+        <script>
+            
+            var ingredientTab = 1;
+            var stepTab = 1;
+            
+            var ingredientAjax = [];
+            var stepAjax = [];
+            
+            function insertIngredientStep(recipeID)
+            {
+                for(var i = 0;i<ingredientAjax.length;i++)
+                {
+                    ajaxRecipeIngredientRequest(ingredientAjax[i]+"&recipeID="+recipeID);
+                }
+                
+                for(var i = 0;i<stepAjax.length;i++)
+                {
+                    ajaxRecipeStepRequest(stepAjax[i]+"&recipeID="+recipeID);
+                }
+            }
+            
+            function ajaxRecipeRequest(request)
+            {
+
+                if (request.length == 0) 
+                {
+                    alert("error in recipe request");
+                    return;
+                }else
+                {
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            alert(this.responseText);
+                        }
+                    };
+                    xmlhttp.onload = function()
+                    {
+                        insertIngredientStep(this.responseText);
+                    };
+                    xmlhttp.open("GET", "recipe/create_recipe.php?"+request, true);
+                    xmlhttp.send();
+                }
+                
+            
+            }
+            
+            function ajaxRecipeIngredientRequest(request)
+            {
+
+                console.log(request);
+                if (request.length == 0) 
+                {
+                    alert("error in recipe ingredient request");
+                    return;
+                }else
+                {
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            
+                        }
+                    };
+                    xmlhttp.open("GET", "recipe/create_recipe_ingredient.php?"+request, true);
+                    xmlhttp.send();
+                }
+                
+            
+            }
+            
+            function ajaxRecipeStepRequest(request)
+            {
+                console.log(request);
+                if (request.length == 0) 
+                {
+                    alert("error in recipe step request");
+                    return;
+                    
+                }else
+                {
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            
+                        }
+                    };
+                    xmlhttp.open("GET", "recipe/create_recipe_step.php?"+request, true);
+                    xmlhttp.send();
+                }
+                
+            
+            }
+            
+            
+            function initTab()
+            {
+                document.getElementById("ingredientSpace").innerHTML = "<input type='text' placeholder='Ingredient 1' id='ingredientName1'>\n\
+                                                                        <input type='number' placeholder='Amount' id='ingredientAmount1'>\n\
+                                                                        <input type='text' placeholder='In what unit?' id='ingredientUnit1'>\n\
+                                                                        <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod1'>\n\
+                                                                        <input type='checkbox' id='vegan1'><br>";
+                document.getElementById("stepSpace").innerHTML = "<input type='text' placeholder='Step 1...' id='step1'><br>";
+            }
+            
+            function addIngredientTab()
+            {
+                
+                var existingTabs = "";
+                
+                for(var i=1;i<=ingredientTab;i++)
+                {
+                    var ingredientName = document.getElementById("ingredientName"+i).value;
+                    var ingredientAmount = document.getElementById("ingredientAmount"+i).value;
+                    var ingredientUnit = document.getElementById("ingredientUnit"+i).value;
+                    var ingredientMod = document.getElementById("ingredientMod"+i).value;
+                    
+                    
+                    
+                    existingTabs += "<input type='text' placeholder='Ingredient "+i+"' id='ingredientName"+i+"' value='"+ingredientName+"'>\n\
+                               <input type='number' placeholder='Amount' id='ingredientAmount"+i+"' value='"+ingredientAmount+"'>\n\
+                               <input type='text' placeholder='In what unit?' id='ingredientUnit"+i+"' value='"+ingredientUnit+"'>\n\
+                               <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod"+i+"' value='"+ingredientMod+"'>";
+                    if(document.getElementById("vegan"+i).checked)
+                    {
+                        existingTabs+= "<input type='checkbox' id='vegan"+i+"' checked><br>";
+                    }else
+                    {
+                        existingTabs+= "<input type='checkbox' id='vegan"+i+"'><br>";
+                    }
+            
+                }
+                
+                ingredientTab++;
+                
+                existingTabs += "<input type='text' placeholder='Ingredient "+ingredientTab+"' id='ingredientName"+ingredientTab+"'>\n\
+                               <input type='number' placeholder='Amount' id='ingredientAmount"+ingredientTab+"'>\n\
+                               <input type='text' placeholder='In what unit?' id='ingredientUnit"+ingredientTab+"'>\n\
+                               <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod"+ingredientTab+"'>\n\
+                               <input type='checkbox' id='vegan"+ingredientTab+"'><br>";
+                
+                document.getElementById("ingredientSpace").innerHTML = existingTabs;
+                
+                
+            }
+            
+            function addStepTab()
+            {
+                var existingSteps = "";
+                
+                for(var i=1;i<=stepTab;i++)
+                {
+                    var step = document.getElementById("step"+i).value;
+                    existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><br>";
+                    
+                }
+                
+                
+                stepTab++;
+                
+                existingSteps+="<input type='text' placeholder='Step "+stepTab+"...' id='step"+stepTab+"'><br>";
+                
+                document.getElementById("stepSpace").innerHTML = existingSteps;
+                
+                
+            }
+            
+            
+            function submitData()
+            {
+                
+                
+                
+                var recipeName = document.getElementById("recipeName").value;
+                var recipeDesc = document.getElementById("recipeDesc").value;
+                var recipeServing = document.getElementById("recipeServing").value;
+                
+                if(recipeName===""||recipeDesc===""||recipeServing==="")
+                {
+                    alert("Missing Recipe information please try again.");
+                    return;
+                }
+                
+                var recipeAjaxRequest = "name="+recipeName+"&desc="+recipeDesc+"&serving="+recipeServing;
+                
+                
+                
+                
+                for(var i=1;i<=ingredientTab;i++)
+                {
+                    var ingredientName = document.getElementById("ingredientName"+i).value;
+                    var ingredientAmount = document.getElementById("ingredientAmount"+i).value;
+                    var ingredientUnit = document.getElementById("ingredientUnit"+i).value;
+                    var ingredientMod = document.getElementById("ingredientMod"+i).value;
+                    
+                    if(ingredientName===""||ingredientAmount==="")
+                    {
+                        alert("Missing ingredient name/amount, please try again.");
+                        return;
+                    }
+                    
+                    
+                    if(ingredientUnit === "")
+                    {
+                        ingredientUnit = "null";
+                    }
+                    
+                    if(ingredientMod === "")
+                    {
+                        ingredientMod = "null";
+                    }
+                    
+                    var vegan;
+                    
+                    if(document.getElementById("vegan"+i).checked)
+                    {
+                        vegan = "1";
+                    }else
+                    {
+                        vegan = "0";
+                    }
+                    
+                    
+                    
+                    ingredientAjax.push("name="+ingredientName+"&amount="+ingredientAmount+"&unit="+ingredientUnit+"&mod="+ingredientMod+"&vegan="+vegan);
+                    
+                }
+                
+                for(var i=1;i<=stepTab;i++)
+                {
+                    var step = "step="+document.getElementById("step"+i).value;
+                    if(step==="")
+                    {
+                        alert("Empty fields in step, please try again.");
+                        return;
+                    }
+                    
+                    stepAjax.push(step);
+                }
+                
+                
+                ajaxRecipeRequest(recipeAjaxRequest);
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            }
+            
+            
+            
+            
+        </script>
+        
+        <input type="text" placeholder="Recipe Name" id="recipeName">
+        <br>
+        <input type="text" placeholder="Recipe Description" id="recipeDesc">
+        <br>
+        <input type="number" placeholder="Recommended servings" id="recipeServing">
+        <br>
+        <br>
+        <div id="ingredientSpace"></div>
+        <button onclick="addIngredientTab()">Add Ingredient</button>
+        <div id="stepSpace"></div>
+        <button onclick="addStepTab()">Add Step</button>
+        <br>
+        <br>
+        <button onclick="submitData()">Submit Recipe</button>
+        
+    </body>
+</html>
