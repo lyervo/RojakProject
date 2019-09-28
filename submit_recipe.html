@@ -23,6 +23,32 @@ and open the template in the editor.
             var ingredientAjax = [];
             var stepAjax = [];
             
+            
+            function suggestIngredient(i)
+            {
+                
+                var name = document.getElementById("ingredientName"+i).value;
+                
+                if (name.length <= 3) 
+                {
+                    
+                    return;
+                }else
+                {
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            document.getElementById("suggest"+i).innerHTML = this.responseText;
+                        }
+                    };
+                    
+                    xmlhttp.open("GET", "recipe/suggest_ingredient.php?name="+name, true);
+                    xmlhttp.send();
+                }
+            }
+            
             function insertIngredientStep(recipeID)
             {
                 for(var i = 0;i<ingredientAjax.length;i++)
@@ -50,7 +76,7 @@ and open the template in the editor.
                     {
                         if (this.readyState == 4 && this.status == 200)
                         {
-                            alert(this.responseText);
+                            
                         }
                     };
                     xmlhttp.onload = function()
@@ -117,12 +143,12 @@ and open the template in the editor.
             
             function initTab()
             {
-                document.getElementById("ingredientSpace").innerHTML = "<input type='text' placeholder='Ingredient 1' id='ingredientName1'>\n\
+                document.getElementById("ingredientSpace").innerHTML = "<input type='text' placeholder='Ingredient 1' id='ingredientName1' oninput='suggestIngredient(1)'><div id='suggest1'></div>\n\
                                                                         <input type='number' placeholder='Amount' id='ingredientAmount1'>\n\
                                                                         <input type='text' placeholder='In what unit?' id='ingredientUnit1'>\n\
                                                                         <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod1'>\n\
-                                                                        <input type='checkbox' id='vegan1'><br>";
-                document.getElementById("stepSpace").innerHTML = "<input type='text' placeholder='Step 1...' id='step1'><br>";
+                                                                        <input type='checkbox' id='vegan1'><button onclick='removeIngredient(1)'>Remove</button><br>";
+                document.getElementById("stepSpace").innerHTML = "<input type='text' placeholder='Step 1...' id='step1'><button onclick='removeStep(1)'>Remove</button><br>";
             }
             
             function addIngredientTab()
@@ -139,31 +165,103 @@ and open the template in the editor.
                     
                     
                     
-                    existingTabs += "<input type='text' placeholder='Ingredient "+i+"' id='ingredientName"+i+"' value='"+ingredientName+"'>\n\
+                    existingTabs += "<input type='text' placeholder='Ingredient "+i+"' id='ingredientName"+i+"' value='"+ingredientName+"' oninput='suggestIngredient("+i+")'><div id='suggest"+i+"'></div>\n\
                                <input type='number' placeholder='Amount' id='ingredientAmount"+i+"' value='"+ingredientAmount+"'>\n\
                                <input type='text' placeholder='In what unit?' id='ingredientUnit"+i+"' value='"+ingredientUnit+"'>\n\
                                <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod"+i+"' value='"+ingredientMod+"'>";
                     if(document.getElementById("vegan"+i).checked)
                     {
-                        existingTabs+= "<input type='checkbox' id='vegan"+i+"' checked><br>";
+                        existingTabs+= "<input type='checkbox' id='vegan"+i+"' checked>";
                     }else
                     {
-                        existingTabs+= "<input type='checkbox' id='vegan"+i+"'><br>";
+                        existingTabs+= "<input type='checkbox' id='vegan"+i+"'>";
                     }
+                    existingTabs+= "<button onclick='removeIngredient("+i+")'>Remove</button><br>"
             
                 }
                 
                 ingredientTab++;
                 
-                existingTabs += "<input type='text' placeholder='Ingredient "+ingredientTab+"' id='ingredientName"+ingredientTab+"'>\n\
+                existingTabs += "<input type='text' placeholder='Ingredient "+ingredientTab+"' id='ingredientName"+ingredientTab+"' oninput='suggestIngredient("+ingredientTab+")'><div id='suggest"+ingredientTab+"'></div>\n\
                                <input type='number' placeholder='Amount' id='ingredientAmount"+ingredientTab+"'>\n\
                                <input type='text' placeholder='In what unit?' id='ingredientUnit"+ingredientTab+"'>\n\
                                <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod"+ingredientTab+"'>\n\
-                               <input type='checkbox' id='vegan"+ingredientTab+"'><br>";
+                               <input type='checkbox' id='vegan"+ingredientTab+"'><button onclick='removeIngredient("+ingredientTab+")'>Remove</button><br>";
                 
                 document.getElementById("ingredientSpace").innerHTML = existingTabs;
                 
                 
+            }
+            
+            function removeIngredient(index)
+            {
+                if(ingredientTab>1)
+                {
+                    var existingTabs = "";
+
+                    var removed = false;
+
+                    for(var i=1;i<=ingredientTab;i++)
+                    {
+                        if(i==index)
+                        {
+                            removed = true;
+                        }else if(!removed)
+                        {
+                            var ingredientName = document.getElementById("ingredientName"+i).value;
+                            var ingredientAmount = document.getElementById("ingredientAmount"+i).value;
+                            var ingredientUnit = document.getElementById("ingredientUnit"+i).value;
+                            var ingredientMod = document.getElementById("ingredientMod"+i).value;
+
+
+
+                            existingTabs += "<input type='text' placeholder='Ingredient "+i+"' id='ingredientName"+i+"' value='"+ingredientName+"' oninput='suggestIngredient("+i+")'><div id='suggest"+i+"'></div>\n\
+                                       <input type='number' placeholder='Amount' id='ingredientAmount"+i+"' value='"+ingredientAmount+"'>\n\
+                                       <input type='text' placeholder='In what unit?' id='ingredientUnit"+i+"' value='"+ingredientUnit+"'>\n\
+                                       <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod"+i+"' value='"+ingredientMod+"'>";
+                            if(document.getElementById("vegan"+i).checked)
+                            {
+                                existingTabs+= "<input type='checkbox' id='vegan"+i+"' checked>";
+                            }else
+                            {
+                                existingTabs+= "<input type='checkbox' id='vegan"+i+"'>";
+                            }
+                            
+                            existingTabs+= "<button onclick='removeIngredient("+i+")'>Remove</button>"
+                            
+                        }else if(removed)
+                        {
+                            var ingredientName = document.getElementById("ingredientName"+i).value;
+                            var ingredientAmount = document.getElementById("ingredientAmount"+i).value;
+                            var ingredientUnit = document.getElementById("ingredientUnit"+i).value;
+                            var ingredientMod = document.getElementById("ingredientMod"+i).value;
+
+
+
+                            existingTabs += "<input type='text' placeholder='Ingredient "+(i-1)+"' id='ingredientName"+(i-1)+"' value='"+ingredientName+"' oninput='suggestIngredient("+(i-1)+")'><div id='suggest"+(i-1)+"'></div>\n\
+                                       <input type='number' placeholder='Amount' id='ingredientAmount"+(i-1)+"' value='"+ingredientAmount+"'>\n\
+                                       <input type='text' placeholder='In what unit?' id='ingredientUnit"+(i-1)+"' value='"+ingredientUnit+"'>\n\
+                                       <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod"+(i-1)+"' value='"+ingredientMod+"'>";
+                            if(document.getElementById("vegan"+i).checked)
+                            {
+                                existingTabs+= "<input type='checkbox' id='vegan"+(i-1)+"' checked>";
+                            }else
+                            {
+                                existingTabs+= "<input type='checkbox' id='vegan"+(i-1)+"'>";
+                            }
+                            
+                            existingTabs+= "<button onclick='removeIngredient("+(i-1)+")'>Remove</button>"
+                            
+                        }
+
+                    }
+
+                    ingredientTab--;
+
+
+
+                    document.getElementById("ingredientSpace").innerHTML = existingTabs;
+                }
             }
             
             function addStepTab()
@@ -173,19 +271,52 @@ and open the template in the editor.
                 for(var i=1;i<=stepTab;i++)
                 {
                     var step = document.getElementById("step"+i).value;
-                    existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><br>";
+                    existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><button onclick='removeStep("+i+")'>Remove</button><br>";
                     
                 }
                 
                 
                 stepTab++;
                 
-                existingSteps+="<input type='text' placeholder='Step "+stepTab+"...' id='step"+stepTab+"'><br>";
+                existingSteps+="<input type='text' placeholder='Step "+stepTab+"...' id='step"+stepTab+"'><button onclick='removeStep("+stepTab+")'>Remove</button><br>";
                 
                 document.getElementById("stepSpace").innerHTML = existingSteps;
                 
                 
             }
+            
+            function removeStep(index)
+            {
+                if(stepTab>1)
+                {
+                    var existingSteps = "";
+                    var removed = false;
+
+                    for(var i=1;i<=stepTab;i++)
+                    {
+                        if(index==i)
+                        {
+                            removed = true;
+                        }else if(!removed)
+                        {
+                            var step = document.getElementById("step"+i).value;
+                            existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><button onclick='removeStep("+i+")'>Remove</button><br>";
+
+                        }else if(removed)
+                        {
+                            var step = document.getElementById("step"+(i)).value;
+                            existingSteps += "<input type='text' placeholder='Step "+(i-1)+"...' id='step"+(i-1)+"' value='"+step+"'><button onclick='removeStep("+(i-1)+")'>Remove</button><br>";
+                        }
+                    }
+
+
+                    stepTab--;
+
+
+                    document.getElementById("stepSpace").innerHTML = existingSteps;
+                }
+            }
+            
             
             
             function submitData()
