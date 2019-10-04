@@ -1,4 +1,25 @@
 <?php
+
+/**
+ * Start the session.
+ */
+session_start();
+
+/**
+ * Check if the user is logged in.
+ */
+if (!isset($_SESSION['id']) || !isset($_SESSION['logged_in'])) {
+    //User not logged in. Redirect them back to the login.php page.
+    header('Location: ../login.php');
+    exit;
+}
+
+// logout
+if (isset($_POST['but_logout'])) {
+    session_destroy();
+    header('Location: ../login.php');
+}
+
 $current = 'home';
 include 'header.php';
 ?>
@@ -9,19 +30,23 @@ include 'header.php';
 
     <div class="row">
 
-        <div class="col-lg-3">
+        <!--        side div-->
+        <div class="col-lg-2">
 
-            <h1 class="my-4">Shop Name</h1>
-            <div class="list-group">
+            <h4 class="my-4">Join UniMeals</h4>
+            <input type="submit" name="Login" value="Login" class="btn btn-success">
+<!--            <div class="list-group">
                 <a href="#" class="list-group-item">Category 1</a>
                 <a href="#" class="list-group-item">Category 2</a>
                 <a href="#" class="list-group-item">Category 3</a>
-            </div>
+            </div>-->
 
         </div>
         <!-- /.col-lg-3 -->
+        
+        <!--        body div-->
 
-        <div class="col-lg-9">
+        <div class="col-lg-8">
 
             <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -162,6 +187,17 @@ include 'header.php';
 
         </div>
         <!-- /.col-lg-9 -->
+        
+         <div class="col-lg-1">
+
+            <h1 class="my-4">Unimeals</h1>
+<!--            <div class="list-group">
+                <a href="#" class="list-group-item">Category 1</a>
+                <a href="#" class="list-group-item">Category 2</a>
+                <a href="#" class="list-group-item">Category 3</a>
+            </div>-->
+
+        </div>
 
     </div>
     <!-- /.row -->

@@ -42,7 +42,7 @@
                             echo 'class="current"';
                         }
                         ?> class="nav-item">
-                            <a class="nav-link" href="../controller/?action=about">About</a>
+                            <a class="nav-link" href="../controller/?action=about">About us</a>
                         </li>
                         <li <?php
                         if ($current == 'recipe') {
@@ -58,6 +58,8 @@
                         ?> class="nav-item">
                             <a class="nav-link" href="../controller/?action=contact">Contact</a>
                         </li>
+                        
+                        
                     </ul>
                 </div>
             </div>

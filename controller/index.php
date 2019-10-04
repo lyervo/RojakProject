@@ -27,3 +27,8 @@ if ($action == 'contact') {
     include('../view/contact.php');
 }
 
+if ($action == 'login') {
+
+    include('../view/login.php');
+}
+
