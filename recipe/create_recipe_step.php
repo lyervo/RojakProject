@@ -11,7 +11,5 @@
     
     create_step($recipe_id, $step);
     
-    echo "reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
-    
 
 ?>
