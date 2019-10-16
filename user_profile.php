@@ -1,6 +1,6 @@
 <?php
     
-    include "db_connect.php";
+    include "model/db_connect.php";
     require "user/user_db.php";
 
     $id = $_REQUEST['user_id'];

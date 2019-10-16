@@ -199,27 +199,6 @@ function searchRecipeOrderByDate($name,$order,$tags,$noTags)
     return $result;
 }
 
-//function searchRecipeOrderByIngredient($name,$order,$tags)
-//{
-//    global $db;
-//    $query = "SELECT recipe.recipe_id, recipe.description, recipe.recipe_name, COUNT(recipe_ingredient.recipe_id) 
-//                FROM (recipe
-//                INNER JOIN recipe_ingredient ON recipe.recipe_id = recipe_ingredient.recipe_id)
-//                INNER JOIN (recipe INNER JOIN (recipe_tag INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id) ON recipe.recipe_id = recipe_tag.recipe_id)
-//                WHERE (recipe.recipe_name like '%".$name."%' or recipe.recipe_name like '".$name."%' or recipe.recipe_name like '%".$name."')
-//                ".$tags."
-//                GROUP BY recipe.recipe_name
-//                ORDER BY COUNT(recipe_ingredient.recipe_id)
-//                 ".$order;
-//    echo $query;
-//   
-//    $statement = $db->prepare($query);
-//    $statement->execute();
-//    $result = $statement->fetchAll();
-//    $statement->closeCursor();
-//    return $result;
-//}
-
 function searchRecipeOrderByRating($name,$order,$tags,$noTags)
 {
     global $db;   

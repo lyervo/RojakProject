@@ -1,6 +1,6 @@
 <?php
 
-    include "../db_connect.php";
+    include "../model/db_connect.php";
     
     require 'review_db.php';
     require '../user/user_db.php';
@@ -11,7 +11,6 @@
     $result = getReviews($recipe_id);
     
     $response = "";
-    
     if(empty($result))
     {
         echo 'Be the first one to comment!';

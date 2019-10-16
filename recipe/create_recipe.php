@@ -1,6 +1,6 @@
 <?php
 
-    include "../db_connect.php";
+    include "../model/db_connect.php";
     require "recipe_db.php";
 
     $name = $_REQUEST["name"];

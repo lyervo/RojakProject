@@ -1,6 +1,6 @@
 <?php
 
-    include "../db_connect.php";
+    include "../model/db_connect.php";
     require "like_db.php";
     
     

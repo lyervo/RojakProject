@@ -1,6 +1,6 @@
 <?php
 
-    include "db_connect.php";
+    include "model/db_connect.php";
     require "recipe/recipe_db.php";
     
     
@@ -20,6 +20,35 @@
     </head>
     <body onload="init()">
         <script>
+            var user_id;
+            
+            function checkLoginStatus(task)
+            {
+                var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            if(this.responseText >= 1)
+                            {
+                                if(task===1)
+                                {
+                                    user_id = this.responseText;
+                                    like();
+                                }else
+                                {
+                                    user_id = this.responseText;
+                                    comment();
+                                }
+                            }else
+                            {
+                                alert("Please login to perform this action");
+                            }
+                        }
+                    };
+                    xmlhttp.open("GET", "user/checkLoginStatus.php", true);
+                    xmlhttp.send();
+            }
             
             function init()
             {
@@ -33,6 +62,9 @@
             
             function checkLike()
             {
+                
+                
+                
                 var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function()
                     {
@@ -101,7 +133,8 @@
                             refreshComments();
                         }
                     };
-                    xmlhttp.open("GET", "review/submit_comment.php?recipe_id="+<?php echo $id ?>+"&user_id="+1+"&review="+comment, true);
+               
+                    xmlhttp.open("GET", "review/submit_comment.php?recipe_id="+<?php echo $id ?>+"&user_id="+user_id+"&review="+comment, true);
                     xmlhttp.send();
                 }
             
@@ -127,7 +160,7 @@
                             refreshLikes();
                         }
                     };
-                    xmlhttp.open("GET", "like/like.php?recipe_id="+<?php echo $id ?>+"&user_id="+1, true);
+                    xmlhttp.open("GET", "like/like.php?recipe_id="+<?php echo $id ?>+"&user_id="+user_id, true);
                 xmlhttp.send();
                 
                 
@@ -144,7 +177,7 @@
         <p>Recipe Description :<?php echo $recipe['description'] ?></p>
         <p id="likes"></p>
         <br>
-        <button onclick="like()" id="likeButton">Like</button>
+        <button onclick="checkLoginStatus(1)" id="likeButton">Like</button>
         
         
         
@@ -181,7 +214,7 @@
         
         ?>
         
-        <button onclick="comment()">Comment</button>
+        <button onclick="checkLoginStatus(2)">Comment</button>
         <br>
         <textarea id="commentInput"></textarea>
         

@@ -8,7 +8,6 @@
         $statement->execute();
         $statement->closeCursor();
     }
-    
     function getReviews($recipe_id)
     {
         global $db;

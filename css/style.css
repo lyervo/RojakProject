@@ -1,0 +1,25 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29-Sep-2019, 16:10:03
+    Author     : franc
+*/
+
+.current{
+
+    border-bottom: 3px solid white;
+    
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color: white !important;
+}
+
+.nav-item:hover{
+    border-bottom: 3px solid ;
+    border-color: white;
+    opacity: 0.8;
+}
