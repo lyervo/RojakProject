@@ -19,10 +19,11 @@ and open the template in the editor.
             
             var ingredientTab = 1;
             var stepTab = 1;
+            var tagTab = 1;
             
             var ingredientAjax = [];
             var stepAjax = [];
-            
+            var tagAjax = [];
             
             function suggestIngredient(i)
             {
@@ -51,6 +52,7 @@ and open the template in the editor.
             
             function insertIngredientStep(recipeID)
             {
+                alert(recipeID);
                 for(var i = 0;i<ingredientAjax.length;i++)
                 {
                     ajaxRecipeIngredientRequest(ingredientAjax[i]+"&recipeID="+recipeID);
@@ -60,10 +62,16 @@ and open the template in the editor.
                 {
                     ajaxRecipeStepRequest(stepAjax[i]+"&recipeID="+recipeID);
                 }
+                
+                for(var i=0;i<tagAjax.length;i++)
+                {
+                    ajaxRecipeTagRequest(tagAjax[i]+"&recipe_id="+recipeID);
+                }
             }
             
             function ajaxRecipeRequest(request)
             {
+                alert(request);
 
                 if (request.length == 0) 
                 {
@@ -140,6 +148,30 @@ and open the template in the editor.
             
             }
             
+            function ajaxRecipeTagRequest(request)
+            {
+                console.log(request);
+                if (request.length == 0) 
+                {
+                    alert("error in recipe tag request");
+                    return;
+                    
+                }else
+                {
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            
+                        }
+                    };
+                    xmlhttp.open("GET", "recipe/create_recipe_tag.php?"+request, true);
+                    xmlhttp.send();
+                }
+                
+            
+            }
             
             function initTab()
             {
@@ -149,6 +181,28 @@ and open the template in the editor.
                                                                         <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod1'>\n\
                                                                         <input type='checkbox' id='vegan1'><button onclick='removeIngredient(1)'>Remove</button><br>";
                 document.getElementById("stepSpace").innerHTML = "<input type='text' placeholder='Step 1...' id='step1'><button onclick='removeStep(1)'>Remove</button><br>";
+                document.getElementById("tagSpace").innerHTML = "<input type='text' placeholder='Enter a tag...' id='tag1'><button onclick='removeTag(1)'>Remove</button><br>";
+            }
+            
+            function addTagTab()
+            {
+                var existingTabs = "";
+                
+                for(var i=1;i<=tagTab;i++)
+                {
+                    var tagName = document.getElementById("tag"+i).value;
+
+                    existingTabs += "<input type='text' value='"+tagName+"' placeholder='Enter a tag...' id='tag"+i+"'>";
+                    
+                    existingTabs+= "<button onclick='removeTag("+i+")'>Remove</button><br>";
+            
+                }
+                
+                tagTab++;
+                
+                existingTabs += "<input type='text' placeholder='Enter a tag...' id='tag"+tagTab+"'><button onclick='removeTag("+tagTab+")'>Remove</button><br>";
+                
+                document.getElementById("tagSpace").innerHTML = existingTabs;
             }
             
             function addIngredientTab()
@@ -317,16 +371,51 @@ and open the template in the editor.
                 }
             }
             
+            function removeTag(index)
+            {
+                if(tagTab>1)
+                {
+                    var existingTags = "";
+                    var removed = false;
+
+                    for(var i=1;i<=tagTab;i++)
+                    {
+                        if(index==i)
+                        {
+                            removed = true;
+                        }else if(!removed)
+                        {
+                            var tag = document.getElementById("tag"+i).value;
+                            existingTags += "<input type='text' placeholder='Enter a Tag...' id='tag"+i+"' value='"+tag+"'><button onclick='removeTag("+i+")'>Remove</button><br>";
+
+                        }else if(removed)
+                        {
+                            var tag = document.getElementById("tag"+(i)).value;
+                            existingTags += "<input type='text' placeholder='Enter a Tag' id='tag"+(i-1)+"' value='"+tag+"'><button onclick='removeTag("+(i-1)+")'>Remove</button><br>";
+                        }
+                    }
+
+
+                    tagTab--;
+
+
+                    document.getElementById("tagSpace").innerHTML = existingTags;
+                }
+            }
             
             
             function submitData()
             {
+               
+                tagAjax = [];
+                stepAjax = [];
+                ingredientAjax = [];
                 
-                
-                
+                var time = document.getElementById("recipeTime").value;
                 var recipeName = document.getElementById("recipeName").value;
                 var recipeDesc = document.getElementById("recipeDesc").value;
                 var recipeServing = document.getElementById("recipeServing").value;
+                var difficulty = document.getElementById("difficulty").value;
                 
                 if(recipeName===""||recipeDesc===""||recipeServing==="")
                 {
@@ -334,7 +423,7 @@ and open the template in the editor.
                     return;
                 }
                 
-                var recipeAjaxRequest = "name="+recipeName+"&desc="+recipeDesc+"&serving="+recipeServing;
+                var recipeAjaxRequest = "name="+recipeName+"&desc="+recipeDesc+"&serving="+recipeServing+"&time="+time+"&difficulty="+difficulty;
                 
                 
                 
@@ -392,6 +481,20 @@ and open the template in the editor.
                 }
                 
                 
+                
+                
+                for(var i=1;i<=tagTab;i++)
+                {
+                    var step = "tag="+document.getElementById("tag"+i).value;
+                    if(step==="")
+                    {
+                        alert("Empty fields in tag, please try again.");
+                        return;
+                    }
+                    
+                    tagAjax.push(step);
+                }
+                
                 ajaxRecipeRequest(recipeAjaxRequest);
                 
                 
@@ -417,12 +520,23 @@ and open the template in the editor.
         <br>
         <input type="number" placeholder="Recommended servings" id="recipeServing">
         <br>
+        <select id="difficulty">
+            <option value="College Student">College Student(Easy)</option>
+            <option value="Chef">Chef(Medium)</option>
+            <option value="Michelin Chef">Michelin Chef(Hard)</option>
+        </select>
+        <br>
+        <input type="number" placeholder="Cooking time(Minutes)" id="recipeTime">
+        <br>
         <br>
         <div id="ingredientSpace"></div>
         <button onclick="addIngredientTab()">Add Ingredient</button>
         <div id="stepSpace"></div>
         <button onclick="addStepTab()">Add Step</button>
         <br>
+        <br>
+        <div id="tagSpace"></div>
+        <button onclick="addTagTab()">Add Tag</button>
         <br>
         <button onclick="submitData()">Submit Recipe</button>
         

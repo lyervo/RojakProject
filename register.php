@@ -135,6 +135,13 @@ if (isset($_POST['register'])) {
                                 <input type="password" required id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control input_pass"  placeholder="password">
                             </div>
                             
+                            <div class="input-group mb-3">
+                                Gender:&nbsp;&nbsp;&nbsp;&nbsp;
+                                <select id="selectGender">
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                </select>
+                            </div>
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                                     <label class="form-check-label" for="exampleCheck1">I Accept the <a href="https://tripadvisor.mediaroom.com/ie-terms-of-use">Terms of Use</a> and our <a href="https://tripadvisor.mediaroom.com/ie-privacy-policy">Privacy Policy</a> of UniMeals</label>

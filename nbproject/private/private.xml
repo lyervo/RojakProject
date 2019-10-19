@@ -3,22 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/login.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/css/style.css</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/contact.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/controller/index.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/header.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/footer.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/about.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/db_connect.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/register_page.html</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/index.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/user/user_db.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/register.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/css/login_style.css</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/view/recipe.php</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/sql/review.sql</file>
-            <file>file:/C:/Users/franc/Documents/DKIT/DKIT%20YR3/UDP/RojakProject/user/create_user.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/user_profile.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view_recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/create_recipe_ingredient.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/create_recipe_step.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/view_recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/about.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/recipe_db.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/review/review_db.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/JS/JavaScript.js</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/contact.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/create_recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/review/getReviews.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/user/user_db.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/search.html</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/user/checkLoginStatus.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/review/submit_comment.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/header.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/index.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/controller/index.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/search.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/search_recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/register.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/user/likedRecipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/login.php</file>
         </group>
     </open-files>
 </project-private>

@@ -1,6 +1,6 @@
 <?php
 
-    include "../db_connect.php";
+    include "../model/db_connect.php";
     require "recipe_db.php";
 
 
@@ -10,8 +10,6 @@
     echo $step."+".$recipe_id;
     
     create_step($recipe_id, $step);
-    
-    echo "reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
     
 
 ?>

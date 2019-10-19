@@ -4,8 +4,6 @@
 /**
  * Start the session.
  */
-session_start();
-
 
 /**
  * Include ircmaxell's password_compat library.
@@ -15,12 +13,13 @@ require 'passJS/password.php';
 /**
  * Include our MySQL connection.
  */
-require 'model/db_connect.php';
+include 'model/db_connect.php';
 
 
 //If the POST var "login" exists (our submit button), then we can
 //assume that the user has submitted the login form.
-if (isset($_POST['Login'])) {
+if (isset($_POST['Login'])) 
+{
 
     //Retrieve the field values from our login form.
     $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
@@ -56,8 +55,9 @@ if (isset($_POST['Login'])) {
 
             
             //Provide the user with a login session.
-            $_SESSION['id'] = $user['user_id'];
+            $_SESSION['userID'] = $user['user_id'];
             $_SESSION['logged_in'] = time();
+            $_SESSION['login'] = true;
 
             //Redirect to our protected page, which we called home.php
             header('Location: controller/index.php');
