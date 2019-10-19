@@ -1,7 +1,7 @@
 <?php
     
-    include "model/db_connect.php";
-    require "user/user_db.php";
+    include "../model/db_connect.php";
+    require "../user/user_db.php";
 
     $id = $_REQUEST['user_id'];
     
@@ -9,7 +9,7 @@
     
 ?>
 
-<html>
+
     <head>
         <title><?php echo $user['username']; ?></title>
     </head>
@@ -32,7 +32,7 @@
                             document.getElementById("favoriteRecipes").innerHTML = this.responseText;
                         }
                     };
-                    xmlhttp.open("GET", "user/likedRecipe.php?user_id="+1, true);
+                    xmlhttp.open("GET", "../user/likedRecipe.php?user_id="+1, true);
                     xmlhttp.send();
                 
             }
@@ -53,4 +53,3 @@
         
         
     </body>
-</html>

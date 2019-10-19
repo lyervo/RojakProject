@@ -16,6 +16,8 @@
         <!-- Custom styles for this template -->
         <link href="../css/shop-homepage.css" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        
+        <script src="../JS/JavaScript.js" type="text/javascript"></script>
 
     </head>
 
@@ -43,13 +45,6 @@
                         }
                         ?> class="nav-item">
                             <a class="nav-link" href="../controller/?action=about">About us</a>
-                        </li>
-                        <li <?php
-                        if ($current == 'recipe') {
-                            echo 'class="current"';
-                        }
-                        ?>class="nav-item">
-                            <a class="nav-link" href="../controller/?action=recipe">Recipes</a>
                         </li>
                         <li <?php
                         if ($current == 'contact') {

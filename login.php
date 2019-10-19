@@ -55,7 +55,7 @@ if (isset($_POST['Login']))
 
             
             //Provide the user with a login session.
-            $_SESSION['userID'] = $user['user_id'];
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['logged_in'] = time();
             $_SESSION['login'] = true;
 

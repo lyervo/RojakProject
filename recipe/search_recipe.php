@@ -94,7 +94,7 @@
     
     foreach ($result as $res)
     {
-        $response = $response."<p><h2><a href='view_recipe.php?id=".$res['recipe_id']."'>".$res['recipe_name']."</h2></a></p><p>".$res['description']."</p>";
+        $response = $response."<p><h2><a href='?action=view_recipe&id=".$res['recipe_id']."'>".$res['recipe_name']."</h2></a></p><p>".$res['description']."</p>";
     }
     
     

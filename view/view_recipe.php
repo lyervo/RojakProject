@@ -106,6 +106,7 @@ $steps = getStepByID($id);
             if (this.readyState == 4 && this.status == 200)
             {
                 document.getElementById("comments").innerHTML = this.responseText;
+                
             }
         };
         xmlhttp.open("GET", "../review/getReviews.php?recipe_id=" +<?php echo $id ?>, true);
@@ -178,7 +179,7 @@ $steps = getStepByID($id);
         <!--        side div-->
         <div class="col-lg-2">
 
-            contact
+          
 
         </div>
         <!-- /.col-lg-3 -->
@@ -238,7 +239,7 @@ $steps = getStepByID($id);
 <!-- /.container -->
 
 <?php
-include 'footer.php';
+//include 'footer.php';
 ?>
 
 </body>

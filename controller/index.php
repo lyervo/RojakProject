@@ -18,8 +18,12 @@ if ($action == 'about') {
     include('../view/about.php');
 }
 
-if ($action == 'recipe') {
-    include '../view/recipe.php';
+if ($action == 'view_recipe'){
+    include('../view/view_recipe.php');
+}
+
+if ($action == 'user_profile'){
+    include('../view/user_profile.php');
 }
 
 if ($action == 'contact') {
