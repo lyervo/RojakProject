@@ -14,8 +14,13 @@ and open the template in the editor.
     
 }
 
+nav{
+    background-color: #6666ff;
+}
+
 .navbar-dark .navbar-nav .nav-link{
     color: white !important;
+    
 }
 
 .nav-item:hover{
@@ -23,3 +28,25 @@ and open the template in the editor.
     border-color: white;
     opacity: 0.8;
 }
+
+footer{
+    background-color: blue;
+}
+
+#foot{
+   display: inline-block;
+   
+}
+
+#foot2{
+    display: inline-block;
+    margin-right: 200px;
+}
+
+#login_button{
+    cursor: pointer;
+}
+
+
+
+

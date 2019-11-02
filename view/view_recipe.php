@@ -18,6 +18,9 @@ $steps = getStepByID($id);
 ?>
 
 <script>
+    
+    init();
+    
     var user_id;
 
     function checkLoginStatus(task)
@@ -239,7 +242,7 @@ $steps = getStepByID($id);
 <!-- /.container -->
 
 <?php
-//include 'footer.php';
+include 'footer.php';
 ?>
 
 </body>

@@ -33,6 +33,8 @@ if ($action == 'contact') {
 
 if ($action == 'login') {
 
-    include('../view/login.php');
+    include('../view/login_modal.php');
 }
+
+
 
