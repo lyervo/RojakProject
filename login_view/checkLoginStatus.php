@@ -4,7 +4,7 @@
     
     if(isset($_SESSION['log_user_id']))
     {
-        echo $_SESSION['user_id'];
+        echo $_SESSION['log_user_id'];
     }else
     {
         echo -1;

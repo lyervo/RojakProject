@@ -62,12 +62,12 @@ if (isset($_POST['Login']))
 
             
             //Provide the user with a login session.
-            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['log_user_id'] = $user['user_id'];
             $_SESSION['logged_in'] = time();
             $_SESSION['login'] = true;
 
             //Redirect to our protected page, which we called home.php
-            header('Location: ../controller/?action=about');
+            header('Location: ../controller/?action=login_index');
             exit;
         } else {
             //$validPassword was FALSE. Passwords do not match.

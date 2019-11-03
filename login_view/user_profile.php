@@ -1,11 +1,20 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['log_user_id']) || !isset($_SESSION['logged_in'])) {
+    //User not logged in. Redirect them back to the login.php page.
+    header('Location: ../view/index.php');
+    exit;
+}
+
 $current = 'home';
 include 'header.php';
 include "../model/db_connect.php";
 require "../user/user_db.php";
 
 
-$id = $_REQUEST['user_id'];
+$id = $_REQUEST['log_user_id'];
 
 $user = getUserByID($id);
 ?>

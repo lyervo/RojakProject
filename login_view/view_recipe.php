@@ -1,9 +1,19 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['log_user_id']) || !isset($_SESSION['logged_in'])) {
+    //User not logged in. Redirect them back to the login.php page.
+    header('Location: ../view/index.php');
+    exit;
+}
+
 $current = 'home';
 include 'header.php';
 
 include "../model/db_connect.php";
-require "../recipe/recipe_db.php";
+require "../recipe_login/recipe_db.php";
+
 
 
 $id = $_REQUEST['id'];
@@ -21,7 +31,33 @@ $steps = getStepByID($id);
     
     var user_id;
 
-    
+    function checkLoginStatus(task)
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                if (this.responseText >= 1)
+                {
+                    if (task === 1)
+                    {
+                        user_id = this.responseText;
+                        like();
+                    } else
+                    {
+                        user_id = this.responseText;
+                        comment();
+                    }
+                } else
+                {
+                    alert("Please login to perform this action");
+                }
+            }
+        };
+        xmlhttp.open("GET", "checkLoginStatus.php", true);
+        xmlhttp.send();
+    }
 
     function init()
     {
@@ -166,7 +202,7 @@ $steps = getStepByID($id);
             <p>Recipe Description :<?php echo $recipe['description'] ?></p>
             <p id="likes"></p>
             <br>
-            <button role="button" data-toggle="modal" data-target="#login-modal" id="likeButton">Like</button>
+            <button id="likeButton">Like</button>
 
 
 
@@ -195,7 +231,7 @@ $steps = getStepByID($id);
             }
             ?>
 
-            <button role="button" data-toggle="modal" data-target="#login-modal">Comment</button>
+            <button>Comment</button>
             <br>
             <textarea id="commentInput"></textarea>
 
