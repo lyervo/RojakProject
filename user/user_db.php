@@ -43,6 +43,34 @@ function getUserLikedRecipes($user_id)
     return $result;
 }
 
+function addUserStrike($user_id)
+{
+    global $db;
+    $query = "update user set strike = strike+1 where user_id=".$user_id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function getUserCountByStrikes($strikes)
+{
+    global $db;
+    $query = "select count(user_id) from user where strike > ".$strikes;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result['count(user_id)'];
+}
+
+function deleteUsersByStrikes($strikes)
+{
+    global $db;
+    $query = "delete from user where strike > ".$strikes;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
 
 
 ?>

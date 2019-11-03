@@ -24,6 +24,9 @@ and open the template in the editor.
             var ingredientAjax = [];
             var stepAjax = [];
             var tagAjax = [];
+            var user_id;
+            
+            
             
             function suggestIngredient(i)
             {
@@ -58,10 +61,7 @@ and open the template in the editor.
                     ajaxRecipeIngredientRequest(ingredientAjax[i]+"&recipeID="+recipeID);
                 }
                 
-                for(var i = 0;i<stepAjax.length;i++)
-                {
-                    ajaxRecipeStepRequest(stepAjax[i]+"&recipeID="+recipeID);
-                }
+                ajaxRecipeStepRequest(recipeID);
                 
                 for(var i=0;i<tagAjax.length;i++)
                 {
@@ -69,16 +69,36 @@ and open the template in the editor.
                 }
             }
             
-            function ajaxRecipeRequest(request)
+            function ajaxRecipeRequest()
             {
-                alert(request);
-
-                if (request.length == 0) 
+                var time = document.getElementById("recipeTime").value;
+                var recipeName = document.getElementById("recipeName").value;
+                var recipeDesc = document.getElementById("recipeDesc").value;
+                var recipeServing = document.getElementById("recipeServing").value;
+                var difficulty = document.getElementById("difficulty").value;
+                
+                var formData = new FormData();
+                
+                var imageFileInput = document.getElementById('image_file');
+                if(imageFileInput.value.length>0)
                 {
-                    alert("error in recipe request");
-                    return;
-                }else
-                {
+                    var image_file = imageFileInput.files[0];
+                    
+                    formData.append('image_file', image_file,"recipe_image");
+                }
+                formData.append('time',time);
+                formData.append('name',recipeName);
+                formData.append('desc',recipeDesc);
+                formData.append('serving',recipeServing);
+                formData.append('difficulty',difficulty);
+                formData.append('id',user_id);
+                
+                
+                
+                
+                
+                
+                
                     var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function()
                     {
@@ -91,9 +111,9 @@ and open the template in the editor.
                     {
                         insertIngredientStep(this.responseText);
                     };
-                    xmlhttp.open("GET", "recipe/create_recipe.php?"+request, true);
-                    xmlhttp.send();
-                }
+                    xmlhttp.open("POST", "recipe/create_recipe.php", true);
+                    xmlhttp.send(formData);
+                
                 
             
             }
@@ -123,27 +143,47 @@ and open the template in the editor.
             
             }
             
-            function ajaxRecipeStepRequest(request)
+            function ajaxRecipeStepRequest(id)
             {
-                console.log(request);
-                if (request.length == 0) 
+                
+                alert("running with "+id);
+                alert(stepTab);
+                
+                for(var i=1;i<=stepTab;i++)
                 {
-                    alert("error in recipe step request");
-                    return;
                     
-                }else
-                {
+                    alert("loop");
+                    var formData = new FormData();
+                    
+                    var step = document.getElementById("step"+i).value;
+                    
+                    formData.append("step",step);
+                    formData.append("recipe_id",id);
+                    
+                    var stepImageInput = document.getElementById("stepImage"+i);
+                    if(stepImageInput.value.length>0)
+                    {
+                        var stepImageFile = stepImageInput.files[0];
+                        alert("image");
+                        formData.append('step_image', stepImageFile,"step_image");
+                    }else
+                    {
+                        alert("no image");
+                    }
+                
                     var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function()
                     {
                         if (this.readyState == 4 && this.status == 200)
                         {
-                            
+                            alert(this.responseText);
                         }
                     };
-                    xmlhttp.open("GET", "recipe/create_recipe_step.php?"+request, true);
-                    xmlhttp.send();
+                    xmlhttp.open("POST", "recipe/create_recipe_step.php", true);
+                    xmlhttp.send(formData);
                 }
+                
+                
                 
             
             }
@@ -180,7 +220,7 @@ and open the template in the editor.
                                                                         <input type='text' placeholder='In what unit?' id='ingredientUnit1'>\n\
                                                                         <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod1'>\n\
                                                                         <input type='checkbox' id='vegan1'><button onclick='removeIngredient(1)'>Remove</button><br>";
-                document.getElementById("stepSpace").innerHTML = "<input type='text' placeholder='Step 1...' id='step1'><button onclick='removeStep(1)'>Remove</button><br>";
+                document.getElementById("stepSpace").innerHTML = "<input type='text' placeholder='Step 1...' id='step1'><br>Upload an image for step 1:<input type='file' id='stepImage1'><br><button onclick='removeStep(1)'>Remove</button><br>";
                 document.getElementById("tagSpace").innerHTML = "<input type='text' placeholder='Enter a tag...' id='tag1'><button onclick='removeTag(1)'>Remove</button><br>";
             }
             
@@ -325,14 +365,15 @@ and open the template in the editor.
                 for(var i=1;i<=stepTab;i++)
                 {
                     var step = document.getElementById("step"+i).value;
-                    existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><button onclick='removeStep("+i+")'>Remove</button><br>";
+                   
+                    existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><br>Upload an image for step "+i+":<input type='file' id='stepImage"+i+"'><br><button onclick='removeStep("+i+")'>Remove</button><br>";
                     
                 }
                 
                 
                 stepTab++;
                 
-                existingSteps+="<input type='text' placeholder='Step "+stepTab+"...' id='step"+stepTab+"'><button onclick='removeStep("+stepTab+")'>Remove</button><br>";
+                existingSteps+="<input type='text' placeholder='Step "+stepTab+"...' id='step"+stepTab+"'><br>Upload an image for step "+stepTab+":<input type='file' id='stepImage1'><br><button onclick='removeStep("+stepTab+")'>Remove</button><br>";
                 
                 document.getElementById("stepSpace").innerHTML = existingSteps;
                 
@@ -354,12 +395,14 @@ and open the template in the editor.
                         }else if(!removed)
                         {
                             var step = document.getElementById("step"+i).value;
-                            existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><button onclick='removeStep("+i+")'>Remove</button><br>";
+                            
+                            existingSteps += "<input type='text' placeholder='Step "+i+"...' id='step"+i+"' value='"+step+"'><br>Upload an image for step "+i+":<input type='file' id='stepImage"+i+"'><br><button onclick='removeStep("+i+")'>Remove</button><br>";
 
                         }else if(removed)
                         {
                             var step = document.getElementById("step"+(i)).value;
-                            existingSteps += "<input type='text' placeholder='Step "+(i-1)+"...' id='step"+(i-1)+"' value='"+step+"'><button onclick='removeStep("+(i-1)+")'>Remove</button><br>";
+                           
+                            existingSteps += "<input type='text' placeholder='Step "+(i-1)+"...' id='step"+(i-1)+"' value='"+step+"'><br>Upload an image for step "+(i-1)+":<input type='file' id='stepImage"+(i-1)+"'><br><button onclick='removeStep("+(i-1)+")'>Remove</button><br>";
                         }
                     }
 
@@ -403,6 +446,28 @@ and open the template in the editor.
                 }
             }
             
+            function checkLoginStatus(task)
+            {
+                var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            if(this.responseText >= 1)
+                            {
+                                
+                                user_id = this.responseText;
+                                submitData();    
+                                
+                            }else
+                            {
+                                alert("Please login to perform this action");
+                            }
+                        }
+                    };
+                    xmlhttp.open("GET", "user/checkLoginStatus.php", true);
+                    xmlhttp.send();
+            }
             
             function submitData()
             {
@@ -423,7 +488,7 @@ and open the template in the editor.
                     return;
                 }
                 
-                var recipeAjaxRequest = "name="+recipeName+"&desc="+recipeDesc+"&serving="+recipeServing+"&time="+time+"&difficulty="+difficulty;
+                
                 
                 
                 
@@ -468,17 +533,7 @@ and open the template in the editor.
                     
                 }
                 
-                for(var i=1;i<=stepTab;i++)
-                {
-                    var step = "step="+document.getElementById("step"+i).value;
-                    if(step==="")
-                    {
-                        alert("Empty fields in step, please try again.");
-                        return;
-                    }
-                    
-                    stepAjax.push(step);
-                }
+                
                 
                 
                 
@@ -495,25 +550,32 @@ and open the template in the editor.
                     tagAjax.push(step);
                 }
                 
-                ajaxRecipeRequest(recipeAjaxRequest);
                 
+                var noTags = document.getElementsByClassName("noTag");
                 
+                for(var i=0;i<noTags.length;i++)
+                {
+                    if(noTags[i].checked)
+                    {
+                        
+                        tagAjax.push("tag="+noTags[i].value);
+                        alert(noTags[i].value);
+                    }
+                }
                 
-                
-                
-                
-                
-                
-                
-                
-                
+                ajaxRecipeRequest();
+
             }
             
             
             
             
+            
+            
         </script>
-        
+        <p>Submit an image of the recipe</p>
+        <input type="file" name="image_file" id="image_file">
+        <br>
         <input type="text" placeholder="Recipe Name" id="recipeName">
         <br>
         <input type="text" placeholder="Recipe Description" id="recipeDesc">
@@ -521,9 +583,9 @@ and open the template in the editor.
         <input type="number" placeholder="Recommended servings" id="recipeServing">
         <br>
         <select id="difficulty">
-            <option value="College Student">College Student(Easy)</option>
-            <option value="Chef">Chef(Medium)</option>
-            <option value="Michelin Chef">Michelin Chef(Hard)</option>
+            <option value="Easy">College Student(Easy)</option>
+            <option value="Medium">Chef(Medium)</option>
+            <option value="Hard">Michelin Chef(Hard)</option>
         </select>
         <br>
         <input type="number" placeholder="Cooking time(Minutes)" id="recipeTime">
@@ -531,6 +593,7 @@ and open the template in the editor.
         <br>
         <div id="ingredientSpace"></div>
         <button onclick="addIngredientTab()">Add Ingredient</button>
+        <p>For security measure, please only upload your image only after you finish all your steps, if you remove or add a step, all existing file uploads will be reset.</p>
         <div id="stepSpace"></div>
         <button onclick="addStepTab()">Add Step</button>
         <br>
@@ -538,7 +601,21 @@ and open the template in the editor.
         <div id="tagSpace"></div>
         <button onclick="addTagTab()">Add Tag</button>
         <br>
-        <button onclick="submitData()">Submit Recipe</button>
+        <p>Exclude:</p>
+        <input type="checkbox" value="no_wheat" class="noTag">Wheat<br>
+        <input type="checkbox" value="no_crustacean" class="noTag">Crustaceans<br>
+        <input type="checkbox" value="no_egg" class="noTag">Egg<br>
+        <input type="checkbox" value="no_fish" class="noTag">Fish<br>
+        <input type="checkbox" value="no_peanut" class="noTag">Peanuts<br>
+        <input type="checkbox" value="no_soy" class="noTag">Soy<br>
+        <input type="checkbox" value="no_milk" class="noTag">Milk<br>
+        <input type="checkbox" value="no_nuts" class="noTag">Nuts<br>
+        <input type="checkbox" value="no_celery" class="noTag">Celery<br>
+        <input type="checkbox" value="no_mustard" class="noTag">Mustard<br>
+        <input type="checkbox" value="no_sesame" class="noTag">Sesame<br>
+        <input type="checkbox" value="no_shellfish" class="noTag">Shellfish<br>
+        
+        <button onclick="checkLoginStatus()">Submit Recipe</button>
         
     </body>
 </html>

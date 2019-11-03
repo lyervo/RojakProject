@@ -25,7 +25,9 @@ if (isset($_POST['register'])) {
     $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
     $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
     $pass = !empty($_POST['password']) ? trim($_POST['password']) : null;
-
+    $gender = !empty($_POST['gender']) ? trim($_POST['gender']) : null;
+    
+    
     //TO ADD: Error checking (username characters, password length, etc).
     //Basically, you will need to add your own error checking BEFORE
     //the prepared statement is built and executed.
@@ -65,13 +67,14 @@ if (isset($_POST['register'])) {
 
         //Prepare our INSERT statement.
         //Remember: We are inserting a new row into our users table.
-        $sql3 = "INSERT INTO user (email, username, password) VALUES (:email, :username, :password)";
+        $sql3 = "INSERT INTO user VALUES (null,:username,:email,:password,:gender,0)";
         $stmt3 = $db->prepare($sql3);
 
         //Bind our variables.
         $stmt3->bindValue(':email', $email);
         $stmt3->bindValue(':username', $username);
         $stmt3->bindValue(':password', $passwordHash);
+        $stmt3->bindValue(':gender', $gender);
 
         //Execute the statement and insert the new account.
         $result = $stmt3->execute();
@@ -137,9 +140,9 @@ if (isset($_POST['register'])) {
                             
                             <div class="input-group mb-3">
                                 Gender:&nbsp;&nbsp;&nbsp;&nbsp;
-                                <select id="selectGender">
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
+                                <select id="selectGender" name="gender">
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
                                 </select>
                             </div>
                                 <div class="form-group form-check">

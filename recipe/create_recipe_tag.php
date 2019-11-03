@@ -10,14 +10,15 @@
     
     $result = getTagByName($tagName);
     
-    if($result === null)
+    if(empty($result))
     {
-        echo "run";
+        echo "run ewwwwwwwwwwwwwwwwwwwwwwww";
         createTag($tagName);
-        $tag_id = getTagIDByName($tagName);
-        createRecipeTag($tag_id, $recipe_id);
+        $tag = getTagIDByName($tagName);
+        createRecipeTag($tag['tag_id'], $recipe_id);
     }else
     {
+        echo "i run";
         createRecipeTag($result['tag_id'], $recipe_id);
     }
 

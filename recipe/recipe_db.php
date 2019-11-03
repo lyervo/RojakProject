@@ -1,10 +1,20 @@
 <?php
 
-function create_recipe($name,$desc,$serving,$time,$difficulty)
+function create_recipe($name,$desc,$serving,$time,$difficulty,$author_id)
 {
     global $db;
-    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."',null,'".$time."','".$difficulty."',1)";
+    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null)";
     $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function create_recipe_with_image($name,$desc,$serving,$time,$difficulty,$author_id,$blob)
+{
+    global $db;
+    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",:blob)";
+    $statement = $db->prepare($query);
+    $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -21,8 +31,18 @@ function create_recipe_ingredient($ingredientID,$recipeID,$amount,$unit,$mod)
 function create_step($recipeID,$step)
 {
     global $db;
-    $query = "insert into step values(".$recipeID.",null,'".$step."')";
+    $query = "insert into step values(".$recipeID.",null,'".$step."',null)";
     $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function create_step_with_image($recipeID,$step,$blob)
+{
+    global $db;
+    $query = "insert into step values(".$recipeID.",null,'".$step."',:blob)";
+    $statement = $db->prepare($query);
+    $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -235,21 +255,14 @@ function getTagByName($name)
     $result = $statement->fetch();
     $statement->closeCursor();
     
-    if(empty($result))
-    {
-        return null;
-    }else
-    {
-        
-        return $result;
-    }
+    return $result;
 }
 
 function createTag($name)
 {
     global $db;
     $query = "insert into tag values(null,'".$name."')";
-    echo $query."/n";
+    echo $query."        ";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -259,28 +272,102 @@ function getTagIDByName($name)
 {
     global $db;
     $query = "select tag_id from tag where tag_name = '".$name."'";
-    echo $query."/n";
+    echo $query."       ";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
     $statement->closeCursor();
-    if(empty($result))
-    {
-        return null;
-    }else
-    {
-        return $result['tag_id'];
-    }
+    return $result;
 }
 
 function createRecipeTag($tag,$recipe)
 {
     global $db;
-    $query = "insert into recipe_tag values('".$tag."','".$recipe."')";
-    echo $query."/n";
+    $query = "insert into recipe_tag values(".$recipe.",".$tag.")";
+    echo $query."      ";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
+}
+
+function getRecipeTags($recipe_id)
+{
+    global $db;
+    $query = "SELECT tag.tag_id,tag.tag_name 
+    FROM
+    (tag INNER JOIN (recipe_tag INNER JOIN recipe ON recipe_tag.recipe_id = recipe.recipe_id) ON tag.tag_id = recipe_tag.tag_id)
+    WHERE recipe.recipe_id = ".$recipe_id;
+
+   
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+    
+}
+
+function deleteRecipeByID($recipe_id)
+{
+    global $db;    
+    
+    
+    
+    $query = "delete from recipe where recipe_id=".$recipe_id;
+
+   
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+
+}
+
+function deleteLikeByID($recipe_id)
+{
+    global $db;    
+    $query = "delete from likes where recipe_id=".$recipe_id;
+
+   
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+
+}
+
+function deleteReviewByID($recipe_id)
+{
+    global $db;    
+    $query = "delete from review where recipe_id=".$recipe_id;
+
+   
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+
+}
+
+function deleteRecipeIngredientByID($recipe_id)
+{
+    global $db;    
+    $query = "delete from recipe_ingredient where recipe_id=".$recipe_id;
+
+   
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+
+}
+
+function deleteStepByID($recipe_id)
+{
+    global $db;    
+    $query = "delete from step where recipe_id=".$recipe_id;
+
+   
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+
 }
 
 
