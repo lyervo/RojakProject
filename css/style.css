@@ -1,0 +1,67 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29-Sep-2019, 16:10:03
+    Author     : franc
+*/
+
+.current{
+
+    border-bottom: 3px solid white;
+    
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color: white !important;
+}
+
+.nav-item:hover{
+    border-bottom: 3px solid ;
+    border-color: white;
+    opacity: 0.8;
+}
+/*                       CSS FOR THE FILTER SYSTEM                        */
+.collapsible {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #005aba;
+}
+
+.collapsible:after {
+  content: '\002B'; /* Unicode character for "plus" sign (+) */
+  color: white;
+  font-weight: bold;
+  float: right;
+  
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";/* Unicode character for "plus" sign (-) */
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+.unimealMe
+{
+    position:fixed;
+    
+}
