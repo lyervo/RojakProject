@@ -111,3 +111,46 @@ for (i = 0; i < coll.length; i++) {
   });
 }
             }
+            
+function checkTag(tagName)
+{
+   
+    let tags = document.getElementsByClassName('tag');
+    let noTags = document.getElementsByClassName('noTag');
+    
+    for(let i = 0; i < tags.length; i++)
+    {
+        if(tags[i].value == tagName)
+        {
+            tags[i].checked = !tags[i].checked;
+            if(tags[i].checked)
+            {
+                tags[i].parentElement.style.backgroundColor = "#005aba";
+                tags[i].parentElement.style.color = "white";
+                tags[i].parentElement.style.border = "1px solid #005aba";
+            }else
+            {
+                
+                tags[i].parentElement.style.backgroundColor = "white";
+                tags[i].parentElement.style.color = "black";
+                tags[i].parentElement.style.border = "1px solid #007bff";
+                
+                
+            }
+        }
+        
+    }
+    
+        for(let i = 0; i < noTags.length; i++)
+        {
+            if(noTags[i].value == tagName)
+            {
+                noTags[i].checked = !noTags[i].checked;
+
+            }
+
+        }
+    
+    
+}
+
