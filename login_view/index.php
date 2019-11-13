@@ -1,4 +1,14 @@
 <?php
+
+
+session_start();
+
+if (!isset($_SESSION['log_user_id']) || !isset($_SESSION['logged_in'])) {
+    //User not logged in. Redirect them back to the login.php page.
+    header('Location: ../view/index.php');
+    exit;
+}
+
 $current = 'home';
 include 'header.php';
 
@@ -37,10 +47,10 @@ include 'header.php';
 
             Sort by 
             <select id="sort">
-                <option value="recipe_name">Name</option>
-                <option value="time">Submitted Date</option>
+                <option value="name">Name</option>
+                <option value="date">Submitted Date</option>
                 <option value="rating">User Rating</option>
-                <option value="cooking_time">Cooking Time</option>
+                <option value="time">Cooking Time</option>
 
             </select>
             <select id="order">
@@ -48,8 +58,6 @@ include 'header.php';
                 <option value="desc">Descending Order</option>
             </select>
 
-            
-             <!-- Button trigger modal -->
              
              
         

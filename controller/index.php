@@ -8,27 +8,47 @@ if ($action == NULL) {
     }
 }
 
-if ($action == 'home') {
-
+switch($action){
+case 'home':
     include('../view/index.php');
-}
+    break;
 
-if ($action == 'about') {
-
+case 'about':
     include('../view/about.php');
+    break;
+
+case 'view_recipe':
+    include('../view/view_recipe.php');
+    break;
+
+case 'user_profile':
+    include('../view/user_profile.php');
+    break;
+
+////////////////////// LOGIN //////////////////////////////// 
+
+case 'login_index':
+    include '../login_view/index.php';
+    break;
+
+case 'logout':
+    include '../login_view/logout.php';
+    break;
+
+case 'profile':
+    include '../login_view/user_profile.php';
+    break;
+
+case 'view_recipe_login':
+    include '../login_view/view_recipe.php';
+    break;
+
+default :
+    echo 'action error ' . $action;
+
 }
 
-if ($action == 'recipe') {
-    include '../view/recipe.php';
-}
 
-if ($action == 'contact') {
 
-    include('../view/contact.php');
-}
 
-if ($action == 'login') {
-
-    include('../view/login.php');
-}
 

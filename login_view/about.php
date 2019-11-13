@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['log_user_id']) || !isset($_SESSION['logged_in'])) {
+    //User not logged in. Redirect them back to the login.php page.
+    header('Location: ../view/index.php');
+    exit;
+}
+
 $current = 'about';
 include 'header.php';
 ?>

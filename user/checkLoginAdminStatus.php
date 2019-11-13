@@ -4,16 +4,18 @@
     require "user_db.php";
     
     
-    if(isset($_SESSION['log_user_id']))
+    if(isset($_SESSION['user_id']))
     {
-        $user = getUserByID($_SESSION['log_user_id']);
-        if($user['admin']===1)
+        $user = getUserByID($_SESSION['user_id']);
+        
+        if($user["admin"] == 1)
         {
-            echo $_SESSION['log_user_id'];
+            echo $user['user_id'];
         }else
         {
             echo -1;
         }
+        
     }else
     {
         echo -1;

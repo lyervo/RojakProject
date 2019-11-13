@@ -1,19 +1,10 @@
 <?php
-function create_recipe($name,$desc,$serving,$time,$difficulty,$author_id)
-{
-    global $db;
-    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,null)";
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $statement->closeCursor();
-}
 
-function create_recipe_with_image($name,$desc,$serving,$time,$difficulty,$author_id,$blob)
+function create_recipe($name,$desc,$serving,$time,$difficulty)
 {
     global $db;
-    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,:blob)";
+    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."',null,'".$time."','".$difficulty."',1)";
     $statement = $db->prepare($query);
-    $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -30,18 +21,8 @@ function create_recipe_ingredient($ingredientID,$recipeID,$amount,$unit,$mod)
 function create_step($recipeID,$step)
 {
     global $db;
-    $query = "insert into step values(".$recipeID.",null,'".$step."',null)";
+    $query = "insert into step values(".$recipeID.",null,'".$step."')";
     $statement = $db->prepare($query);
-    $statement->execute();
-    $statement->closeCursor();
-}
-
-function create_step_with_image($recipeID,$step,$blob)
-{
-    global $db;
-    $query = "insert into step values(".$recipeID.",null,'".$step."',:blob)";
-    $statement = $db->prepare($query);
-    $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -143,14 +124,10 @@ function searchIngredient($name)
     return $result;
 }
 
-function searchRecipe($name,$sort,$order)
+function searchRecipe($name)
 {
     global $db;
-    $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description "
-                . "FROM recipe WHERE "
-                . "recipe_name like '%".$name."%'"
-                . " group by recipe.recipe_id order by recipe.".$sort." ".$order;
-
+    $query = "select recipe_id,recipe_name,description from recipe where recipe_name like '%".$name."%' or recipe_name like '%".$name."' or recipe_name like '".$name."%'";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -158,6 +135,93 @@ function searchRecipe($name,$sort,$order)
     return $result;
 }
 
+function searchRecipeOrderByName($name,$order,$tags,$noTags)
+{
+    global $db;
+   
+    if($noTags!=""||$tags!="")
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM 
+                (recipe INNER JOIN (recipe_tag INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id) ON recipe.recipe_id = recipe_tag.recipe_id)
+                WHERE (recipe_name like '%".$name."%')".$tags.$noTags." "
+                . "group by recipe.recipe_id order by recipe.recipe_name ".$order;
+    }else
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM recipe WHERE recipe_name like '%".$name."%' group by recipe.recipe_id order by recipe_name ".$order;
+    }
+    
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
+function searchRecipeOrderByTime($name,$order,$tags,$noTags)
+{
+    global $db;
+    if($noTags!=""||$tags!="")
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM 
+                (recipe INNER JOIN (recipe_tag INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id) ON recipe.recipe_id = recipe_tag.recipe_id)
+                WHERE (recipe_name like '%".$name."%')".$tags.$noTags." "
+                . "group by recipe.recipe_id order by recipe.cooking_time ".$order;
+    }else
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM recipe WHERE recipe_name like '%".$name."%' group by recipe.recipe_id order by cooking_time ".$order;
+    }
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
+function searchRecipeOrderByDate($name,$order,$tags,$noTags)
+{
+    global $db;
+    
+    if($noTags!=""||$tags!="")
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM 
+                (recipe INNER JOIN (recipe_tag INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id) ON recipe.recipe_id = recipe_tag.recipe_id)
+                WHERE (recipe_name like '%".$name."%')".$tags.$noTags." "
+                . "group by recipe.recipe_id order by recipe.submit_date ".$order;
+    }else
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM recipe WHERE recipe_name like '%".$name."%' group by recipe.recipe_id order by submit_date ".$order;
+    }
+    
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
+function searchRecipeOrderByRating($name,$order,$tags,$noTags)
+{
+    global $db;   
+    if($noTags!=""||$tags!="")
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM 
+                (recipe INNER JOIN (recipe_tag INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id) ON recipe.recipe_id = recipe_tag.recipe_id)
+                WHERE (recipe_name like '%".$name."%')".$tags.$noTags." "
+                . "group by recipe.recipe_id order by rating ".$order;
+    }else
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description FROM recipe WHERE recipe_name like '%".$name."%' group by recipe.recipe_id order by rating ".$order;
+    }
+    
+    echo $query;
+    
+    
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
 
 
 
@@ -212,71 +276,13 @@ function getTagIDByName($name)
 function createRecipeTag($tag,$recipe)
 {
     global $db;
-    $query = "insert into recipe_tag values('".$recipe."','".$tag."')";
+    $query = "insert into recipe_tag values('".$tag."','".$recipe."')";
     echo $query."/n";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
 }
 
-function filterResults($tag,$noTag,$recipe_id)
-{
-    global $db;
 
-    $tags = explode("%%",$tag);
-    
-    $noTags = explode("%%",$noTag);
-    $query = "SELECT tag.tag_name FROM (tag INNER JOIN recipe_tag ON tag.tag_id = recipe_tag.tag_id) WHERE recipe_tag.recipe_id = ".$recipe_id;
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $result =$statement->fetchAll();
-    $statement->closeCursor();
-
-    $valid = true;
-    
-    if($tag!="null")
-    {
-        $size = sizeof($tags);
-    }else
-    {
-        $size = 0;
-    }
-    $size_valid = 0;
-    
-    foreach($result as $res)
-    {
-
-        if($noTag!=="null")
-        {
-            if(in_array($res['tag_name'],$noTags))
-            {
-                $valid = false;
-            }
-        }
-    
-        $second_valid = false;
-        if($tag!=="null")
-        {
-            foreach($tags as $t)
-            {
-                $value = strcmp($t, $res['tag_name']);
-                if($value===0)
-                {
-                    $size_valid = $size_valid+1;
-
-                    $second_valid = true;
-
-                }
-            }
-        }
-    }
-    
-    
-    
-    
-
-    
-    return $valid&&($size===$size_valid); 
-}
 
 ?>

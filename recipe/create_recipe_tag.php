@@ -10,9 +10,9 @@
     
     $result = getTagByName($tagName);
     
-    if($result === null)
+    if(empty($result))
     {
-        echo "run";
+        
         createTag($tagName);
         $tag_id = getTagIDByName($tagName);
         createRecipeTag($tag_id, $recipe_id);
@@ -20,5 +20,7 @@
     {
         createRecipeTag($result['tag_id'], $recipe_id);
     }
+    
+    echo $tagName." Tag added ";
 
 ?>

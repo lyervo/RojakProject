@@ -3,35 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/like/like_db.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/user/checkLoginStatus.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/recipe/search_recipe.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/like/checkLiked.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/submit_recipe.html</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/recipe/suggest_ingredient.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/passJS/password.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/review/getReviews.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/search.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/login.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/recipe/create_recipe_ingredient.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/review/review_db.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/like/like.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/review/submit_comment.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/recipe/create_recipe_step.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/view_recipe.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/model/db_connect.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/user/user_db.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/sql/udp.sql</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/user_profile.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/register.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/user/create_user.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/recipe/recipe_db.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/recipe/create_recipe_tag.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/user/check_username.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/user/likedRecipe.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/like/getLikes.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/search.html</file>
-            <file>file:/C:/xampp/htdocs/RojakProject-francis/recipe/create_recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject1/view/view_recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject1/view/submit_recipe.html</file>
+            <file>file:/C:/xampp/htdocs/RojakProject1/view/header.php</file>
         </group>
     </open-files>
 </project-private>
