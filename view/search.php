@@ -9,82 +9,133 @@ include 'header.php';
      <div class="row">
 
         <!--        side div-->
-        <div class="col-lg-2">
+        <div class="col-lg-11">
             
 
         <input type="text" id="term"><button onclick="searchRecipe()">Search</button><br>
         
         <button class="collapsible" onclick="collapsible()">Meat</button>
+        
 <div class="content">
-    <input type="checkbox" name="Chicken" value="Chicken" class="tag">Chicken <br>
-    <input type="checkbox" name="Pork" value="Pork" class="tag">Pork <br>
-    <input type="checkbox" name="Beef" value="Beef" class="tag">Beef <br>
+    <br><br>
+    <div class="filterButton" id="Chicken" onclick="checkTag('Chicken')">
+        <input hidden id="filterButton" type="checkbox" name="Chicken" value="Chicken" class="tag">Chicken </div><p></p>
+    
+    <div class="filterButton" id="Pork" onclick="checkTag('Pork')">
+    <input hidden id="filterButton" type="checkbox" name="Pork" value="Pork" class="tag">Pork </div><p></p>
+    
+    <div class="filterButton" id="Beef" onclick="checkTag('Beef')">
+    <input hidden id="filterButton" type="checkbox" name="Beef" value="Beef" class="tag">Beef </div>
+    <br>
 </div>
+        
         <button class="collapsible" onclick="collapsible()">Sea Food</button>
 <div class="content">
-    <input type="checkbox" name="Cod" value="Cod" class="tag">Cod <br>
-    <input type="checkbox" name="Salmon" value="Salmon" class="tag">Salmon <br>
-    <input type="checkbox" name="Tuna" value="Tuna" class="tag">Tuna <br>
+    <br><br>
+<div class="filterButton" id="Cod" onclick="checkTag('Cod')">
+    <input hidden id="filterButton" type="checkbox" name="Cod" value="Cod" class="tag">Cod </div>
+<div class="filterButton" id="Salmon" onclick="checkTag('Salmon')">
+    <input hidden id="filterButton" type="checkbox" name="Salmon" value="Salmon" class="tag">Salmon </div>
+<div class="filterButton" id="Tuna" onclick="checkTag('Tuna')">
+    <input hidden id="filterButton" type="checkbox" name="Tuna" value="Tuna" class="tag">Tuna </div>
+    <br>
 </div>
 
 <button class="collapsible" onclick="collapsible()">vegetables </button>
 <div class="content">
-    
-    <input type="checkbox" name="Carrots" value="Carrots" class="tag">Carrots<br>
-    <input type="checkbox" name="Cucumber" value="Cucumber" class="tag">Cucumber<br>
-    <input type="checkbox" name="Mushrooms" value="Mushrooms" class="tag">Mushrooms
+    <br><br>
+<div class="filterButton" id="Carrots" onclick="checkTag('Carrots')">
+    <input hidden  type="checkbox" name="Carrots" value="Carrots" class="tag">Carrots </div>
+    <div class="filterButton" id="Cucumber" onclick="checkTag('Cucumber')">
+    <input hidden type="checkbox" name="Cucumber" value="Cucumber" class="tag">Cucumber </div>
+    <div class="filterButton" id="Mushrooms" onclick="checkTag('Mushrooms')">
+    <input hidden type="checkbox" name="Mushrooms" value="Mushrooms" class="tag">Mushrooms </div>
+    <br>
 </div>
 <button class="collapsible" onclick="collapsible()">Fruit </button>
 <div class="content">
-    <input type="checkbox" name="Tomatoes" value="Tomatoes" class="tag">Tomatoes<br>
-    <input type="checkbox" name="Apples" value="Apples" class="tag">Apples<br>
-    <input type="checkbox" name="Strawberries" value="Strawberries" class="tag">Strawberries
+    <br><br>
+<div class="filterButton" id="Tomatoes" onclick="checkTag('Tomatoes')">
+    <input hidden  type="checkbox" name="Tomatoes" value="Tomatoes" class="tag">Tomatoes </div>
+    <div class="filterButton" id="Cucumber" onclick="checkTag('Cucumber')">
+    <input hidden  type="checkbox" name="Cucumber" value="Cucumber" class="tag">Cucumber </div>
+    <div class="filterButton" id="Strawberries" onclick="checkTag('Strawberries')">
+    <input hidden  type="checkbox" name="Strawberries" value="Strawberries" class="tag">Strawberries</div>
+    <br>
 </div>
 <button class="collapsible" onclick="collapsible()">Serving</button>
 <div class="content">
-    <input type="number" name="serving" value="1" class="tag"/>
     
+    <input type="number" name="serving" value="1" class="tag"/>
+    <br>
 </div>
 <button class="collapsible" onclick="collapsible()">Allergies</button>
 <div class="content">
-    <input type="checkbox" name="nut" value="no_nuts" class="noTag">Nuts <br>
-    <input type="checkbox" name="lactose" value="no_lactose" class="noTag">Lactose <br>
-    <input type="checkbox" name="gluton" value="no_gluton" class="noTag">Gluten <br>
-    
+    <br><br>
+<div class="filterButton" id="Nuts" onclick="checkTag('Nuts')">
+    <input hidden type="checkbox" name="Nuts" value="Nuts" class="tag">Nuts </div>
+    <div class="filterButton" id="Lactose" onclick="checkTag('Lactose')">
+    <input hidden type="checkbox" name="Lactose" value="Lactose" class="tag">Lactose </div>
+    <div class="filterButton" id="Gluten" onclick="checkTag('Gluten')">
+    <input hidden  type="checkbox" name="Gluten" value="Gluten" class="tag">Gluten </div>
+    <br>
     
 </div>
 <button class="collapsible" onclick="collapsible()">Lifestyle </button>
 <div class="content">
-    <input type="checkbox" name="vegan" value="vegan" class="tag">Vegan <br>
-    <input type="checkbox" name="Vegetarian" value="Vegetarian" class="tag">Vegetarian <br>
-    <input type="checkbox" name="Pescatarian" value="Pescatarian" class="tag">Pescatarian <br>
-    <input type="checkbox" name="Budget" value="Budget" class="tag">Budget <br>
-    <input type="checkbox" name="Onepot" value="Onepot" class="tag">Onepot <br>
+    <br><br>
+<div class="filterButton" id="Vegan" onclick="checkTag('Vegan')">
+    <input hidden  type="checkbox" name="Vegan" value="Vegan" class="tag">Vegan </div>
+    <div class="filterButton" id="Vegetarian" onclick="checkTag('Vegetarian')">
+    <input hidden  type="checkbox" name="Vegetarian" value="Vegetarian" class="tag">Vegetarian </div>
+    <div class="filterButton" id="Pescaterian" onclick="checkTag('Pescaterian')">
+    <input hidden  type="checkbox" name="Pescaterian" value="Pescaterian" class="tag">Pescaterian </div>
+    <br>
 </div>
 <button class="collapsible" onclick="collapsible()">Cuisine </button>
 <div class="content">
-    <input type="checkbox" name="Mexican" value="Mexican" class="tag">Mexican <br>
-    <input type="checkbox" name="Indian" value="Indian" class="tag">Indian <br>
-    <input type="checkbox" name="Chinese" value="Chinese" class="tag">Chinese <br>
-    <input type="checkbox" name="Italian" value="Italian" class="tag">Italian <br>
+    <br><br>
+<div class="filterButton" id="Mexican" onclick="checkTag('Mexican')">
+    <input hidden  type="checkbox" name="Mexican" value="Mexican" class="tag">Mexican </div>
+    <div class="filterButton" id="Indian" onclick="checkTag('Indian')">
+    <input hidden  type="checkbox" name="Indian" value="Indian" class="tag">Indian </div>
+    <div class="filterButton" id="Chinese" onclick="checkTag('Chinese')">
+    <input hidden  type="checkbox" name="Chinese" value="Chinese" class="tag">Chinese </div>
+    <div class="filterButton" id="Italian" onclick="checkTag('Italian')">
+    <input hidden  type="checkbox" name="Italian" value="Italian" class="tag">Italian </div>
+  <br>
+  
     
 </div>
 <button class="collapsible" onclick="collapsible()">Easy to make </button>
 <div class="content">
-    <input type="checkbox" name="Salad" value="Salad" class="tag">Salad <br>
-    <input type="checkbox" name="Sandwiches" value="Sandwiches" class="tag">Sandwiches <br>
+    <br><br>
+<div class="filterButton" id="Salad" onclick="checkTag('Salad')">
+    <input hidden  type="checkbox" name="Salad" value="Salad" class="tag">Salad </div>
+    <div class="filterButton" id="Sandwiches" onclick="checkTag('Sandwiches')">
+    <input hidden  type="checkbox" name="Sandwiches" value="Sandwiches" class="tag">Sandwiches </div>
+  <br>
+
     
     
 </div>
 <button class="collapsible" onclick="collapsible()">Cooking method </button>
 <div class="content">
-    <input type="checkbox" name="Fried" value="Fried" class="tag">Fried <br>
-    <input type="checkbox" name="Grilled" value="Grilled" class="tag">Grilled <br>
-    <input type="checkbox" name="Oven" value="Oven" class="tag">Oven <br>
-    <input type="checkbox" name="Baking" value="Baking" class="tag">Baking <br>
+    <br><br>
+<div class="filterButton" id="Chicken" onclick="checkTag('Fried')">
+    <input hidden  type="checkbox" name="Fried" value="Fried" class="tag">Fried </div>
+    <div class="filterButton" id="Grilled" onclick="checkTag('Grilled')">
+    <input hidden type="checkbox" name="Grilled" value="Grilled" class="tag">Grilled </div>
+    <div class="filterButton" id="Oven" onclick="checkTag('Oven')">
+    <input hidden  type="checkbox" name="Oven" value="Oven" class="tag">Oven </div>
+    <div class="filterButton" id="Budget" onclick="checkTag('Budget')">
+    <input hidden  type="checkbox" name="Budget" value="Budget" class="tag">Budget </div>
+    <div class="filterButton" id="Onepot" onclick="checkTag('Onepot')">
+    <input hidden  type="checkbox" name="Onepot" value="Onepot" class="tag">Onepot </div>
+   <br>
     
 </div>
-        
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--        <p>Must have:</p>
         
         <input type="checkbox" value="halal" class="tag">Halal<br>
@@ -126,7 +177,7 @@ include 'header.php';
        
         </div>
         <!-- /.col-lg-3 -->
-        
+        <div class="col-lg-2"></div>
         <!--        body div-->
 
         <div class="col-lg-9">
