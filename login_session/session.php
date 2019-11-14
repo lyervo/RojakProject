@@ -10,8 +10,10 @@
  * Start the session.
  */
 
+if(!isset($_SESSION))
+{
     session_start();
-
+}
 
 
 /**
@@ -62,12 +64,15 @@ if (isset($_POST['Login']))
 
             
             //Provide the user with a login session.
-            $_SESSION['log_user_id'] = $user['user_id'];
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['logged_in'] = time();
             $_SESSION['login'] = true;
 
-            //Redirect to our protected page, which we called home.php
-            header('Location: ../controller/?action=home');
+//            //Redirect to our protected page, which we called home.php
+//            header('Location: ../controller/?action=login_index');
+            if (isset($_SERVER["HTTP_REFERER"])) {
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
+    }
             exit;
         } else {
             //$validPassword was FALSE. Passwords do not match.

@@ -1,7 +1,8 @@
 <?php
 //login.php
+
 /**
- * Star t the session.
+ * Start the session.
  */
 
 /**

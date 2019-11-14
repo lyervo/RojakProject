@@ -11,6 +11,19 @@ function getUserByID($user_id)
     return $result;
 }
 
+function getUserByName($username)
+{
+    global $db;
+    $query = "select * from user where username = '".$username."'";
+    
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+
+
 function create_user($username,$email,$password,$gender)
 {
     global $db;
@@ -24,6 +37,43 @@ function deleteUser($id)
 {
     global $db;
     $query = "delete from user where user_id = ".$id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+    deleteUserReview($id);
+}
+
+function deleteUserReview($id)
+{
+    global $db;
+    $query = "delete from review where user_id = ".$id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function deleteUserByName($name)
+{
+    global $db;
+    $query = "delete from user where username = '".$name."'";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function setUserAdminByName($name)
+{
+    global $db;
+    $query = "update user set admin = 1 where username = '".$name."'";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function removeUserAdminByName($name)
+{
+    global $db;
+    $query = "update user set admin = 0 where username = '".$name."'";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();

@@ -1,6 +1,8 @@
 <?php
 
-
+if (!isset($_SESSION)) {
+    session_start();
+}
 $dsn = 'mysql:host=localhost;dbname=udp';
 
 $pdoOptions = array(

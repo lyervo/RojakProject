@@ -1,5 +1,3 @@
-
-
 function searchRecipe()
 {
     var term = document.getElementById("term").value;
@@ -68,15 +66,6 @@ function searchRecipe()
         noTagString = "null";
     }
 
-
-
-
-
-
-
-
-
-
     if (term.length == 0)
     {
         document.getElementById("result").innerHTML = "";
@@ -95,10 +84,3 @@ function searchRecipe()
         xmlhttp.send();
     }
 }
-
-
-
-
-
-
-

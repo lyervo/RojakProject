@@ -9,15 +9,12 @@ $id = $_REQUEST['user_id'];
 
 $user = getUserByID($id);
 ?>
-
-
-<head>
-    <title><?php echo $user['username']; ?></title>
-</head>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
     init();
+    
+    var user_id;
 
     function init()
     {
@@ -35,10 +32,63 @@ $user = getUserByID($id);
                 document.getElementById("favoriteRecipes").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "../user/likedRecipe.php?user_id=" + 1, true);
+        xmlhttp.open("GET", "../user/likedRecipe.php?user_id=" + <?php echo $id ?>, true);
         xmlhttp.send();
 
     }
+    
+    function checkLoginStatus(task)
+    {
+        
+        if(user_id>=1)
+        {
+            if (task === 1)
+                    {
+                        
+                        submitReportUser();
+                    }
+        }
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                if (this.responseText >= 1)
+                {
+                    if (task === 1)
+                    {
+                        user_id = this.responseText;
+                        submitReportUser();
+                    }
+                } else
+                {
+                    alert("Sorry, you need to login to perform this action.");
+                    $('#login-modal').modal('show');
+                }
+            }
+        };
+        xmlhttp.open("GET", "../user/checkLoginStatus.php", true);
+        xmlhttp.send();
+    }
+    
+    function submitReportUser()
+            {
+                
+                var type = document.getElementById("reportReasonUser").value;
+                
+                var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            alert(this.responseText);
+                        }
+                    };
+                    xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&user_id="+<?php echo $id ?>+"&type="+type, true);
+                    xmlhttp.send();
+            }
+            
 
 
 

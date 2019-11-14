@@ -40,7 +40,30 @@ CREATE TABLE `ingredient` (
 
 INSERT INTO `ingredient` (`ingredient_id`, `ingredient_name`, `vegan`) VALUES
 (1, 'Bacon', 0),
-(2, 'Egg', 0);
+(2, 'Egg', 0),
+(3, 'onion', 0),
+(4, 'flour', 0),
+(5, 'butter', 0),
+(6, 'Rice', 0),
+(7, 'wesd', 0),
+(8, 'wsedfg', 0),
+(9, 'dascv', 0),
+(10, 'chicken', 0),
+(11, '2dcdq', 0),
+(12, 'ergf onion', 0),
+(13, 'eqdwefv galic', 0),
+(14, 'fvgbbvd ginger', 0),
+(15, 'wefrgdtfhyj', 0),
+(16, '1qwdsef', 0),
+(17, 'ASDFCGB', 0),
+(18, 'efrgdf onions', 0),
+(19, 'pork loin', 0),
+(20, 'lettuce', 0),
+(21, 'honey', 0),
+(22, 'soy sauce', 0),
+(23, 'yugjhhj', 0),
+(24, 'big carrot with carrot', 0),
+(25, '13d', 0);
 
 -- --------------------------------------------------------
 
@@ -53,14 +76,6 @@ CREATE TABLE `likes` (
   `recipe_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- 傾印資料表的資料 `likes`
---
-
-INSERT INTO `likes` (`user_id`, `recipe_id`) VALUES
-(1, 1),
-(3, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -71,15 +86,14 @@ CREATE TABLE `recipe` (
   `recipe_id` int(11) NOT NULL,
   `recipe_name` varchar(40) NOT NULL,
   `description` varchar(200) NOT NULL,
-  `serving` int(2) NOT NULL
+  `serving` int(2) NOT NULL,
+  `difficulty` varchar(20) NOT NULL,
+  `cooking_time` int(11) NOT NULL,
+  `rating` float NOT NULL,
+  `author` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `image_blob` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- 傾印資料表的資料 `recipe`
---
-
-INSERT INTO `recipe` (`recipe_id`, `recipe_name`, `description`, `serving`) VALUES
-(1, 'Bacon & Egg', 'A simple breakfast that is both delicious and economical.', 1);
 
 -- --------------------------------------------------------
 
@@ -95,14 +109,6 @@ CREATE TABLE `recipe_ingredient` (
   `modifier` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- 傾印資料表的資料 `recipe_ingredient`
---
-
-INSERT INTO `recipe_ingredient` (`ingredient_id`, `recipe_id`, `amount`, `unit`, `modifier`) VALUES
-(1, 1, 1, '', ''),
-(2, 1, 2, 's', '');
-
 -- --------------------------------------------------------
 
 --
@@ -113,6 +119,70 @@ CREATE TABLE `recipe_tag` (
   `recipe_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- 傾印資料表的資料 `recipe_tag`
+--
+
+INSERT INTO `recipe_tag` (`recipe_id`, `tag_id`) VALUES
+(5, 13),
+(5, 14),
+(8, 16),
+(8, 16),
+(9, 17),
+(9, 18),
+(9, 19),
+(9, 20),
+(13, 34),
+(15, 34),
+(16, 34),
+(16, 34),
+(16, 34),
+(19, 34),
+(22, 34),
+(23, 23),
+(23, 22),
+(24, 18),
+(24, 21),
+(24, 35),
+(24, 18),
+(24, 21),
+(24, 18),
+(24, 21),
+(4, 18),
+(4, 3),
+(4, 1),
+(4, 2),
+(39, 27),
+(40, 27),
+(39, 28),
+(40, 28),
+(18, 28),
+(22, 28),
+(21, 28),
+(23, 28),
+(24, 28),
+(25, 28),
+(19, 28),
+(20, 28),
+(26, 28),
+(27, 28),
+(28, 28),
+(29, 28),
+(29, 39),
+(29, 40),
+(29, 18),
+(29, 22),
+(29, 21),
+(29, 23),
+(29, 24),
+(29, 25),
+(29, 19),
+(29, 20),
+(29, 26),
+(29, 27),
+(29, 28),
+(29, 29);
 
 -- --------------------------------------------------------
 
@@ -128,16 +198,6 @@ CREATE TABLE `review` (
   `review_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- 傾印資料表的資料 `review`
---
-
-INSERT INTO `review` (`user_id`, `recipe_id`, `review_id`, `comment`, `review_date`) VALUES
-(1, 1, 1, 'This bacon & egg recipe is so simple! I like bacon too!!!', '2019-10-16 20:34:40'),
-(3, 1, 2, 'hello thomas', '2019-10-16 21:04:51'),
-(3, 1, 3, 'hello world', '2019-10-16 21:05:00'),
-(3, 1, 4, 'hello thomas', '2019-10-16 21:05:10');
-
 -- --------------------------------------------------------
 
 --
@@ -147,17 +207,9 @@ INSERT INTO `review` (`user_id`, `recipe_id`, `review_id`, `comment`, `review_da
 CREATE TABLE `step` (
   `recipe_id` int(11) NOT NULL,
   `step_id` int(11) NOT NULL,
-  `description` varchar(250) NOT NULL
+  `description` varchar(250) NOT NULL,
+  `step_image` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- 傾印資料表的資料 `step`
---
-
-INSERT INTO `step` (`recipe_id`, `step_id`, `description`) VALUES
-(1, 1, 'First, put your oil into the pan, make sure it is smoking hot, add your bacon into the pan and remove when it is crispy done.'),
-(1, 2, 'Crack both eggs open, and cook them with the grease of the bacon to give them extra flavor.'),
-(1, 3, 'Put both the eggs and bacon onto the plate and serve it with a hearty morning coffee!');
 
 -- --------------------------------------------------------
 
@@ -167,8 +219,68 @@ INSERT INTO `step` (`recipe_id`, `step_id`, `description`) VALUES
 
 CREATE TABLE `tag` (
   `tag_id` int(11) NOT NULL,
-  `tag_name` int(11) NOT NULL
+  `tag_name` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- 傾印資料表的資料 `tag`
+--
+
+INSERT INTO `tag` (`tag_id`, `tag_name`) VALUES
+(1, 'halal'),
+(2, 'kosher'),
+(3, 'vegan'),
+(13, 'migi'),
+(14, 'sss'),
+(15, 'wds'),
+(17, 'wasdxcd'),
+(18, 'no_wheat'),
+(19, 'no_milk'),
+(20, 'no_nuts'),
+(21, 'no_crustacean'),
+(22, 'no_egg'),
+(23, 'no_fish'),
+(24, 'no_peanut'),
+(25, 'no_soy'),
+(26, 'no_celery'),
+(27, 'no_mustard'),
+(28, 'no_sesame'),
+(29, 'no_shellfish'),
+(30, 'efdrgbhn'),
+(31, 'chicken'),
+(32, 'chicken_tag'),
+(33, 'erfg'),
+(34, ''),
+(35, 'onion tag'),
+(36, 'onion tag number 2'),
+(37, 'carrot'),
+(38, 'new carrot'),
+(39, '2we'),
+(40, '2wedffghjk');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `ticket`
+--
+
+CREATE TABLE `ticket` (
+  `ticket_id` int(11) NOT NULL,
+  `date_submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ticket_type` varchar(40) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `review_id` int(11) NOT NULL,
+  `recipe_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- 傾印資料表的資料 `ticket`
+--
+
+INSERT INTO `ticket` (`ticket_id`, `date_submitted`, `ticket_type`, `link`, `review_id`, `recipe_id`, `user_id`) VALUES
+(4, '2019-11-04 12:39:50', 'missing allergen', '?id=23', 0, 23, 0),
+(5, '2019-11-06 10:43:58', 'profanity', '?id=23#review_7', 7, 23, 0);
 
 -- --------------------------------------------------------
 
@@ -181,17 +293,19 @@ CREATE TABLE `user` (
   `username` varchar(40) NOT NULL,
   `email` varchar(40) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `gender` int(2) NOT NULL
+  `gender` varchar(1) NOT NULL,
+  `admin` int(1) NOT NULL,
+  `strike` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- 傾印資料表的資料 `user`
 --
 
-INSERT INTO `user` (`user_id`, `username`, `email`, `password`, `gender`) VALUES
-(1, 'Thomas McKeown', 'thomasMcKeown@gmail.com', 'guest', 1),
-(2, 'Timothy', 'timothynguoi@hotmail.com', '$2y$12$L9OrRo34pBJowWibbj82kOaCVAl1DM/3r', 0),
-(3, 'lyervo', 'helloWorld@gmail.com', '$2y$12$ceIATkkQxQty0cbOEqf/D.g0EFumFef4B9vYbPMp0EE4TvYhg6qMS', 0);
+INSERT INTO `user` (`user_id`, `username`, `email`, `password`, `gender`, `admin`, `strike`) VALUES
+(2, 'Timothy', 'timothynguoi@hotmail.com', '$2y$12$L9OrRo34pBJowWibbj82kOaCVAl1DM/3r', 'M', 0, 0),
+(3, 'lyervo', 'helloWorld@gmail.com', '$2y$12$ceIATkkQxQty0cbOEqf/D.g0EFumFef4B9vYbPMp0EE4TvYhg6qMS', 'M', 1, 2),
+(5, 'Dolly', 'dolly@hk.com', '$2y$12$/rfXT1fVmnUbKGwEVoYDdeJ1bw/Rg9.5TZwaBZTXP16iz56X6GwjS', 'F', 0, 0);
 
 --
 -- 已傾印資料表的索引
@@ -228,6 +342,12 @@ ALTER TABLE `tag`
   ADD PRIMARY KEY (`tag_id`);
 
 --
+-- 資料表索引 `ticket`
+--
+ALTER TABLE `ticket`
+  ADD PRIMARY KEY (`ticket_id`);
+
+--
 -- 資料表索引 `user`
 --
 ALTER TABLE `user`
@@ -241,37 +361,43 @@ ALTER TABLE `user`
 -- 使用資料表自動增長(AUTO_INCREMENT) `ingredient`
 --
 ALTER TABLE `ingredient`
-  MODIFY `ingredient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ingredient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `recipe`
 --
 ALTER TABLE `recipe`
-  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `review`
 --
 ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `step`
 --
 ALTER TABLE `step`
-  MODIFY `step_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `step_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `tag`
 --
 ALTER TABLE `tag`
-  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- 使用資料表自動增長(AUTO_INCREMENT) `ticket`
+--
+ALTER TABLE `ticket`
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- 使用資料表自動增長(AUTO_INCREMENT) `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

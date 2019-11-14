@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+        include '../login_session/session.php';
+        ?>
 <html lang="en">
 
     <head>
@@ -25,16 +28,18 @@
         <script src="../JS/login.js" type="text/javascript"></script>
         <link href="../css/login_style.css" rel="stylesheet" type="text/css"/>
 
-
-        <script src="../JS/JavaScript.js" type="text/javascript"></script>
-
         <!-- Custom styles for this template -->
         <link href="../css/shop-homepage.css" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+
+        <script src="../JS/JavaScript.js" type="text/javascript"></script>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v5.0"></script>
+
     </head>
 
     <body>
-
+        
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
             <div class="container">
@@ -58,9 +63,20 @@
                         ?> class="nav-item">
                             <a class="nav-link" href="../controller/?action=about">About us</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="login_button"  role="button" data-toggle="modal" data-target="#login-modal">Login/Sign Up</a>
-                        </li>
+                        <?php
+                        
+                        if(isset($_SESSION['user_id']))
+                        {
+                            echo '<li class="nav-item">
+                                <a class="nav-link" id="login_button"  role="button" data-toggle="modal" data-target="#login-modal">User</a>
+                            </li>';
+                        }else
+                        {
+                            echo '<li class="nav-item">
+                                <a class="nav-link" id="login_button"  role="button" data-toggle="modal" data-target="#login-modal">Login/Sign Up</a>
+                            </li>';
+                        }
+                                ?>
 
 
 
@@ -87,9 +103,7 @@
                     </div>
                 </div>-->
 
-        <?php
-        require '../login_session/session.php';
-        ?>
+        
 
         <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 
@@ -122,7 +136,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div>
-                                    <input type="submit" name="Login" value="Login" class="btn btn-primary">
+                                    <input type="submit" name="Login" value="Login" class="btn login_btn">
                                 </div>
                                 <div>
                                     <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
@@ -166,7 +180,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div>
-                                    <input type="submit" name="register" value="Register" class="btn btn-success">
+                                    <input type="submit" name="register" value="Register" class="btn login_btn">
 
                                 </div>
                                 <div>

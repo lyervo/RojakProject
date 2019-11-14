@@ -1,8 +1,10 @@
 <?php
 $current = 'home';
 include 'header.php';
-include '../user/checkLoginStatus.php';
+
 ?>
+
+
 <!-- Page Content -->
 <div class="container">
 
@@ -35,10 +37,10 @@ include '../user/checkLoginStatus.php';
 
             Sort by 
             <select id="sort">
-                <option value="name">Name</option>
-                <option value="date">Submitted Date</option>
+                <option value="recipe_name">Name</option>
+                <option value="time">Submitted Date</option>
                 <option value="rating">User Rating</option>
-                <option value="time">Cooking Time</option>
+                <option value="cooking_time">Cooking Time</option>
 
             </select>
             <select id="order">
@@ -46,12 +48,28 @@ include '../user/checkLoginStatus.php';
                 <option value="desc">Descending Order</option>
             </select>
 
-            <!-- Button trigger modal -->       
+            
+             <!-- Button trigger modal -->
+             
+             
+        
+        
+        
+
+        
         </div>
         <!-- /.col-lg-3 -->
+
         <!--        body div-->
+
+       
         <div class="col-lg-9">
+
             <div id="result"></div>
+
+
+
+
         </div>
         <!-- /.col-lg-9 -->
 
