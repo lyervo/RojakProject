@@ -19,7 +19,7 @@
         foreach($result as $res)
         {
             $user = getUserByID($res['user_id']);
-            $response = $response."<a href='?action=user_profile&user_id=".$user['user_id']."'>".$user['username']."</a><p>".$res['comment']."</p><i>".$res['review_date']."</i><br>";
+            $response = $response."<div id='one_comment'><a href='?action=user_profile&user_id=".$user['user_id']."'>".$user['username']."</a><p>".$res['comment']."</p><i>".$res['review_date']."</i></div><br>";
         }
         echo $response;
     }

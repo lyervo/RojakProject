@@ -72,6 +72,10 @@
 #img_logo {
     max-height: 100px;
     max-width: 100px;
+    border-radius: 50%;
+    margin-left: 30%;
+    margin-right: 25%;
+    
 }
 
 /* #########################################
@@ -84,7 +88,7 @@
 }
 
 .modal-content {
-    background-color: #ececec;
+    background-color: white;
     border: 1px solid #bdc3c7;
     border-radius: 0px;
     outline: 0;

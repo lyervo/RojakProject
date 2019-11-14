@@ -1,9 +1,14 @@
-.context-dark, .bg-gray-dark, .bg-primary {
-    color: rgba(255, 255, 255, 0.8);
+.context-light, .bg-gray-dark, .bg-primary {
+/*    color: rgba(255, 255, 255, 0.8);*/
+    color: #4d6de6; 
 }
 
 .footer-classic a, .footer-classic a:focus, .footer-classic a:active {
-    color: #ffffff;
+    color: black;
+}
+
+#footerTitle{
+    color: #6666ff;
 }
 .nav-list li {
     padding-top: 5px;
@@ -36,8 +41,11 @@ ul, ol {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .nav-list li a:before {
-    content: "\f14f";
-    font: 400 21px/1 "Material Design Icons";
+    content: "\f054";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
     color: #4d6de6;
     display: inline-block;
     vertical-align: baseline;

@@ -25,12 +25,12 @@
         <script src="../JS/login.js" type="text/javascript"></script>
         <link href="../css/login_style.css" rel="stylesheet" type="text/css"/>
 
-        <!-- Custom styles for this template -->
-        <link href="../css/shop-homepage.css" rel="stylesheet">
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 
         <script src="../JS/JavaScript.js" type="text/javascript"></script>
 
+        <!-- Custom styles for this template -->
+        <link href="../css/shop-homepage.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body>
@@ -122,7 +122,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div>
-                                    <input type="submit" name="Login" value="Login" class="btn login_btn">
+                                    <input type="submit" name="Login" value="Login" class="btn btn-primary">
                                 </div>
                                 <div>
                                     <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
@@ -166,7 +166,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div>
-                                    <input type="submit" name="register" value="Register" class="btn login_btn">
+                                    <input type="submit" name="register" value="Register" class="btn btn-success">
 
                                 </div>
                                 <div>

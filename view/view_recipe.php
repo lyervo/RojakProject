@@ -16,12 +16,38 @@ $steps = getStepByID($id);
 ?>
 
 <script>
-    
+
     init();
-    
+
     var user_id;
 
-    
+    function checkLoginStatus(task)
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                if (this.responseText >= 1)
+                {
+                    if (task === 1)
+                    {
+                        user_id = this.responseText;
+                        like();
+                    } else
+                    {
+                        user_id = this.responseText;
+                        comment();
+                    }
+                } else
+                {
+                    alert("Please login to perform this action");
+                }
+            }
+        };
+        xmlhttp.open("GET", "../user/checkLoginStatus.php", true);
+        xmlhttp.send();
+    }
 
     function init()
     {
@@ -35,9 +61,6 @@ $steps = getStepByID($id);
 
     function checkLike()
     {
-
-
-
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
@@ -45,10 +68,10 @@ $steps = getStepByID($id);
             {
                 if (this.responseText == 1)
                 {
-                    document.getElementById("likeButton").innerHTML = "Unlike";
+                    document.getElementById("likeButton").innerHTML = "<i class='fas fa-heart'></i>";
                 } else
                 {
-                    document.getElementById("likeButton").innerHTML = "Like";
+                    document.getElementById("likeButton").innerHTML = "<i class='far fa-heart'></i>";
                 }
             }
         };
@@ -81,7 +104,7 @@ $steps = getStepByID($id);
             if (this.readyState == 4 && this.status == 200)
             {
                 document.getElementById("comments").innerHTML = this.responseText;
-                
+
             }
         };
         xmlhttp.open("GET", "../review/getReviews.php?recipe_id=" +<?php echo $id ?>, true);
@@ -152,24 +175,13 @@ $steps = getStepByID($id);
     <div class="row">
 
         <!--        side div-->
-        <div class="col-lg-2">
-
-          
-
-        </div>
-        <!-- /.col-lg-3 -->
-
-        <!--        body div-->
-        <div class="col-lg-10">
-            <h2>Recipe Name: <?php echo $recipe['recipe_name']; ?></h2>
-            <p>Recommended Amount of Servings: <?php echo $recipe['serving'] ?></p>
-            <p>Recipe Description :<?php echo $recipe['description'] ?></p>
+        <div class="col-lg-4">
+            <img id="recipe_picture">
             <p id="likes"></p>
+            <button id="likeButton" onclick="checkLoginStatus(1)"></button>
             <br>
-            <button role="button" data-toggle="modal" data-target="#login-modal" id="likeButton">Like</button>
-
-
-
+            <a href="#comments">write a review</a>
+            <h5>Ingredents:</h5>
             <?php
             foreach ($ingredients as $ing) {
                 $ingredient_name = getIngredientNameByID($ing['ingredient_id']);
@@ -186,7 +198,21 @@ $steps = getStepByID($id);
 
                 echo "</p>";
             }
+            ?>
+            
+        </div>
+        <!-- /.col-lg-3 -->
 
+        <!--        body div-->
+        <div class="col-lg-8">
+            <h2>Recipe Name: <?php echo $recipe['recipe_name']; ?></h2>
+            By (Username)
+            
+            <p>Recommended Amount of Servings: <?php echo $recipe['serving'] ?></p>
+            <p>Recipe Description :<?php echo $recipe['description'] ?></p>
+
+            <h5>Method</h5>
+            <?php
             $num = 1;
 
             foreach ($steps as $step) {
@@ -194,13 +220,28 @@ $steps = getStepByID($id);
                 $num += 1;
             }
             ?>
-
-            <button role="button" data-toggle="modal" data-target="#login-modal">Comment</button>
+            
             <br>
-            <textarea id="commentInput"></textarea>
+            
+            <a href="#"><i class="fab fa-youtube"></i>Click here for a video Tutorial</a>
 
-            <div id="comments">Reviews</div>
+            <br><br>
 
+            <div class="comment_section">
+                <div class="comment_contain">
+                    <div id="comments">Reviews</div>
+                </div>
+
+                <textarea placeholder="write a comment..." id="commentInput"></textarea>
+                <br>
+                <button onclick="checkLoginStatus(2)" >Comment</button>
+            </div>            
+            
+            <br>
+            
+            <h2>Simular Recipes</h2>
+            ...
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 

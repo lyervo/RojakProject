@@ -1,10 +1,8 @@
 <?php
 $current = 'home';
 include 'header.php';
-
+include '../user/checkLoginStatus.php';
 ?>
-
-
 <!-- Page Content -->
 <div class="container">
 
@@ -48,28 +46,12 @@ include 'header.php';
                 <option value="desc">Descending Order</option>
             </select>
 
-            
-             <!-- Button trigger modal -->
-             
-             
-        
-        
-        
-
-        
+            <!-- Button trigger modal -->       
         </div>
         <!-- /.col-lg-3 -->
-
         <!--        body div-->
-
-       
         <div class="col-lg-9">
-
             <div id="result"></div>
-
-
-
-
         </div>
         <!-- /.col-lg-9 -->
 

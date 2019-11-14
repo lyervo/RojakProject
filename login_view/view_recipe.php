@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['log_user_id']) || !isset($_SESSION['logged_in'])) {
@@ -26,9 +25,9 @@ $steps = getStepByID($id);
 ?>
 
 <script>
-    
+
     init();
-    
+
     var user_id;
 
     function checkLoginStatus(task)
@@ -117,7 +116,7 @@ $steps = getStepByID($id);
             if (this.readyState == 4 && this.status == 200)
             {
                 document.getElementById("comments").innerHTML = this.responseText;
-                
+
             }
         };
         xmlhttp.open("GET", "../review/getReviews.php?recipe_id=" +<?php echo $id ?>, true);
@@ -190,7 +189,7 @@ $steps = getStepByID($id);
         <!--        side div-->
         <div class="col-lg-2">
 
-          
+
 
         </div>
         <!-- /.col-lg-3 -->
@@ -202,7 +201,7 @@ $steps = getStepByID($id);
             <p>Recipe Description :<?php echo $recipe['description'] ?></p>
             <p id="likes"></p>
             <br>
-            <button id="likeButton">Like</button>
+            <button onclick="checkLoginStatus(1)" id="likeButton">Like</button>
 
 
 
@@ -235,7 +234,7 @@ $steps = getStepByID($id);
             <br>
             <textarea id="commentInput"></textarea>
 
-            <div id="comments">Reviews</div>
+            <div onclick="checkLoginStatus(2)" id="comments">Reviews</div>
 
 
 

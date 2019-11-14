@@ -49,21 +49,25 @@ $user = getUserByID($id);
     <div class="row">
 
         <div class="col-lg-3">
-            <img width="300px" height="300px">
+            <img id="profile_pic" >
         </div>
 
         <div class="col-lg-9">
             <h1><?php echo $user['username']; ?></h1>
+            <h3>Bio:</h3>
             <h2>Liked Recipes</h2>
             <div id="favoriteRecipes">
 
             </div>
+            
+            <h2>Uploaded Recipes</h2>
+            no posts yet :(
         </div>
     </div>
 </div>
 
 <?php
-//include 'footer.php';
+include 'footer.php';
 ?>
 
 </body>

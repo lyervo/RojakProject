@@ -67,7 +67,7 @@ if (isset($_POST['Login']))
             $_SESSION['login'] = true;
 
             //Redirect to our protected page, which we called home.php
-            header('Location: ../controller/?action=login_index');
+            header('Location: ../controller/?action=home');
             exit;
         } else {
             //$validPassword was FALSE. Passwords do not match.

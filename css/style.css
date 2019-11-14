@@ -47,6 +47,101 @@ footer{
     cursor: pointer;
 }
 
+#comments{
+    border: 2px dotted red;
+    
+}
+
+#one_comment{
+    border: 2px solid red;
+}
+
+#commentInput{
+    width: 100%;
+    
+    height: 100px;
+}
+
+.comment_contain{
+    border: 2px solid blue;
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+}
+
+.comment_section{
+    border: 2px solid green;
+    width: 70%;
+    
+}
+
+#profile_pic{
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 2px solid red;
+}
+
+#recipe_picture{
+    width: 300px;
+    height: 300px;
+    border: 2px solid pink;
+}
+
+#likeButton{
+    border: none;
+    background-color: white;
+    font-size: 3em;
+    color: red;
+    
+}
+
+
+
+
+
+
+
+
+.social_face{
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.social_face:hover{
+    color: #3b5998;
+    
+}
+
+.social_in{
+    font-size: 2em;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.social_in:hover{
+    color: #e1306c;
+}
+
+.social_goog{
+    font-size: 2em;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.social_goog:hover{
+    color: #ff1919;
+}
+
+.social_twit{
+    font-size: 2em;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.social_twit:hover{
+    color: #55ACEE;
+}
 
 
 
