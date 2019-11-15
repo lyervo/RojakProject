@@ -136,6 +136,7 @@ function checkTag(tagName)
                 tags[i].parentElement.style.border = "1px solid #007bff";
                 
                 
+                
             }
         }
         
@@ -154,3 +155,42 @@ function checkTag(tagName)
     
 }
 
+function hoverIn(x)
+{
+    if(x.children[0].checked)
+    {
+        
+    }else
+    {
+        x.style.backgroundColor = "#007bff";
+    }
+}
+function hoverOut(x)
+{
+    if(x.children[0].checked)
+    {
+        
+    }else
+    {
+        x.style.backgroundColor = "#ffffff";
+    }
+}
+
+function changeColourOnHover()
+{
+    let arr = document.getElementsByClassName("filterButton");
+    for(let i = 0; i < arr.length; i++)
+    {
+        arr[i].addEventListener("mouseover", function()
+        {
+           hoverIn(arr[i]); 
+        },false);
+        
+        arr[i].addEventListener("mouseout", function()
+        {
+           hoverOut(arr[i]); 
+        },false);
+        
+    }
+    
+}
