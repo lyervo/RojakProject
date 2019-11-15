@@ -17,9 +17,12 @@
         <link href="../css/shop-homepage.css" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <script src="../javascript/script.js" type="text/javascript"></script>
+        
+        
+  
     </head>
 
-    <body>
+    <body onload="changeColourOnHover()">
 
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
