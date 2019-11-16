@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<body onload="sample()">
+
+<p>This example demonstrates how to pass parameter values when using the 
+addEventListener() method.</p>
+
+<p>Click the button to perform a calculation.</p>
+
+<button id="myBtn">Try it</button>
+
+<input type="checkbox" value="Taki kun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt">
+<input type="checkbox" value="Taki kun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Taki kun" class="bt">
+<input type="checkbox" value="Msuha" class="bt"><input type="checkbox" value="Taki ffrrdfdedbgkun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Takifefsdrgg kun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Taki kun" class="bt">
+<input type="checkbox" value="Muha" class="bt"><input type="checkbox" value="Taki kusfdn" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Takin" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Taki kun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Takifsd kun" class="bt">
+<input type="checkbox" value="Mitha" class="bt"><input type="checkbox" value="Taki kuesdferdffdsn" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Taki kun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Takifde kun" class="bt">
+<input type="checkbox" value="Miha" class="bt"><input type="checkbox" value="Taki fdefdxkun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt"><input type="checkbox" value="Taki edrfkun" class="bt">
+<input type="checkbox" value="Miuha" class="bt"><input type="checkbox" value="Taki krfdgun" class="bt">
+<input type="checkbox" value="Mitsuha" class="bt">
+<p id="demo"></p>
+
+<script>
+
+function sample()
+{
+	let arr = document.getElementsByClassName("bt");
+    for(let i=0;i<arr.length;i++)
+    {
+    	arr[i].addEventListener("click",function()
+        {
+            sayYourName(arr[i]);
+        },false);
+    }
+}
+
+function sayYourName(obj)
+{
+    document.getElementById("demo").innerHTML = obj.value;
+}
+
+</script>
+
+</body>
