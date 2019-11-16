@@ -279,7 +279,7 @@ $steps = getStepByID($id);
             if ($recipe['image_blob'] == null) {
                 echo "<p>This recipe has no image</p>";
             } else {
-                echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" height="300px" width="350px"/>';
+                echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" height="280px" width="400px"/>';
             }
             ?>
             <p id="likes"></p>

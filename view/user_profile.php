@@ -1,5 +1,5 @@
 <?php
-$current = 'home';
+$current = 'user';
 include 'header.php';
 include "../model/db_connect.php";
 require "../user/user_db.php";
@@ -13,7 +13,7 @@ $user = getUserByID($id);
 <script>
 
     init();
-    
+
     var user_id;
 
     function init()
@@ -36,19 +36,18 @@ $user = getUserByID($id);
         xmlhttp.send();
 
     }
-    
+
     function checkLoginStatus(task)
     {
-        
-        if(user_id>=1)
+
+        if (user_id >= 1)
         {
             if (task === 1)
-                    {
-                        
-                        submitReportUser();
-                    }
+            {
+                submitReportUser();
+            }
         }
-        
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
@@ -71,24 +70,24 @@ $user = getUserByID($id);
         xmlhttp.open("GET", "../user/checkLoginStatus.php", true);
         xmlhttp.send();
     }
-    
+
     function submitReportUser()
+    {
+
+        var type = document.getElementById("reportReasonUser").value;
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
             {
-                
-                var type = document.getElementById("reportReasonUser").value;
-                
-                var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = function()
-                    {
-                        if (this.readyState == 4 && this.status == 200)
-                        {
-                            alert(this.responseText);
-                        }
-                    };
-                    xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&user_id="+<?php echo $id ?>+"&type="+type, true);
-                    xmlhttp.send();
+                alert(this.responseText);
             }
-            
+        };
+        xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&user_id=" +<?php echo $id ?> + "&type=" + type, true);
+        xmlhttp.send();
+    }
+
 
 
 
@@ -100,6 +99,18 @@ $user = getUserByID($id);
 
         <div class="col-lg-3">
             <img id="profile_pic" >
+
+            <div class="edit_account">
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    if ($_SESSION['user_id'] == $user['user_id']) {
+                        echo '<a href="../controller/?action=edit_user"><i class="fas fa-user-cog"></i> edit account</a>';
+                    }
+                }
+                ?>
+
+            </div>
+
         </div>
 
         <div class="col-lg-9">
@@ -109,9 +120,26 @@ $user = getUserByID($id);
             <div id="favoriteRecipes">
 
             </div>
-            
+
             <h2>Uploaded Recipes</h2>
             no posts yet :(
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                if ($_SESSION['user_id'] == $user['user_id']) {
+                    echo '<button><a href="../controller/?action=submit_recipe">Upload a recipe</a></button>';
+                }
+            }
+            ?>
+
+            Report this user: 
+            <select id="reportReasonUser" onchange='checkLoginStatus(1)'>
+                <option value='' selected disabled hidden>Select Reason</option>
+                <option value="illegal content">Illegal content</option>
+                <option value="impersonation">Impersonation</option>
+                <option value="malicious link">Malicious Link</option>
+                <option value="other">Other</option>
+
+            </select>
         </div>
     </div>
 </div>
