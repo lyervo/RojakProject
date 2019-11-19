@@ -15,6 +15,7 @@ include '../login_session/session.php';
 
 
 
+        
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -30,9 +31,12 @@ include '../login_session/session.php';
 
         <!-- Custom styles for this template -->
         <link href="../css/shop-homepage.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        
 
         <script src="../JS/JavaScript.js" type="text/javascript"></script>
+        
 <!--        <script src="../JS/addRecipe.js" type="text/javascript"></script>-->
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v5.0"></script>
@@ -40,19 +44,13 @@ include '../login_session/session.php';
 </head>
 
 <?php
-if (basename($_SERVER['PHP_SELF']) == "submit_recipe.php") {
-    echo "<body onload='initTab()'>";
-} else if (basename($_SERVER['PHP_SELF']) == "view_recipe.php") {
-    echo "<body onload='init()'>";
-} {
-    echo "<body>";
-}
+    echo $bodyTag;
 ?>
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="?action=home">UniMeals</a>
+        <a class="navbar-brand" id="web_title" href="?action=home">UniMeals</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -118,22 +116,28 @@ if (basename($_SERVER['PHP_SELF']) == "submit_recipe.php") {
 
                 <!-- Begin # Login Form -->
                 <form action="" method="post" id="login-form">
-                      <div class="modal-body">
-                        <div id="div-login-msg">
-                            <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
-                            <span id="text-login-msg">Type your username and password.</span>
-                        </div>
-                        <input  id="login_username" class="form-control" type="text" name="username" placeholder="Username" required>
-                        <input id="login_password" class="form-control" type="password" name="password" placeholder="Password" required>
+                    <div class="modal-body">
+                        <h4 id="form_title">Login</h4>
+
+                        <input  id="login_username" class="form-control" type="text" name="username" value="<?php
+                        if (isset($_COOKIE["username"])) {
+                            echo $_COOKIE["username"];
+                        }
+                        ?>" placeholder="Username" required>
+                        <input id="login_password" class="form-control" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password" value="<?php
+                        if (isset($_COOKIE["password"])) {
+                            echo $_COOKIE["password"];
+                        }
+                        ?>" placeholder="Password" required>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> Remember me
+                                <input  type="checkbox" id="remember" name="remember" <?php if (isset($_COOKIE["username"])) { ?> checked <?php } ?>> Remember me
                             </label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <div>
-                            <input type="submit" name="Login" value="Login" class="btn login_btn">
+                            <input type="submit" name="Login" value="Login" class="btn btn-primary">
                         </div>
                         <div>
                             <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
@@ -167,17 +171,19 @@ if (basename($_SERVER['PHP_SELF']) == "submit_recipe.php") {
                 <!-- Begin | Register Form -->
                 <form action="" method="post" id="register-form" style="display:none;">
                     <div class="modal-body">
-                        <div id="div-register-msg">
-                            <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
-                            <span id="text-register-msg">Register an account.</span>
-                        </div>
+
+                        <h4 id="form_title">Register an account</h4>
                         <input id="register_username" class="form-control" type="text" name="username" placeholder="Username" required>
                         <input id="register_email" class="form-control" type="email" name="email" placeholder="E-Mail" required>
                         <input id="register_password" class="form-control" type="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" required>
+                        <input id="register_password" class="form-control" type="password" name="confirm_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Confirm Password" required>
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            Your password must be 8-20 characters long, contain Uppercase and Lowercase letters and numbers, and must not contain spaces or special characters.
+                        </small>
                     </div>
                     <div class="modal-footer">
                         <div>
-                            <input type="submit" name="register" value="Register" class="btn login_btn">
+                            <input type="submit" name="register" value="Register" class="btn btn-success">
 
                         </div>
                         <div>

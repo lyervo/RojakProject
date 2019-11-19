@@ -27,7 +27,7 @@ function getUserByName($username)
 function create_user($username,$email,$password,$gender)
 {
     global $db;
-    $query = "insert into user values(null,'".$username."','".$email."','".$password."','".$gender."');";
+    $query = "insert into user values(null,'".$username."','".$email."','".$password."','".$gender."',null,0,0,null);";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -150,5 +150,15 @@ if (isset($_POST['edit_user'])) {
     }
 }
 
+
+function add_user_image($user_id,$blob)
+{
+    global $db;
+    $query = "update user set user_image = :blob where user_id = ".$user_id;
+    $statement = $db->prepare($query);
+    $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
+    $statement->execute();
+    $statement->closeCursor();
+}
 
 ?>

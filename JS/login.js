@@ -58,3 +58,7 @@ $(function() {
   		}, $msgShowTime);
     }
 });
+
+setTimeout( "$('#login_error').fadeOut();", 5000);
+setTimeout( "$('#reg_error').fadeOut();", 5000);
+setTimeout( "$('#reg_success').fadeOut();", 5000);

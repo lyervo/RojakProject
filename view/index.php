@@ -13,7 +13,7 @@ include 'header.php';
         <!--        side div-->
         <div class="col-lg-3">
 
-            <input type="text" id="term"><button onclick="searchRecipe()">Search</button><br>
+            <input type="text" id="term" placeholder="Search..."><button id="search_icon" onclick="searchRecipe()"><i class="fas fa-search"></i></button><br>
 
             <p>Must have:</p>
             <input type="checkbox" value="vegan" class="tag">Vegan<br>

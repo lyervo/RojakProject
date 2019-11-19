@@ -4,7 +4,7 @@ include 'header.php';
 
 include "../model/db_connect.php";
 require "../recipe/recipe_db.php";
-
+include '../user/user_db.php';
 
 $id = $_REQUEST['id'];
 
@@ -13,6 +13,8 @@ $recipe = getRecipeByID($id);
 $ingredients = getRecipeIngredientByID($id);
 
 $steps = getStepByID($id);
+
+$user = getUserByID($recipe['author']);
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
@@ -42,10 +44,10 @@ $steps = getStepByID($id);
             {
                 if (this.responseText == 1)
                 {
-                    document.getElementById("likeButton").innerHTML = "Unlike";
+                    document.getElementById("likeButton").innerHTML = "<i class='fas fa-heart'></i>";
                 } else
                 {
-                    document.getElementById("likeButton").innerHTML = "Like";
+                    document.getElementById("likeButton").innerHTML = "<i class='far fa-heart'></i>";
                 }
             }
         };
@@ -121,11 +123,11 @@ $steps = getStepByID($id);
             {
                 if (this.responseText == 1)
                 {
-                    document.getElementById("likeButton").innerHTML = "Unlike";
+                    document.getElementById("likeButton").innerHTML = "<i class='fas fa-heart'></i>";
 
                 } else
                 {
-                    document.getElementById("likeButton").innerHTML = "Like";
+                    document.getElementById("likeButton").innerHTML = "<i class='far fa-heart'></i>";
                 }
 
                 refreshLikes();
@@ -282,10 +284,11 @@ $steps = getStepByID($id);
                 echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" height="280px" width="400px"/>';
             }
             ?>
-            <p id="likes"></p>
+            
             <button id="likeButton" onclick="checkLoginStatus(1)"></button>
-            <br>
+            <p id="likes"></p>
             <a href="#comments">write a review</a>
+            <br><br>
             <h5>Ingredents:</h5>
             <?php
             foreach ($ingredients as $ing) {
@@ -304,6 +307,8 @@ $steps = getStepByID($id);
                 echo "</p>";
             }
             ?>
+            <br>
+            <p>Servings: <?php echo $recipe['serving'] ?></p>
 
         </div>
         <!-- /.col-lg-3 -->
@@ -311,10 +316,10 @@ $steps = getStepByID($id);
         <!--        body div-->
         <div class="col-lg-8">
 
-            <h2>Recipe Name: <?php echo $recipe['recipe_name']; ?></h2>
-            By (Username)
-            <p>Recommended Amount of Servings: <?php echo $recipe['serving'] ?></p>
-            <p>Recipe Description :<?php echo $recipe['description'] ?></p>
+            <h2><?php echo $recipe['recipe_name']; ?></h2>
+            <p>By <?php echo "<a href='?action=user_profile&user_id=" . $user['user_id'] . "'>" . $user['username'] . "</a>"?>
+            
+            <p><?php echo $recipe['description'] ?></p>
 
 
 

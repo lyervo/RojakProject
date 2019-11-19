@@ -7,17 +7,21 @@ and open the template in the editor.
     Created on : 29-Sep-2019, 16:10:03
     Author     : franc
 */
+#web_title{
+    color: white;
+    font-family: 'Courgette', cursive;
+}
 
 .current{
-
     border-bottom: 3px solid white;
-
 }
 
 .col-lg-8{
     
     padding-left: 4em;
 }
+
+
 
 nav{
     background-color: #6666ff;
@@ -66,6 +70,7 @@ footer{
 
 #one_comment{
     border: 2px solid red;
+    padding: 4px;
 }
 
 #commentInput{
@@ -98,11 +103,68 @@ footer{
 }
 
 #likeButton{
-    border: none;
+    border: 1px;
     background-color: white;
     font-size: 3em;
     color: red;
 
+}
+
+#login_error{
+    margin-top: 2em;
+    position: absolute;
+    width: 200px;
+    text-align: center;
+    height: 40px;
+    background-color: white;
+    border: 2px solid red;
+    color: red;
+    z-index: 9;
+}
+
+#reg_error{
+    margin-top: 2em;
+    position: absolute;
+    width: 250px;
+    text-align: center;
+    height: 40px;
+    background-color: white;
+    border: 2px solid red;
+    color: red;
+    z-index: 9;
+}
+
+#reg_success{
+    margin-top: 2em;
+    position: absolute;
+    width: 400px;
+    text-align: center;
+    height: 40px;
+    background-color: white;
+    border: 2px solid limegreen;
+    color: limegreen;
+    z-index: 9;
+}
+
+#form_title{
+    color: #6666ff;
+}
+
+#term{
+    border-radius: 20px;
+    border: 2px solid #6666ff;
+    height: 35px;
+    width: 180px;
+    padding: 5px;
+    outline: none;
+}
+
+#search_icon{
+    background-color: #6666ff;
+    color: white;
+    border-radius: 50%;
+    border: 1px solid #6666ff;
+    outline: none;
 }
 
 
