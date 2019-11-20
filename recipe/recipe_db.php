@@ -2,7 +2,7 @@
 function create_recipe($name,$desc,$serving,$time,$difficulty,$author_id)
 {
     global $db;
-    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,null)";
+    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,null);";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -11,7 +11,8 @@ function create_recipe($name,$desc,$serving,$time,$difficulty,$author_id)
 function create_recipe_with_image($name,$desc,$serving,$time,$difficulty,$author_id,$blob)
 {
     global $db;
-    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,:blob)";
+    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,:blob);";
+    
     $statement = $db->prepare($query);
     $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->execute();
@@ -21,7 +22,7 @@ function create_recipe_with_image($name,$desc,$serving,$time,$difficulty,$author
 function create_recipe_ingredient($ingredientID,$recipeID,$amount,$unit,$mod)
 {
     global $db;
-    $query = "insert into recipe_ingredient values(".$ingredientID.",".$recipeID.",".$amount.",'".$unit."','".$mod."')";
+    $query = "insert into recipe_ingredient values(".$ingredientID.",".$recipeID.",".$amount.",'".$unit."','".$mod."');";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -30,7 +31,7 @@ function create_recipe_ingredient($ingredientID,$recipeID,$amount,$unit,$mod)
 function create_step($recipeID,$step)
 {
     global $db;
-    $query = "insert into step values(".$recipeID.",null,'".$step."',null)";
+    $query = "insert into step values(".$recipeID.",null,'".$step."',null);";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -39,9 +40,13 @@ function create_step($recipeID,$step)
 function create_step_with_image($recipeID,$step,$blob)
 {
     global $db;
-    $query = "insert into step values(".$recipeID.",null,'".$step."',:blob)";
+    $query = "insert into step values(:id,null,:step,:blob);";
+    echo "RecipeID".$recipeID;
+    echo "STEP".$step;
     $statement = $db->prepare($query);
     $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
+    $statement->bindParam(':id',$recipeID);
+    $statement->bindParam(':step',$step);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -50,12 +55,18 @@ function create_step_with_image($recipeID,$step,$blob)
 function getRecipeIDByName($name)
 {
     global $db;
-    $query = "select recipe_id from recipe where recipe_name = '".$name."'";
+    $query = "select recipe_id from recipe where lower(recipe_name) = lower('".$name."')";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetch();
     $statement->closeCursor();
-    return $result['recipe_id'];
+    if(empty($result))
+    {
+        return -1;
+    }else
+    {
+        return $result['recipe_id'];
+    }
     
 }
 
@@ -109,7 +120,7 @@ function getIngredientNameByID($id)
 function getIngredientIDByName($name)
 {
     global $db;
-    $query = "select ingredient_id from ingredient where ingredient_name = '".$name."'";
+    $query = "select ingredient_id from ingredient where lower(ingredient_name) = lower('".$name."')";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetch();
@@ -126,7 +137,7 @@ function getIngredientIDByName($name)
 function createIngredient($name,$vegan)
 {
     global $db;
-    $query = "insert into ingredient values(null,'".$name."',".$vegan.")";
+    $query = "insert into ingredient values(null,'".$name."',".$vegan.");";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -135,7 +146,18 @@ function createIngredient($name,$vegan)
 function searchIngredient($name)
 {
     global $db;
-    $query = "select ingredient_name from ingredient where ingredient_name like '%".$name."%' or ingredient_name like '%".$name."' or ingredient_name like '".$name."%'";
+    $query = "select ingredient_name from ingredient where lower(ingredient_name) like lower('%".$name."%')";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
+function searchTag($name)
+{
+    global $db;
+    $query = "select tag_name from tag where lower(tag_name) like lower('%".$name."%')";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -146,11 +168,19 @@ function searchIngredient($name)
 function searchRecipe($name,$sort,$order)
 {
     global $db;
-    $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description "
-                . "FROM recipe WHERE "
-                . "recipe_name like '%".$name."%'"
-                . " group by recipe.recipe_id order by recipe.".$sort." ".$order;
-
+    if($name == "null")
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description "
+                    . "FROM recipe"
+                    . " order by recipe.".$sort." ".$order;
+    }else
+    {
+        $query = "SELECT recipe.recipe_id,recipe.recipe_name,recipe.description "
+                    . "FROM recipe WHERE "
+                    . "lower(recipe_name) like lower('%".$name."%')"
+                    . " order by recipe.".$sort." ".$order;
+    }
+    echo $query;
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -164,7 +194,7 @@ function searchRecipe($name,$sort,$order)
 function getTagByName($name)
 {
     global $db;
-    $query = "select * from tag where tag_name = '".$name."'";
+    $query = "select * from tag where lower(tag_name) = lower('".$name."')";
     echo $query."/n";
     $statement = $db->prepare($query);
     $statement->execute();
@@ -194,7 +224,7 @@ function createTag($name)
 function getTagIDByName($name)
 {
     global $db;
-    $query = "select tag_id from tag where tag_name = '".$name."'";
+    $query = "select tag_id from tag where lower(tag_name) = lower('".$name."')";
     echo $query."/n";
     $statement = $db->prepare($query);
     $statement->execute();
@@ -207,6 +237,16 @@ function getTagIDByName($name)
     {
         return $result['tag_id'];
     }
+}
+
+function deleteRecipeByID($id)
+{
+    global $db;
+    $query = "delete from recipe where recipe_id = ".$id;
+
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
 }
 
 function createRecipeTag($tag,$recipe)
@@ -223,6 +263,9 @@ function filterResults($tag,$noTag,$recipe_id)
 {
     global $db;
 
+    $tag = strtolower($tag);
+    $noTag = strtolower($noTag);
+    
     $tags = explode("%%",$tag);
     
     $noTags = explode("%%",$noTag);

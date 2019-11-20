@@ -10,43 +10,46 @@ if ($action == NULL) {
 
 switch($action){
 case 'home':
+    $bodyTag = "<body onload='changeColourOnHover()'>";
     include('../view/index.php');
     break;
 
 case 'about':
+    $bodyTag = "<body>";
     include('../view/about.php');
     break;
 
 case 'view_recipe':
+    $bodyTag = "<body onload='init()'>";
     include('../view/view_recipe.php');
     break;
 
 case 'user_profile':
+    $bodyTag = "<body>";
     include('../view/user_profile.php');
     break;
 
-////////////////////// LOGIN //////////////////////////////// 
+case 'submit_recipe':
+    $bodyTag = "<body onload='initTab()'>";
+    include ('../view/submit_recipe.php');
+    break;
 
-case 'login_index':
-    include '../login_view/index.php';
+case 'edit_user':
+    $bodyTag = "<body>";
+    include '../view/edit_user.php';
     break;
 
 case 'logout':
-    include '../login_view/logout.php';
+    $bodyTag = "<body>";
+    include ('../view/logout.php');
     break;
-
-case 'profile':
-    include '../login_view/user_profile.php';
-    break;
-
-case 'view_recipe_login':
-    include '../login_view/view_recipe.php';
-    break;
-
+    
 default :
     echo 'action error ' . $action;
 
 }
+
+
 
 
 

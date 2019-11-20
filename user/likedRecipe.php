@@ -16,7 +16,7 @@
         $response = "";
         foreach($result as $res)
         {
-            $response = $response."<p><a href='view_recipe.php?id=".$res['recipe_id']."'>".$res['recipe_name']."</a></p>";
+            $response = $response."<p><a href='?action=view_recipe&id=".$res['recipe_id']."'>".$res['recipe_name']."</a></p>";
         }
     }
     

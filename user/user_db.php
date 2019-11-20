@@ -27,7 +27,7 @@ function getUserByName($username)
 function create_user($username,$email,$password,$gender)
 {
     global $db;
-    $query = "insert into user values(null,'".$username."','".$email."','".$password."','".$gender."');";
+    $query = "insert into user values(null,'".$username."','".$email."','".$password."','".$gender."',null,0,0,null);";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -94,5 +94,71 @@ function getUserLikedRecipes($user_id)
 }
 
 
+if (isset($_POST['edit_user'])) {
+
+
+    $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+    $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
+    $pass = !empty($_POST['password']) ? trim($_POST['password']) : null;
+
+
+    $sql = "SELECT COUNT(email) AS num FROM user WHERE email = :email";
+    $sql2 = "SELECT COUNT(username) AS num FROM user WHERE username = :username";
+
+    $stmt = $db->prepare($sql);
+    $stmt2 = $db->prepare($sql2);
+
+    $stmt->bindValue(':email', $email);
+    $stmt2->bindValue(':username', $username);
+
+
+    $stmt->execute();
+    $stmt2->execute();
+
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+
+    if ($row2['num'] > 0) {
+        echo '<p id="reg_error">That username already exists!</p>';
+    } else if ($row['num'] > 0) {
+        echo '<p id="reg_error">That email already exists!</p>';
+    } else {
+
+
+
+        $passwordHash = password_hash($pass, PASSWORD_BCRYPT, array("cost" => 12));
+
+
+        $sql3 = "INSERT INTO user (email, username, password) VALUES (:email, :username, :password)";
+        $stmt3 = $db->prepare($sql3);
+
+
+        $stmt3->bindValue(':email', $email);
+        $stmt3->bindValue(':username', $username);
+        $stmt3->bindValue(':password', $passwordHash);
+
+
+        $result = $stmt3->execute();
+
+
+        if ($result) {
+
+            echo '<p id="success">Thank you ' . $username . ', for registering with our website.</p>';
+        }
+    }
+}
+
+
+function add_user_image($user_id,$blob)
+{
+    global $db;
+    $query = "update user set user_image = :blob where user_id = ".$user_id;
+    $statement = $db->prepare($query);
+    $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
+    $statement->execute();
+    $statement->closeCursor();
+}
 
 ?>

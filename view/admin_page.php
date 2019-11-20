@@ -269,17 +269,17 @@
             function deleteComment(id)
             {
  
-                
+                alert("wdfghj");
                 var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function()
                     {
                         if (this.readyState == 4 && this.status == 200)
                         {
-                            alert("Action Completed");
+                            alert(this.responseText);
                             getTickets();
                         }
                     };
-                    xmlhttp.open("GET", "../ticket/deleteReview.php?review_id="+id, true);
+                    xmlhttp.open("GET", "../ticket/deleteReview.php?recipe_id=0&review_id="+id, true);
                     xmlhttp.send();
             
             }
@@ -293,11 +293,11 @@
                     {
                         if (this.readyState == 4 && this.status == 200)
                         {
-                            alert("Action Completed");
+                            alert(this.responseText);
                             getTickets();
                         }
                     };
-                    xmlhttp.open("GET", "../ticket/deleteRecipe.php?recipe_id="+id, true);
+                    xmlhttp.open("GET", "../ticket/deleteReview.php?review_id=0&recipe_id="+id, true);
                     xmlhttp.send();
             
             }
