@@ -2,7 +2,6 @@
 $current = 'user';
 include 'header.php';
 include "../model/db_connect.php";
-require "../user/user_db.php";
 
 
 $id = $_REQUEST['user_id'];
@@ -13,28 +12,28 @@ $user = getUserByID($id);
 <script>
 
     init();
-    
+
     function uploadUserImage()
     {
-        
-        
-        
+
+
+
         var formData = new FormData();
-        
+
         var imageFileInput = document.getElementById('image_file');
         if (imageFileInput.value.length > 0)
         {
             var image_file = imageFileInput.files[0];
 
             formData.append('image_file', image_file, "user_image");
-        }else
+        } else
         {
             alert("Please provide an image");
         }
-        
-        
-        
-        formData.append("user_id",user_id);
+
+
+
+        formData.append("user_id", user_id);
 
 
 
@@ -58,14 +57,14 @@ $user = getUserByID($id);
 
 
     }
-    
+
 
 
     var user_id;
 
     function init()
     {
-        
+
         getLikedRecipes();
     }
 
@@ -107,7 +106,7 @@ $user = getUserByID($id);
                     {
                         user_id = this.responseText;
                         submitReportUser();
-                    }else if(task === 0)
+                    } else if (task === 0)
                     {
                         alert("run");
                         user_id = this.responseText;
@@ -122,7 +121,7 @@ $user = getUserByID($id);
         };
         xmlhttp.open("GET", "../user/checkLoginStatus.php", true);
         xmlhttp.send();
-        
+
     }
 
     function submitReportUser()
@@ -153,12 +152,12 @@ $user = getUserByID($id);
 
         <div class="col-lg-3">
             <?php
-        if ($user['user_image'] == null) {
-               
+            if ($user['user_image'] == null) {
+                echo '<img id="default_profile" src="../images/fbp.jpg" height="240px" width="240px" />';
             } else {
-                echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($user['user_image']) . '" height="280px" width="400px"/>';
+                echo '<img id="profile_picture" src="data:image/jpeg;base64,' . base64_encode($user['user_image']) . '" height="240px" width="240px"/>';
             }
-        ?>
+            ?>
 
             <div class="edit_account">
                 <?php
@@ -172,8 +171,8 @@ $user = getUserByID($id);
             </div>
 
         </div>
-        
-        
+
+
         <div class="col-lg-9">
             <h1><?php echo $user['username']; ?></h1>
             <h3>Bio:</h3>
@@ -193,8 +192,8 @@ $user = getUserByID($id);
             ?>
             <br>
             Upload your profile
-             <input type="file" name="image_file" id="image_file">
-             <button onclick='checkLoginStatus(0)'>Upload Profile Image</button>
+            <input type="file" name="image_file" id="image_file">
+            <button onclick='checkLoginStatus(0)'>Upload Profile Image</button>
 
             Report this user: 
             <select id="reportReasonUser" onchange='checkLoginStatus(1)'>

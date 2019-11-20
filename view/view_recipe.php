@@ -4,7 +4,6 @@ include 'header.php';
 
 include "../model/db_connect.php";
 require "../recipe/recipe_db.php";
-include '../user/user_db.php';
 
 $id = $_REQUEST['id'];
 

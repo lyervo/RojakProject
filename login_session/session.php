@@ -123,9 +123,12 @@ if (isset($_POST['register'])) {
     else if($password == ""){
         echo '<p id="reg_error">You must Enter a password!</p>';
     }
-    elseif(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)){
-        echo '<p id="reg_error">You must enter a valid email</p>';
-    }
+//    else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)){
+//        echo '<p id="reg_error">You must enter a valid email</p>';
+//    }
+    else if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z]{8,12}$/', $password)) {
+    echo 'the password does not meet the requirements!';
+}
     else if ($password != $confirm_password) {
         echo '<p id="reg_error">Passwords do not match!</p>';
     } 

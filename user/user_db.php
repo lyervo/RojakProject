@@ -11,6 +11,17 @@ function getUserByID($user_id)
     return $result;
 }
 
+function getUserByIDPicture($user_id)
+{
+    global $db;
+    $query = "select * from user where user_id = ".$user_id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+
 function getUserByName($username)
 {
     global $db;

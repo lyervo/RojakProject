@@ -102,12 +102,25 @@ footer{
     border: 2px solid pink;
 }
 
+#profile_picture{
+    border-radius: 50%;
+}
+
+#default_profile{
+    border-radius: 50%;
+}
+
 #likeButton{
     border: 1px;
     background-color: white;
     font-size: 3em;
     color: red;
+    outline: none;
 
+}
+
+#comment{
+    margin-top: 10px;
 }
 
 #login_error{
