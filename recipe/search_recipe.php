@@ -11,13 +11,7 @@ $order = $_REQUEST['order'];
 $tag = $_REQUEST['tag'];
 $noTag = $_REQUEST['noTag'];
 
-
-
-
-
-
-
-$result = searchRecipe($term, $sort,$order);
+$result = searchRecipe($term, $sort, $order);
 
 
 

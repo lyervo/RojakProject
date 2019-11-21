@@ -241,8 +241,8 @@ $user = getUserByID($recipe['author']);
     {
 
         report_review_id = id;
-        getTargetComment();
-        document.getElementById("report_tab").style.display = "block";
+        //getTargetComment();
+        //document.getElementById("report_tab").style.display = "block";
     }
 
     function getTargetComment()
@@ -283,7 +283,7 @@ $user = getUserByID($recipe['author']);
                 echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" height="280px" width="400px"/>';
             }
             ?>
-            
+
             <button id="likeButton" onclick="checkLoginStatus(1)"></button>
             <p id="likes"></p>
             <a href="#comments">write a review</a>
@@ -316,8 +316,8 @@ $user = getUserByID($recipe['author']);
         <div class="col-lg-8">
 
             <h2><?php echo $recipe['recipe_name']; ?></h2>
-            <p>By <?php echo "<a href='?action=user_profile&user_id=" . $user['user_id'] . "'>" . $user['username'] . "</a>"?>
-            
+            <p>By <?php echo "<a href='?action=user_profile&user_id=" . $user['user_id'] . "'>" . $user['username'] . "</a>" ?>
+
             <p><?php echo $recipe['description'] ?></p>
 
 
@@ -328,15 +328,71 @@ $user = getUserByID($recipe['author']);
 
             </div>
             <br>
-            Report this recipe: 
-            <select id="reportReasonRecipe" onchange='checkLoginStatus(4)'>
-                <option value='' selected disabled hidden>Select Reason</option>
-                <option value="missing allergen">Missing allergen</option>
-                <option value="incorrect recipe">Incorrect recipe</option>
-                <option value="duplicate recipe">Duplicate recipe</option>
-                <option value="malicious links">Malicious links</option>
-                <option value="other">Other</option>
-            </select>
+
+            <button><a role='button' data-toggle='modal' data-target='#report_recipe' >Report</a></button> 
+
+            <div class="modal fade" id="report_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <img class="img-circle" id="img_logo" src="../images/logo.jpg">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
+                            </button>
+                        </div>
+
+                        <!-- Begin # DIV Form -->
+                        <div id="div-forms">
+
+                            <!-- Begin # Login Form -->
+                            <form action="" method="post">
+                                <div class="modal-body">
+                                    <h4 id="form_title_report">Report</h4>
+
+                                    <div style="border: 1px solid black;padding:5px" id="report_drop">
+                                        <div id="targetedComment"></div>
+                                        Report this recipe: 
+                                        <select id="reportReasonRecipe" >
+                                            <option value='' selected disabled hidden>Select Reason</option>
+                                            <option value="missing allergen">Missing allergen</option>
+                                            <option value="incorrect recipe">Incorrect recipe</option>
+                                            <option value="duplicate recipe">Duplicate recipe</option>
+                                            <option value="malicious links">Malicious links</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <input type="text" id="report_textbox" name="report_reason" placeholder="enter reason for report">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div>
+                                        <input type="submit" name="report" value="Report" class="btn btn-danger">
+                                    </div>
+
+                                </div>
+
+                            </form>
+                            <!-- End # Login Form -->
+
+
+                            <!-- End | Register Form -->
+
+                        </div>
+                        <!-- End # DIV Form -->
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
 
             <h5>Method</h5>
             <?php
@@ -360,18 +416,64 @@ $user = getUserByID($recipe['author']);
 
 
 
-            <div style="display:none;border: 1px solid black;padding:5px" id="report_tab">
-                <div id="targetedComment"></div>
-                Report this comment: 
-                <select id="reportReason" onchange='checkLoginStatus(3)'>
-                    <option value='' selected disabled hidden>Select Reason</option>
-                    <option value="profanity">Profanity</option>
-                    <option value="advertisement">Advertisement</option>
-                    <option value="malicious link">Malicious Link</option>
-                    <option value="other">Other</option>
 
-                </select>
-                <br>
+
+            <div class="modal fade" id="report_tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <img class="img-circle" id="img_logo" src="../images/logo.jpg">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
+                            </button>
+                        </div>
+
+                        <!-- Begin # DIV Form -->
+                        <div id="div-forms">
+
+                            <!-- Begin # Login Form -->
+                            <form action="" method="post">
+                                <div class="modal-body">
+                                    <h4 id="form_title_report">Report</h4>
+
+                                    <div style="border: 1px solid black;padding:5px" id="report_drop">
+                                        <div id="targetedComment"></div>
+                                        Report this comment: 
+                                        <select id="reportReason">
+                                            <option value='' selected disabled hidden>Select Reason</option>
+                                            <option value="profanity">Profanity</option>
+                                            <option value="advertisement">Advertisement</option>
+                                            <option value="malicious link">Malicious Link</option>
+                                            <option value="other">Other</option>
+
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <input type="text" id="report_textbox" name="report_reason" placeholder="enter reason for report">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div>
+                                        <input type="submit" name="report" value="Report" class="btn btn-danger">
+                                    </div>
+
+                                </div>
+
+                            </form>
+                            <!-- End # Login Form -->
+
+
+                            <!-- End | Register Form -->
+
+                        </div>
+                        <!-- End # DIV Form -->
+
+                    </div>
+                </div>
             </div>
 
             <div class="comment_section">
@@ -383,9 +485,9 @@ $user = getUserByID($recipe['author']);
                 <br>
                 <button onclick="checkLoginStatus(2)" >Comment</button>
             </div> 
-            
+
             <br>
-            
+
             <h2>Simular Recipes</h2>
             ...
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

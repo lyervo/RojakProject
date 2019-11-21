@@ -5,7 +5,7 @@ and open the template in the editor.
 */
 /* 
     Created on : 29-Sep-2019, 16:10:03
-    Author     : franc
+    Author     : franc/*
 */
 #web_title{
     color: white;
@@ -17,7 +17,7 @@ and open the template in the editor.
 }
 
 .col-lg-8{
-    
+
     padding-left: 4em;
 }
 
@@ -161,6 +161,10 @@ footer{
 
 #form_title{
     color: #6666ff;
+}
+
+#form_title_report{
+    color: red;
 }
 
 #term{

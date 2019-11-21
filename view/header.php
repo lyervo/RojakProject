@@ -18,9 +18,6 @@ if (isset($_SESSION['user_id'])) {
 
         <title>UniMeals</title>
 
-
-
-
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -32,7 +29,10 @@ if (isset($_SESSION['user_id'])) {
 
         <!--login-->
         <script src="../JS/login.js" type="text/javascript"></script>
+        <link href="../css/report_recipe_modal.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/report_comment_modal.css" rel="stylesheet" type="text/css"/>
         <link href="../css/login_style.css" rel="stylesheet" type="text/css"/>
+
 
         <!-- Custom styles for this template -->
         <link href="../css/shop-homepage.css" rel="stylesheet">
@@ -100,7 +100,7 @@ echo $bodyTag;
                             </li>';
                 } else {
                     echo '<li class="nav-item">
-                                <a class="nav-link" id="login_button"  role="button" data-toggle="modal" data-target="#login-modal">Login/Sign Up</a>
+                                <a class="nav-link" id="login_button" role="button" data-toggle="modal" data-target="#login-modal">Login/Sign Up</a>
                             </li>';
                 }
                 ?>
