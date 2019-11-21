@@ -180,7 +180,7 @@ function searchRecipe($name,$sort,$order)
                     . "lower(recipe_name) like lower('%".$name."%')"
                     . " order by recipe.".$sort." ".$order;
     }
-    echo $query;
+    
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
