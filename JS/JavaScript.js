@@ -1,5 +1,6 @@
 function searchRecipe()
 {
+    
     var term = document.getElementById("term").value;
 
     var sort = document.getElementById("sort").value;
@@ -18,6 +19,8 @@ function searchRecipe()
     var first = true;
 
     var checked = false;
+
+    var searchByTag = false;
 
     for (var i = 0; i < tags.length; i++)
     {
@@ -38,6 +41,10 @@ function searchRecipe()
     if (!checked)
     {
         tagString = "null";
+        
+    }else
+    {
+        searchByTag = true;
     }
 
     checked = false;
@@ -64,25 +71,33 @@ function searchRecipe()
     if (!checked)
     {
         noTagString = "null";
+    }else
+    {
+        searchByTag = true;
     }
 
-    if (term.length == 0)
+    if (term.length == 0&&searchByTag)
     {
-        document.getElementById("result").innerHTML = "";
+        term = "null";
 
     } else
     {
+        document.getElementById("result").innerHTML = "";
+        return;
+    }
+    
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
+                
                 document.getElementById("result").innerHTML = this.responseText;
             }
         };
         xmlhttp.open("GET", "../recipe/search_recipe.php?term=" + term + "&sort=" + sort + "&order=" + order + "&tag=" + tagString + "&noTag=" + noTagString, true);
         xmlhttp.send();
-    }
+    
 }
 
 
@@ -111,7 +126,7 @@ function checkTag(tagName)
    
     let tags = document.getElementsByClassName('tag');
     let noTags = document.getElementsByClassName('noTag');
-    let arr2 = document.getElementsByClassName("btn btn-link");
+//    let arr2 = document.getElementsByClassName("btn btn-link");
     
     for(let i = 0; i < tags.length; i++)
     {
@@ -160,27 +175,31 @@ function checkTag(tagName)
             }
 
         }
-    for(let i = 0; i < arr2.length; i++)
-    {
-        if(arr2[i].value == tagName)
-        {
-            arr2[i].checked = !arr2[i].checked;
-            if(arr2[i].checked)
-            {
-                arr2[i].parentElement.style.backgroundColor = "#005aba";
+//    for(let i = 0; i < arr2.length; i++)
+//    {
+//        if(arr2[i].value == tagName)
+//        {
+//            arr2[i].checked = !arr2[i].checked;
+//            if(arr2[i].checked)
+//            {
+//                arr2[i].parentElement.style.backgroundColor = "#005aba";
+//
+//            }else
+//            {
+//                
+//                arr2[i].parentElement.style.backgroundColor = "#007bff";
+//
+//                
+//                
+//                
+//            }
+//        }
+//
+//    }
 
-            }else
-            {
-                
-                arr2[i].parentElement.style.backgroundColor = "#007bff";
+    searchRecipe();
 
-                
-                
-                
-            }
-        }
-
-    }
+    
     
 }
 
@@ -244,16 +263,36 @@ function changeColourOnHover()
         
     }
     
-    for(let i = 0; i < arr2.length; i++)
+//    for(let i = 0; i < arr2.length; i++)
+//    {
+//        arr2[i].addEventListener("mouseover", function()
+//        {
+//           hoverInHead(arr2[i]); 
+//        },false);
+//        
+//        arr2[i].addEventListener("mouseout", function()
+//        {
+//           hoverOutHead(arr2[i]); 
+//        },false);
+//        
+//    }
+//    
+}
+
+
+function changeColourOnHoverButton()
+{
+    let arr = document.getElementById("headingOne2");
+    for(let i = 0; i < arr.length; i++)
     {
-        arr2[i].addEventListener("mouseover", function()
+        arr[i].addEventListener("mouseover", function()
         {
-           hoverInHead(arr2[i]); 
+           hoverIn(arr[i]); 
         },false);
         
-        arr2[i].addEventListener("mouseout", function()
+        arr[i].addEventListener("mouseout", function()
         {
-           hoverOutHead(arr2[i]); 
+           hoverOut(arr[i]); 
         },false);
         
     }
@@ -261,22 +300,4 @@ function changeColourOnHover()
 }
 
 
-//function changeColourOnHoverButton()
-//{
-//    let arr = document.getElementsByClassName("headingOne2");
-//    for(let i = 0; i < arr.length; i++)
-//    {
-//        arr[i].addEventListener("mouseover", function()
-//        {
-//           hoverIn(arr[i]); 
-//        },false);
-//        
-//        arr[i].addEventListener("mouseout", function()
-//        {
-//           hoverOut(arr[i]); 
-//        },false);
-//        
-//    }
-//    
-//}
 
