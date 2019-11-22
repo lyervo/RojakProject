@@ -6,6 +6,13 @@
     $action = $_REQUEST['action'];
     $type = $_REQUEST['type'];
     
+    if(!isset($_REQUEST['detail']))
+    {
+        $detail = "null";
+    }else
+    {
+        $detail = $_REQUEST['detail'];
+    }
     
     if($action==1)
     {

@@ -2,7 +2,7 @@
 function create_recipe($name,$desc,$serving,$time,$difficulty,$author_id)
 {
     global $db;
-    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,null);";
+    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,null,null);";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -11,8 +11,7 @@ function create_recipe($name,$desc,$serving,$time,$difficulty,$author_id)
 function create_recipe_with_image($name,$desc,$serving,$time,$difficulty,$author_id,$blob)
 {
     global $db;
-    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,:blob);";
-    
+    $query = "insert into recipe values(null,'".$name."','".$desc."','".$serving."','".$difficulty."',".$time.",1,".$author_id.",null,null,:blob);";
     $statement = $db->prepare($query);
     $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->execute();
@@ -180,7 +179,7 @@ function searchRecipe($name,$sort,$order)
                     . "lower(recipe_name) like lower('%".$name."%')"
                     . " order by recipe.".$sort." ".$order;
     }
-    
+    echo $query;
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -321,5 +320,70 @@ function filterResults($tag,$noTag,$recipe_id)
     
     return $valid&&($size===$size_valid); 
 }
+
+function getUserFrequentTags($user_id)
+{
+    global $db;
+    $query = "SELECT recipe_tag.tag_id,COUNT(recipe_tag.tag_id) "
+            . "FROM recipe_tag INNER JOIN likes ON likes.recipe_id = recipe_tag.recipe_id "
+            . "WHERE likes.user_id = ".$user_id." GROUP BY recipe_tag.tag_id order by count(recipe_tag.tag_id) desc limit 3";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result =$statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+    
+}
+
+function getRandomTags($num)
+{
+    global $db;
+    $query = "SELECT tag_id from tag order by rand() limit ".$num;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result =$statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+    
+}
+
+function getTagNameById($id)
+{
+    global $db;
+    $query = "SELECT tag_name from tag where tag_id = ".$id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result =$statement->fetch();
+    $statement->closeCursor();
+    return $result['tag_name'];
+}
+
+
+function getRecipeWithTag($tag)
+{
+    global $db;
+    $query = "SELECT recipe.recipe_id, recipe.recipe_name, recipe.description "
+            . "FROM (recipe INNER join recipe_tag ON recipe.recipe_id = recipe_tag.recipe_id)"
+            . " INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id WHERE tag.tag_name = '".$tag."'"
+            . " order by rand() limit 5";
+    
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result =$statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+   
+}
+
+function setRecipeWarning($recipe_id,$warning)
+{
+    global $db;
+    $query = "update recipe set warning = '".$detail."' where recipe_id = ".$recipe_id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+
+}
+
 
 ?>

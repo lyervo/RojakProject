@@ -13,8 +13,11 @@ include 'header.php';
     var tagAjax = [];
     var user_id;
 
+    var br;
+
     function checkDuplicateName()
     {
+       
         
         var name = document.getElementById("recipeName").value;
         var xmlhttp = new XMLHttpRequest();
@@ -106,6 +109,86 @@ include 'header.php';
             ajaxRecipeTagRequest(tagAjax[i] + "&recipe_id=" + recipeID);
         }
     }
+    
+    function ajaxRecipeStepRequest(id)
+    {
+
+
+
+        for (var i = 1; i < stepTab + 1; i++)
+        {
+            //preBlobStepRequest -> postBlobStepRequest -> Finish operation
+            preBlobStepRequest(i,"stepImagePreview"+i,id)
+            
+        }
+
+
+
+
+    }
+    
+    //this function is call to check if a step input group has an uploaded image, 
+    //if so, the image src is converted into a canvas which is then converted 
+    //into a blob to upload it to the database
+    
+    function preBlobStepRequest(i,imgId,recipeId)
+    {
+        var image = document.getElementById(imgId);
+                
+        
+        
+        if(data = "")
+        {
+            //not performing any action since there is no image for uploading
+            postBlobStepRequest(i,recipeId);
+            return;
+        }
+                
+        var img = new Image();
+        var c = document.createElement("canvas");
+        var ctx = c.getContext("2d");
+        img.onload = function ()
+        {
+            c.width = this.naturalWidth;     
+            c.height = this.naturalHeight;
+            ctx.drawImage(this, 0, 0);       
+            c.toBlob(function (blob)
+            {        
+                postBlobStepRequest(i,recipeId,blob);
+            }, "image/jpeg", 0.75);
+        };
+        img.crossOrigin = "";             
+        img.src = image.src;
+    }
+    
+    
+    //send the insert request to the backend, optionally contains the blob image
+    function postBlobStepRequest(i,recipeId,blob)
+    {
+        var formData = new FormData();
+
+            var step = document.getElementById("step" + i).value;
+            
+            formData.append("step", step);
+            formData.append("recipe_id", recipeId);
+
+            
+            if (blob != null)
+            {
+               formData.append('step_image', blob, "step_image");
+            }
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function ()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    
+                }
+            };
+            
+            xmlhttp.open("POST", "../recipe/create_recipe_step.php", true);
+            xmlhttp.send(formData);
+    }
 
     function ajaxRecipeRequest()
     {
@@ -181,50 +264,7 @@ include 'header.php';
 
     }
 
-    function ajaxRecipeStepRequest(id)
-    {
-
-
-
-        for (var i = 1; i < stepTab + 1; i++)
-        {
-
-
-            var formData = new FormData();
-
-            var step = document.getElementById("step" + i).value;
-            
-            formData.append("step", step);
-            formData.append("recipe_id", id);
-
-            var stepImageInput = document.getElementById("stepImage" + i);
-            if (stepImageInput.value.length > 0)
-            {
-                var stepImageFile = stepImageInput.files[0];
-
-                formData.append('step_image', stepImageFile, "step_image");
-            } else
-            {
-
-            }
-
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function ()
-            {
-                if (this.readyState == 4 && this.status == 200)
-                {
-                    
-                }
-            };
-            
-            xmlhttp.open("POST", "../recipe/create_recipe_step.php", true);
-            xmlhttp.send(formData);
-        }
-
-
-
-
-    }
+    
 
     function ajaxRecipeTagRequest(request)
     {
@@ -255,68 +295,196 @@ include 'header.php';
 
     function initTab()
     {
-        document.getElementById("ingredientSpace").innerHTML = "<input type='text' placeholder='Ingredient 1' id='ingredientName1' oninput='suggestIngredient(1)'><div id='suggest1'></div>\n\
-                                                                        <input type='number' placeholder='Amount' id='ingredientAmount1'>\n\
-                                                                        <input type='text' placeholder='In what unit?' id='ingredientUnit1'>\n\
-                                                                        <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod1'>\n\
-                                                                        <button onclick='removeIngredient(1)'>Remove</button><br>";
-        document.getElementById("stepSpace").innerHTML = "<input type='text' placeholder='Step 1...' id='step1'><br>Upload an image for step 1:<input type='file' id='stepImage1'><br><button onclick='removeStep(1)'>Remove</button><br>";
-        document.getElementById("tagSpace").innerHTML = "<input type='text' placeholder='Enter a tag...' id='tag1' onchange='suggestTag(1)'><div id='suggestTag1'></div><button onclick='removeTag(1)'>Remove</button><br>";
+        
+        br = document.createElement("br");
+        
+        document.getElementById("ingredientSpace").appendChild(createIngredientInputGroup(1));
+        document.getElementById("stepSpace").appendChild(createStepInputGroup(1));
+        document.getElementById("tagSpace").appendChild(createTagInputGroup(1));
+    }
+    
+    function createStepInputGroup(i,value,src)
+    {
+       
+        //creating a group of inputs use for processing a step data
+        var step = createElement("div");
+        
+        step.id = "stepInputGroup"+i;
+        
+        var stepTextInput = createElement("input","step"+i);
+        
+        stepTextInput.setAttribute("type","text");
+        
+        stepTextInput.setAttribute("placeholder","Enter step "+i+"...");
+        
+        if(value!=null)
+        { 
+            stepTextInput.setAttribute("value",value);
+        }
+        
+        var previewImg = createElement("img","stepImagePreview"+i);
+        if(src!=null)
+        {
+            previewImg.src = src;
+        }
+        
+        previewImg.setAttribute("height","200");
+        
+        previewImg.className = "previewImage";
+        
+        var text = document.createTextNode("Upload an image for Step "+i+":");
+        
+        
+        var stepImageInput = createElement("input","stepImage"+i,null,"change",function(){ checkFile(stepImageInput); });
+        
+        stepImageInput.setAttribute("type","file");
+        
+        var removeButton = createElement("button",null,null,"click",function(){ removeStep(i); });
+        removeButton.innerHTML = "Remove Step "+i;
+        
+        step.appendChild(stepTextInput);
+        step.appendChild(br);
+        step.appendChild(previewImg);
+        step.appendChild(br);
+        step.appendChild(text);
+        step.appendChild(stepImageInput);
+        step.appendChild(br);
+        step.appendChild(removeButton);
+        step.appendChild(br);
+        return step;
+        
+    }
+    
+    function createTagInputGroup(i,value)
+    {
+        
+        var tag = createElement("div");
+        
+        var textInput = createElement("input", "tag"+i,null,"change",function() { suggestTag(i); });
+        textInput.setAttribute("type","text");
+        
+        if(value!=null&&value!="")
+        {
+            textInput.value = value;
+        }
+        
+        var suggestDiv = createElement("div","suggestTag"+i);
+        
+        var removeButton = createElement("button",null,null,"click", function(){ removeTag(i); });
+        
+        removeButton.innerHTML = "Remove Tag";
+        
+        tag.appendChild(textInput);
+        tag.appendChild(br);
+        tag.appendChild(suggestDiv);
+        tag.appendChild(br);
+        tag.appendChild(removeButton);
+        tag.appendChild(br);
+        
+        return tag;
+        
+        
+    }
+    
+    function createIngredientInputGroup(i,value1,value2,value3,value4)
+    {
+        
+        var ingredient = createElement("div");
+        
+        var nameInput = createElement("input","ingredientName"+i,null,"input",function(){ suggestIngredient(i); });
+        nameInput.setAttribute("type","text");
+        nameInput.setAttribute("placeholder","Enter ingredient "+i+"...");
+       
+        
+        if(value1!=null)
+        {
+            nameInput.value = value1;
+        }
+        
+        
+        var suggestDiv = createElement("div","suggest"+i);
+        
+        
+        var amountInput = createElement("input","ingredientAmount"+i);
+        amountInput.setAttribute("type","number");
+        amountInput.setAttribute("placeholder","Enter amount...");
+        amountInput.setAttribute("min","1");
+        
+        if(value2!=null)
+        {
+            amountInput.value = value2;
+        }
+        
+        var unitInput = createElement("input","ingredientUnit"+i);
+        unitInput.setAttribute("type","text");
+        unitInput.setAttribute("placeholder","In what unit...");
+        
+        if(value3!=null)
+        {
+            unitInput.value = value3;
+        }
+        
+        var modInput = createElement("input","ingredientMod"+i);
+        modInput.setAttribute("type","text");
+        modInput.setAttribute("placeholder","Modifiers(Chopped?Diced?Blended?)");
+        
+        if(value4!=null)
+        {
+            modInput.value = value4;
+        }
+        
+        var removeButton = createElement("button",null,null,"click",function(){ removeIngredient(i); });
+        removeButton.innerHTML = "Remove Ingredient";
+        
+        ingredient.appendChild(nameInput);
+        ingredient.appendChild(br);
+        ingredient.appendChild(suggestDiv);
+        ingredient.appendChild(amountInput);
+        ingredient.appendChild(unitInput);
+        ingredient.appendChild(modInput);
+        ingredient.appendChild(removeButton);
+        ingredient.appendChild(br);
+        
+        return ingredient;
+    }
+    
+    function createElement(type,id,className,event,func)
+    {
+        var obj = document.createElement(type);
+        if(id!=null)
+        {
+            obj.id = id;
+        }
+        
+        if(className!=null)
+        {
+            obj.className = className;
+        }
+        
+        if(event!=null&&func!=null)
+        {
+            obj.addEventListener(event,func);
+        }
+        
+        return obj;
     }
 
     function addTagTab()
     {
-        var existingTabs = "";
-
-        for (var i = 1; i <= tagTab; i++)
-        {
-            var tagName = document.getElementById("tag" + i).value;
-            existingTabs += "<input type='text' value='" + tagName + "' placeholder='Enter a tag...' id='tag" + i + "' onchange='suggestTag("+i+")'>\n\
-                            <div id='suggestTag"+i+"'></div>";
-
-            existingTabs += "<button onclick='removeTag(" + i + ")'>Remove</button><br>";
-
-        }
 
         tagTab++;
 
-        existingTabs += "<input type='text' placeholder='Enter a tag...' id='tag" + tagTab + "' onchange='suggestTag("+tagTab+")'><div id='suggestTag"+tagTab+"'></div><button onclick='removeTag(" + tagTab + ")'>Remove</button><br>";
-
-        document.getElementById("tagSpace").innerHTML = existingTabs;
+        document.getElementById("tagSpace").appendChild(createTagInputGroup(tagTab));
     }
 
     function addIngredientTab()
     {
 
-        var existingTabs = "";
-
-        for (var i = 1; i <= ingredientTab; i++)
-        {
-            var ingredientName = document.getElementById("ingredientName" + i).value;
-            var ingredientAmount = document.getElementById("ingredientAmount" + i).value;
-            var ingredientUnit = document.getElementById("ingredientUnit" + i).value;
-            var ingredientMod = document.getElementById("ingredientMod" + i).value;
-
-
-
-            existingTabs += "<input type='text' placeholder='Ingredient " + i + "' id='ingredientName" + i + "' value='" + ingredientName + "' oninput='suggestIngredient(" + i + ")'><div id='suggest" + i + "'></div>\n\
-                               <input type='number' placeholder='Amount' id='ingredientAmount" + i + "' value='" + ingredientAmount + "'>\n\
-                               <input type='text' placeholder='In what unit?' id='ingredientUnit" + i + "' value='" + ingredientUnit + "'>\n\
-                               <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod" + i + "' value='" + ingredientMod + "'>";
-            
-            existingTabs += "<button onclick='removeIngredient(" + i + ")'>Remove</button><br>"
-
-        }
-
+        var ingredientSpace = document.getElementById("ingredientSpace");
+        
         ingredientTab++;
-
-        existingTabs += "<input type='text' placeholder='Ingredient " + ingredientTab + "' id='ingredientName" + ingredientTab + "' oninput='suggestIngredient(" + ingredientTab + ")'><div id='suggest" + ingredientTab + "'></div>\n\
-                               <input type='number' placeholder='Amount' id='ingredientAmount" + ingredientTab + "'>\n\
-                               <input type='text' placeholder='In what unit?' id='ingredientUnit" + ingredientTab + "'>\n\
-                               <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod" + ingredientTab + "'>\n\
-                               <button onclick='removeIngredient("+ingredientTab+")'>Remove</button><br>";
-
-        document.getElementById("ingredientSpace").innerHTML = existingTabs;
+        
+        ingredientSpace.appendChild(createIngredientInputGroup(ingredientTab));
 
 
     }
@@ -325,121 +493,133 @@ include 'header.php';
     {
         if (ingredientTab > 1)
         {
-            var existingTabs = "";
+            var doms = [];
+            var ingredientSpace = document.getElementById("ingredientSpace");
             var removed = false;
             for (var i = 1; i <= ingredientTab; i++)
             {
+                var ingredientName = document.getElementById("ingredientName" + i).value;
+                var ingredientAmount = document.getElementById("ingredientAmount" + i).value;
+                var ingredientUnit = document.getElementById("ingredientUnit" + i).value;
+                var ingredientMod = document.getElementById("ingredientMod" + i).value;
                 if (i == index)
                 {
                     removed = true;
                 } else if (!removed)
                 {
-                    var ingredientName = document.getElementById("ingredientName" + i).value;
-                    var ingredientAmount = document.getElementById("ingredientAmount" + i).value;
-                    var ingredientUnit = document.getElementById("ingredientUnit" + i).value;
-                    var ingredientMod = document.getElementById("ingredientMod" + i).value;
-                    existingTabs += "<input type='text' placeholder='Ingredient " + i + "' id='ingredientName" + i + "' value='" + ingredientName + "' oninput='suggestIngredient(" + i + ")'><div id='suggest" + i + "'></div>\n\
-                                       <input type='number' placeholder='Amount' id='ingredientAmount" + i + "' value='" + ingredientAmount + "'>\n\
-                                       <input type='text' placeholder='In what unit?' id='ingredientUnit" + i + "' value='" + ingredientUnit + "'>\n\
-                                       <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod" + i + "' value='" + ingredientMod + "'>";
                     
-                    existingTabs += "<button onclick='removeIngredient(" + i + ")'>Remove</button><br>";
-
+                    doms.push(createIngredientInputGroup(i,ingredientName,ingredientAmount,ingredientUnit,ingredientMod));
+                    
+                    
+                    
                 } else if (removed)
                 {
-                    var ingredientName = document.getElementById("ingredientName" + i).value;
-                    var ingredientAmount = document.getElementById("ingredientAmount" + i).value;
-                    var ingredientUnit = document.getElementById("ingredientUnit" + i).value;
-                    var ingredientMod = document.getElementById("ingredientMod" + i).value;
-                    existingTabs += "<input type='text' placeholder='Ingredient " + (i - 1) + "' id='ingredientName" + (i - 1) + "' value='" + ingredientName + "' oninput='suggestIngredient(" + (i - 1) + ")'><div id='suggest" + (i - 1) + "'></div>\n\
-                                       <input type='number' placeholder='Amount' id='ingredientAmount" + (i - 1) + "' value='" + ingredientAmount + "'>\n\
-                                       <input type='text' placeholder='In what unit?' id='ingredientUnit" + (i - 1) + "' value='" + ingredientUnit + "'>\n\
-                                       <input type='text' placeholder='Chop?Diced?Blended?' id='ingredientMod" + (i - 1) + "' value='" + ingredientMod + "'>";
-                    
-
-                    existingTabs += "<button onclick='removeIngredient(" + (i - 1) + ")'>Remove</button><br>";
+                    doms.push(createIngredientInputGroup(i-1,ingredientName,ingredientAmount,ingredientUnit,ingredientMod));
 
                 }
             }
             ingredientTab--;
-            document.getElementById("ingredientSpace").innerHTML = existingTabs;
+            ingredientSpace.innerHTML = "";
+            
+            for(var i=0;i<doms.length;i++)
+            {
+                ingredientSpace.appendChild(doms[i]);
+            }
+        
         }
+        
     }
 
     function addStepTab()
     {
-        var existingSteps = "";
+        
 
-        for (var i = 1; i <= stepTab; i++)
-        {
-            var step = document.getElementById("step" + i).value;
-
-            existingSteps += "<input type='text' placeholder='Step " + i + "...' id='step" + i + "' value='" + step + "'><br>Upload an image for step " + i + ":<input type='file' id='stepImage" + i + "'><br><button onclick='removeStep(" + i + ")'>Remove</button><br>";
-
-        }
-
+        var stepSpace = document.getElementById("stepSpace");
 
         stepTab++;
 
-        existingSteps += "<input type='text' placeholder='Step " + stepTab + "...' id='step" + stepTab + "'><br>Upload an image for step " + stepTab + ":<input type='file' id='stepImage" + stepTab + "'><br><button onclick='removeStep(" + stepTab + ")'>Remove</button><br>";
+        stepSpace.appendChild(createStepInputGroup(stepTab));
 
-        document.getElementById("stepSpace").innerHTML = existingSteps;
+        
 
 
     }
 
     function removeStep(index)
     {
+        
+        var stepSpace = document.getElementById("stepSpace");
+        
+        var doms = [];
+        
         if (stepTab > 1)
         {
-            var existingSteps = "";
             var removed = false;
+            
+            
             for (var i = 1; i <= stepTab; i++)
             {
+                
+                var value = document.getElementById("step"+i).value;
+                
+                var img = document.getElementById("stepImagePreview"+i).src;
+                
+                
+                
+                
                 if (index == i)
                 {
+                    
                     removed = true;
+                    
                 } else if (!removed)
                 {
-                    var step = document.getElementById("step" + i).value;
-
-                    existingSteps += "<input type='text' placeholder='Step " + i + "...' id='step" + i + "' value='" + step + "'><br>Upload an image for step " + i + ":<input type='file' id='stepImage" + i + "'><br><button onclick='removeStep(" + i + ")'>Remove</button><br>";
+                    doms.push(createStepInputGroup(i,value,img));
                 } else if (removed)
                 {
-                    var step = document.getElementById("step" + (i)).value;
-
-                    existingSteps += "<input type='text' placeholder='Step " + (i - 1) + "...' id='step" + (i - 1) + "' value='" + step + "'><br>Upload an image for step " + (i - 1) + ":<input type='file' id='stepImage" + (i - 1) + "'><br><button onclick='removeStep(" + (i - 1) + ")'>Remove</button><br>";
+                    doms.push(createStepInputGroup(i-1,value,img));
                 }
             }
             stepTab--;
-            document.getElementById("stepSpace").innerHTML = existingSteps;
+            stepSpace.innerHTML = "";
+            
+            for(var i=0;i<doms.length;i++)
+            {
+                stepSpace.appendChild(doms[i]);
+            }
+            
         }
     }
 
     function removeTag(index)
     {
+        var tagSpace = document.getElementById("tagSpace");
         if (tagTab > 1)
         {
-            var existingTags = "";
+            var doms = [];
             var removed = false;
             for (var i = 1; i <= tagTab; i++)
             {
+                var value = document.getElementById("tag"+i).value;
                 if (index == i)
                 {
                     removed = true;
                 } else if (!removed)
                 {
-                    var tag = document.getElementById("tag" + i).value;
-                    existingTags += "<input type='text' placeholder='Enter a Tag...' id='tag" + i + "' value='" + tag + "' onchange='suggestTag("+i+")'><div id='suggestTag"+i+"'></div><button onclick='removeTag(" + i + ")'>Remove</button><br>";
+                    doms.push(createTagInputGroup(i,value));
                 } else if (removed)
                 {
-                    var tag = document.getElementById("tag" + (i)).value;
-                    existingTags += "<input type='text' placeholder='Enter a Tag' id='tag" + (i - 1) + "' value='" + tag + "' onchange='suggestTag("+(i-1)+")'><div id='suggestTag"+(i-1)+"'></div><button onclick='removeTag(" + (i - 1) + ")'>Remove</button><br>";
+                    doms.push(createTagInputGroup(i-1,value));
                 }
             }
             tagTab--;
-            document.getElementById("tagSpace").innerHTML = existingTags;
+            tagSpace.innerHTML = "";
+            for(var i=0;i<doms.length;i++)
+            {
+                tagSpace.appendChild(doms[i]);
+            }
         }
+        
     }
 
     function checkLoginStatus(task)
@@ -573,6 +753,42 @@ include 'header.php';
         document.getElementById(id).value = name;
     }
 
+    function checkFile(input)
+    {
+        var imgSrc = window.URL;
+        
+        var file = input.files[0];
+
+        if (file)
+        {
+            
+            var idText = input.id;
+            
+            var idNum = idText.charAt(idText.length-1);
+            
+            var preview = document.getElementById("stepImagePreview"+idNum);
+            
+            preview.style.height = "200px";
+
+            var image = new Image();
+
+            image.onload = function() {
+                if (this.height&&this.width)
+                {
+                    preview.src = image.src;
+                }else
+                {
+                    console.log("invalid input");
+                }
+            };
+
+            image.src = URL.createObjectURL(file);
+        }
+        
+        
+    }
+    
+    
 
 
 
@@ -607,7 +823,6 @@ include 'header.php';
             <br>
             <div id="ingredientSpace"></div>
             <button onclick="addIngredientTab()">Add Ingredient</button>
-            <p>For security measure, please only upload your image only after you finish all your steps, if you remove or add a step, all existing file uploads will be reset.</p>
             <div id="stepSpace"></div>
             <button onclick="addStepTab()">Add Step</button>
             <br>
@@ -616,6 +831,7 @@ include 'header.php';
             <button onclick="addTagTab()">Add Tag</button>
             <br>
             <p>Exclude:</p>
+            <p style="color:red">Attention: Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
             <input type="checkbox" value="no_wheat" class="noTag">Wheat<br>
             <input type="checkbox" value="no_crustacean" class="noTag">Crustaceans<br>
             <input type="checkbox" value="no_egg" class="noTag">Egg<br>
