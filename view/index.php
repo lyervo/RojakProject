@@ -1,7 +1,11 @@
 <?php
 $current = 'home';
 include 'header.php';
+require '../recipe/recipe_db.php';
+$user = showuser();
+
 ?>
+
 
 
 <!-- Page Content -->
@@ -12,22 +16,12 @@ include 'header.php';
         <!--        side div-->
         <div class="col-lg-3">
 
-            <input type="text" id="term" placeholder="Search..."><button id="search_icon" onclick="searchRecipe()"><i class="fas fa-search"></i></button><br>
+            <input type="text" id="term" placeholder="Search..."><button id="search_icon" onclick="searchRecipe()"><i class="fas fa-search"></i></button>
+
+            <br><br>
 
 
-
-            Sort by 
-            <select id="sort">
-                <option value="recipe_name">Name</option>
-                <option value="time">Submitted Date</option>
-                <option value="rating">User Rating</option>
-                <option value="cooking_time">Cooking Time</option>
-
-            </select>
-            <select id="order">
-                <option value="asc">Ascending Order</option>
-                <option value="desc">Descending Order</option>
-            </select>
+            <a id="top_button"></a>
 
 
             <div class="accordion" id="accordionExample275">
@@ -120,35 +114,35 @@ include 'header.php';
                     </div>
                 </div>
 
-<!--                <div class="card z-depth-0 bordered">
-                    <div class="card-header" id="headingFour2" data-toggle="collapse" data-target="#collapseFour2"
-                         aria-expanded="true" aria-controls="collapseFour2">Fruit
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" >
-
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseFour2" class="collapse" aria-labelledby="headingFour2"
-                         data-parent="#accordionExample275">
-                        <div class="card-body">
-                            <div class="filterButton" id="Apple" onclick="checkTag('Apple')">
-                                <input hidden  type="checkbox" name="Apple" value="Apple" class="tag">Apple </div>
-
-                            <div class="filterButton" id="Cucumber" onclick="checkTag('Cucumber')">
-                                <input hidden  type="checkbox" name="Cucumber" value="Cucumber" class="tag">Cucumber </div>
-
-                            <div class="filterButton" id="Strawberries" onclick="checkTag('Strawberries')">
-                                <input hidden  type="checkbox" name="Strawberries" value="Strawberries" class="tag">Strawberries</div>
-
-                            <div class="filterButton" id="Oranges" onclick="checkTag('Oranges')">
-                                <input hidden type="checkbox" name="Oranges" value="Oranges" class="tag">Oranges </div>
-
-                            <div class="filterButton" id="Grapes" onclick="checkTag('Grapes')">
-                                <input hidden type="checkbox" name="Grapes" value="Grapes" class="tag">Grapes </div>
-                        </div>
-                    </div>
-                </div>-->
+                <!--                <div class="card z-depth-0 bordered">
+                                    <div class="card-header" id="headingFour2" data-toggle="collapse" data-target="#collapseFour2"
+                                         aria-expanded="true" aria-controls="collapseFour2">Fruit
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" type="button" >
+                
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseFour2" class="collapse" aria-labelledby="headingFour2"
+                                         data-parent="#accordionExample275">
+                                        <div class="card-body">
+                                            <div class="filterButton" id="Apple" onclick="checkTag('Apple')">
+                                                <input hidden  type="checkbox" name="Apple" value="Apple" class="tag">Apple </div>
+                
+                                            <div class="filterButton" id="Cucumber" onclick="checkTag('Cucumber')">
+                                                <input hidden  type="checkbox" name="Cucumber" value="Cucumber" class="tag">Cucumber </div>
+                
+                                            <div class="filterButton" id="Strawberries" onclick="checkTag('Strawberries')">
+                                                <input hidden  type="checkbox" name="Strawberries" value="Strawberries" class="tag">Strawberries</div>
+                
+                                            <div class="filterButton" id="Oranges" onclick="checkTag('Oranges')">
+                                                <input hidden type="checkbox" name="Oranges" value="Oranges" class="tag">Oranges </div>
+                
+                                            <div class="filterButton" id="Grapes" onclick="checkTag('Grapes')">
+                                                <input hidden type="checkbox" name="Grapes" value="Grapes" class="tag">Grapes </div>
+                                        </div>
+                                    </div>
+                                </div>-->
                 <!--  <div class="card z-depth-0 bordered">
                     <div class="card-header" id="headingFive2"  data-toggle="collapse"
                           data-target="#collapseFive2" aria-expanded="false" aria-controls="collapseFive2">Servings
@@ -305,16 +299,103 @@ include 'header.php';
         <!-- /.col-lg-3 -->
 
         <!--        body div-->
+        <div class="col-lg-9"id="result">
+
+            <div class="sorting" id="sortNav">
+                Sort by 
+                <select id="sort">
+                    <option value="recipe_name">Name</option>
+                    <option value="time">Submitted Date</option>
+                    <option value="rating">User Rating</option>
+                    <option value="cooking_time">Cooking Time</option>
+
+                </select>
+                order by
+                <select id="order">
+                    <option value="asc">Ascending Order</option>
+                    <option value="desc">Descending Order</option>
+                </select>
+            </div>
 
 
-        <div class="col-lg-9">
 
-            <div id="result"></div>
+            <div >Popular Recipes</div>
+            <?php
+            $response = '';
+
+            foreach ($user as $v) {
+                ?>
+
+                <div class="div1">
+
+
+                    <div class="recipecard">
+
+
+                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($v['image_blob']) . '" height="160px" width="250px"/>'; ?>
+                        <div class="name"> <h2><?php echo $v['recipe_name'] ?></h2></div>
+                        <div class="prod_details_tab">
+                            <?php
+                            $dif = $v['difficulty'];
+                            $easy = 'Easy';
+                            $medium = 'Medium';
+                            $hard = 'Hard';
+
+                            if ($v['difficulty'] == $easy) {
+                                ?>
+                                <a>
+
+                                    <i id="iconEasy" class="fas fa-utensils">
+                                        <div id="diff">Easy</div>
+                                    </i>
+                                </a>     
+                                <?php
+                            }
+                            if ($v['difficulty'] == $hard) {
+                                ?>
+
+                                <a>
+                                    <i id="icon1Hard" class="fas fa-utensils"></i></a> 
+                                <a>
+                                    <i id="icon2Hard" class="fas fa-utensils"></i></a> 
+                                <a>
+                                    <i id="icon3Hard" class="fas fa-utensils"></i></a>
+                                <?php
+                            }
+                            if ($v['difficulty'] == $medium) {
+                                ?>
+                                <a>
+                                    <i id="icon1Med" class="fas fa-utensils"></i></a> 
+                                <a>
+                                    <i id="icon2Med" class="fas fa-utensils"></i></a> 
+                            <?php } ?>
+
+                        </div>
+                        <br>
+                        <p class="info"></a>By:<?php echo $v['username'] ?></p>
+                        <p class="info"></a>Cooking Time Mins: <?php echo $v['cooking_time'] ?></p>
+
+                        <div class="fadeingdescriptions">
+                            <p><?php echo $v['description'] ?></p>
+                        </div>
+                        
+                        <p><?php echo "<button><a id='view_button' href='?action=view_recipe&id=" . $v['recipe_id'] . "'>View</a></button>"?></p>
+                       
+                    </div>
+                    
+
+                </div>
+                <?php
+            }
+            ?>  
+
 
 
 
 
         </div>
+
+
         <!-- /.col-lg-9 -->
 
     </div>
@@ -322,6 +403,40 @@ include 'header.php';
 
 </div>
 <!-- /.container -->
+<br><br><br><br><br><br><br><br><br><br>
+
+<script>
+    var btn = $('#top_button');
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop: 0}, '300');
+    });
+</script>
+
+<!--<script>
+window.onscroll = function() {myFunction()};
+
+var sort = document.getElementById("sortNav");
+var sticky = sort.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    sort.classList.add("sticky");
+  } else {
+    sort.classList.remove("sticky");
+  }
+}
+
+</script>-->
 
 <?php
 include 'footer.php';

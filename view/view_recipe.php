@@ -275,6 +275,8 @@ $user = getUserByID($recipe['author']);
 
         <!--        side div-->
         <div class="col-lg-4">
+            
+            <a id="top_button"></a>
 
             <?php
             if ($recipe['image_blob'] == null) {
@@ -512,6 +514,23 @@ $user = getUserByID($recipe['author']);
 
 </div>
 <!-- /.container -->
+
+<script>
+    var btn = $('#top_button');
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop: 0}, '300');
+    });
+</script>
 
 <?php
 include 'footer.php';

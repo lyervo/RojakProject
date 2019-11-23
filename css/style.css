@@ -18,14 +18,45 @@ and open the template in the editor.
     min-width: 992px !important;
     max-width: 85em;
     margin-left: 30px;
-   
+
 
 }
 
 .row{
-        margin-top: 1em;
+    margin-top: 1em;
     width: 100%;
-    
+
+}
+
+.sorting{
+    background-color: #6666ff;
+    color: white;
+    height: 60px;
+    width: 95%;
+    text-align: center;
+    padding: 10px;
+}
+
+#sort{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+}
+
+#order{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+}
+
+.sticky {
+    position: fixed;
+    top: 100;
+    width: 63.7%;
 }
 
 #web_title{
@@ -41,8 +72,6 @@ and open the template in the editor.
 
     padding-left: 4em;
 }
-
-
 
 nav{
     background-color: #6666ff;
@@ -86,7 +115,7 @@ footer{
 
 #comments{
     border: 2px;
-    
+
 
 }
 
@@ -148,7 +177,7 @@ footer{
 }
 
 #recipe_picture{
-    border: 2px solid pink;
+    border: 2px solid #6666ff;
 }
 
 #profile_picture{
@@ -173,7 +202,8 @@ footer{
 }
 
 #login_error{
-    margin-top: 2em;
+    margin-top: 12em;
+    margin-left: 70%;
     position: absolute;
     width: 200px;
     text-align: center;
@@ -182,10 +212,12 @@ footer{
     border: 2px solid red;
     color: red;
     z-index: 9;
+    
 }
 
 #reg_error{
     margin-top: 2em;
+    
     position: absolute;
     width: 250px;
     text-align: center;
@@ -236,7 +268,7 @@ footer{
 #report_recipe_button{
     background-color: white;
     color: red;
-    
+
 }
 
 
@@ -302,6 +334,48 @@ td{
 .social_twit:hover{
     color: #55ACEE;
 }
+
+/*https://codepen.io/matthewcain/pen/ZepbeR*/
+
+#top_button {
+  display: inline-block;
+  background-color: #6666ff;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s, 
+    opacity .5s, visibility .5s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+#top_button::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
+}
+#top_button:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+#top_button:active {
+  background-color: #555;
+}
+#top_button.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
 
 
 

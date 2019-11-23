@@ -1,10 +1,60 @@
 <?php
 $current = 'home';
 include 'header.php';
-include '../user/user_db.php';
 
 $user = getUserByID($_SESSION['user_id']);
 ?>
+
+
+
+
+
+<script>
+    function uploadUserImage()
+    {
+
+
+
+        var formData = new FormData();
+
+        var imageFileInput = document.getElementById('image_file');
+        if (imageFileInput.value.length > 0)
+        {
+            var image_file = imageFileInput.files[0];
+
+            formData.append('image_file', image_file, "user_image");
+        } else
+        {
+            alert("Please provide an image");
+        }
+
+
+
+        formData.append("user_id", user_id);
+
+
+
+
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                alert(this.responseText);
+            }
+        };
+        xmlhttp.onload = function ()
+        {
+            insertIngredientStep(this.responseText);
+        };
+        xmlhttp.open("POST", "../user/uploadUserImage.php", true);
+        xmlhttp.send(formData);
+
+
+
+    }
+</script>
 
 <!-- Page Content -->
 <div class="container">
@@ -14,9 +64,13 @@ $user = getUserByID($_SESSION['user_id']);
         <!--        side div-->
         <div class="col-lg-10">
 
-            
+
             <form action="" method="post">
-                profile picture
+
+                Upload your profile
+                <input type="file" name="image_file" id="image_file">
+                <button onclick='checkLoginStatus(0)'>Upload Profile Image</button>
+                
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-10">
@@ -41,8 +95,8 @@ $user = getUserByID($_SESSION['user_id']);
                         <input type="password" name="confirm_password" class="form-control" id="inputEmail3" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
                     </div>
                 </div>
-                
-                
+
+
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <input type="submit" name="edit_user" value="Save Changes" class="btn login_btn">

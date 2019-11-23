@@ -13,50 +13,7 @@ $user = getUserByID($id);
 
     init();
 
-    function uploadUserImage()
-    {
-
-
-
-        var formData = new FormData();
-
-        var imageFileInput = document.getElementById('image_file');
-        if (imageFileInput.value.length > 0)
-        {
-            var image_file = imageFileInput.files[0];
-
-            formData.append('image_file', image_file, "user_image");
-        } else
-        {
-            alert("Please provide an image");
-        }
-
-
-
-        formData.append("user_id", user_id);
-
-
-
-
-
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function ()
-        {
-            if (this.readyState == 4 && this.status == 200)
-            {
-                alert(this.responseText);
-            }
-        };
-        xmlhttp.onload = function ()
-        {
-            insertIngredientStep(this.responseText);
-        };
-        xmlhttp.open("POST", "../user/uploadUserImage.php", true);
-        xmlhttp.send(formData);
-
-
-
-    }
+    
 
 
 
@@ -191,9 +148,7 @@ $user = getUserByID($id);
             }
             ?>
             <br>
-            Upload your profile
-            <input type="file" name="image_file" id="image_file">
-            <button onclick='checkLoginStatus(0)'>Upload Profile Image</button>
+            
 
             Report this user: 
             <select id="reportReasonUser" onchange='checkLoginStatus(1)'>

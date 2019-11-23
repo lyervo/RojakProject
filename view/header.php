@@ -24,6 +24,10 @@ if (isset($_SESSION['user_id'])) {
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="../css/footer.css" rel="stylesheet" type="text/css"/>
+        
+        <!-- FAVICON -->
+        <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+        
         <!-- Bootstrap core CSS -->
         <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -36,6 +40,7 @@ if (isset($_SESSION['user_id'])) {
 
         <!-- Custom styles for this template -->
         <link href="../css/shop-homepage.css" rel="stylesheet">
+        <link href="../css/boxs.css" rel="stylesheet" type="text/css"/>
         <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:700&display=swap" rel="stylesheet">

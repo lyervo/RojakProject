@@ -1,0 +1,309 @@
+/*body
+{
+
+padding:0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+margin:0px auto auto auto;
+color:#000;
+}*/
+/*formatting the whole div around the card, images and others */
+.div1
+{
+    max-height: 600px;
+    min-height: 600px;
+    padding-top:0px;
+    display:inline-block;
+    word-wrap:break-word;
+    padding:0px 35px 10px 10px;
+    overflow: hidden;
+}
+
+.div2
+{   max-height: 690px;
+    min-height: 690px;
+    padding:50% 50%  50%;
+    padding-left:50px;
+    padding-top:0px;
+    display:inline-block;
+    word-wrap:break-word;
+
+    overflow: hidden;
+}
+/*css for the name inside the divs so it spaces it correctly */
+.name
+{ 
+    max-width:200px;
+    min-width:200px;
+    max-height:120px;
+    min-height:120px;
+    overflow: hidden;
+    padding-bottom:0px;
+    text-align: center;
+    background-color: pink;
+    margin-left: 10%;
+    margin-right: 15%;
+}
+.description
+{
+    max-width:200px;
+    min-width:200px;
+    max-height:100px;
+    min-height:100px;
+    overflow: hidden; 
+
+
+}
+/*Css to get the fade on the text when it goes past three lines */
+.fadeingdescriptions {
+    position: relative;
+    max-height: 69px;
+    min-height:69px;
+    overflow:hidden;
+    /*height: 3.6em; <-exactly three lines */
+}
+.fadeingdescriptions:after {
+
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 55%;
+    height: 1.2em;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+
+/*css for ther the card , price div, and the view button */
+
+.recipecard{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 270px;
+    min-width:270px;
+    margin: auto;
+    min-height:200px;
+    text-align: center;
+    font-family: arial;
+    padding:10px 10px 10px 10px;
+}
+
+.info {
+
+    font-size: 15px;
+    color: #6666ff;
+    padding:0px 0 0px 0;
+    font-weight:bold;
+    text-align: center;
+    background-color: yellow;
+}
+
+.recipecard button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color:#6666ff;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+.recipecard button:hover {
+    opacity: 0.7;
+}
+
+div.sticky{
+    position: -webkit-sticky;
+    position: fixed;
+    margin-left:90%;
+
+    float:right;
+    top:0;
+    height:250px;
+    background-color:#6666ff;
+    padding:0px;
+    font-size:20px;
+    max-height: 250px;
+}
+.sticky
+{
+    max-height: 250px;
+    float:right;
+
+
+}
+
+/*--------Two below scale the boxs---------*/
+.product_title{
+    color:#6666ff;
+    padding:5px 0 5px 0;
+    font-weight:bold;
+}
+.product_title a{
+    text-decoration:none;
+    color:#ea2222;
+    padding:5px 0 5px 0;
+    font-weight:bold;
+}
+
+
+.product_title a:hover{
+    color:#6666ff;
+}
+.product_img{
+    padding:5px 0 5px 0;
+}
+.prod_info{
+    padding:5px 0 5px 0;
+}
+span.reduce{
+    color:#999999;
+    text-decoration:line-through;
+}
+span.info{
+    color:#ea2222;
+}
+
+
+/*center content--------This aligns the hottest recipes tabs with the boxs below------------------*/
+.center_content{
+
+    padding:0% 15%  15%;
+    height:1200px;
+    width:800px;
+
+
+}
+.searchresults
+{
+
+    padding-left: 20px;
+    display: inline-block;
+}
+.center_title_bar{
+    width:520px;
+    height:33px;
+    float:left;
+    padding:0 0 0 0px;
+    margin:0 0 0 12px;
+    _margin:0 0 0 6px;
+    line-height:33px;
+    font-size:25px;
+    color:#6666ff;
+    font-weight:bold;
+    background:url(../images/bar_bg.gif) no-repeat center;
+    padding-bottom:0px;
+}
+
+/*---------prod_box----------*/
+.prod_box{
+    width:173px;
+    height:auto;
+    float:left;
+    padding:10px 10px 10px 11px;
+}
+.top_prod_box{
+    width:173px;height:12px;background:url(../images/product_box_top.gif) no-repeat center bottom;float:left; padding:0px; margin:0px;
+}
+.bottom_prod_box{
+    width:173px;height:10px;background:url(../images/product_box_bottom.gif) no-repeat center top;float:left;padding:0px; margin:0px;
+}
+.center_prod_box{
+    width:173px;height: auto;background:url(../images/product_box_center.gif) repeat-y;float:left; text-align:center;padding:0px; margin:0px;
+}
+.prod_details_tab{
+    width:173px;
+    height:24px;
+    float:left;
+    background-color: whitesmoke;
+    margin-left: 15%;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+/*This is for the stars  */
+img.left_bt{
+    float:left;
+    padding:6px 0 0 6px;
+}
+fas fa-utensils
+{
+    float:left;
+    padding:6px 0 06px;
+}
+
+/*This is + beside details  */
+a.prod_details{
+    width:25px;
+    display:block;
+    float:left;
+    background:url(../images/square-blue-add.gif) no-repeat left;
+    padding:0 0 0 20px;
+    margin:7px 0 0 38px;
+    _margin:6px 0 0 35px;
+    text-decoration:none;
+    color:#0fa0dd;
+}
+
+.prod_details_tab{
+    text-align: center;
+
+}
+
+#icon1Hard{
+    padding-left: 5px;
+    color: #6666ff;
+}
+
+#icon2Hard{
+    padding-left: 10px;
+    color: #6666ff;
+}
+
+#icon3Hard{
+    padding-left: 10px;
+    color: #6666ff;
+}
+
+#icon1Med{
+    padding-left: 5px;
+    color: #6666ff;
+}
+
+#icon2Med{
+    padding-left: 10px;
+    color: #6666ff;
+}
+
+#iconEasy{
+    color: #6666ff;
+    font-size: 1.3em;
+}
+
+#diff{
+    display: none;
+    width: 60px;
+    height: 40px;
+    background-color: #6666ff;
+    color: white;
+    margin-top: -3em;
+    margin-left: -0.9em;
+    position: absolute;
+    z-index: 9;
+    border-radius: 5px;
+}
+
+.prod_details_tab:hover #diff{
+    display: block;
+}
+
+#view_button{
+    width: 100%;
+    height: 40px;
+    background-color: blue;
+}
+
+
+
+
