@@ -7,6 +7,27 @@ and open the template in the editor.
     Created on : 29-Sep-2019, 16:10:03
     Author     : franc/*
 */
+
+
+.container{
+
+
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    min-width: 992px !important;
+    max-width: 85em;
+    margin-left: 30px;
+   
+
+}
+
+.row{
+        margin-top: 1em;
+    width: 100%;
+    
+}
+
 #web_title{
     color: white;
     font-family: 'Courgette', cursive;
@@ -64,30 +85,58 @@ footer{
 }
 
 #comments{
-    border: 2px dotted red;
+    border: 2px;
+    
 
 }
 
 #one_comment{
-    border: 2px solid red;
+    border: 2px solid #7f7fff;
+    border-radius: 70px;
+    background-color: white;
     padding: 4px;
 }
 
+#comment_context{
+    margin-left: 50px;
+}
+
+#comment_date{
+    font-size: 12px;
+    color: blue;
+    margin-left: 400px;
+}
+
+#report_button{
+    margin-left: 400px;
+    background-color: white;
+    border: none;
+    color: red;
+    font-size: 12px;
+}
+
 #commentInput{
-    width: 100%;
+    width: 94%;
     height: 100px;
+    margin-left: 3%;
+    margin-top: 2%;
+}
+
+#comment_button{
+    margin-left: 3%;
 }
 
 .comment_contain{
-    border: 2px solid blue;
+    border: 10px solid #b2b2ff;
     width: 100%;
-    height: 400px;
+    height: 450px;
     overflow: auto;
 }
 
 .comment_section{
-    border: 2px solid green;
+    border: 2px solid #b2b2ff;
     width: 80%;
+    background-color: #ccccff;
 
 }
 
@@ -184,6 +233,29 @@ footer{
     outline: none;
 }
 
+#report_recipe_button{
+    background-color: white;
+    color: red;
+    
+}
+
+
+
+#ing_table{
+    border: 3px solid black;
+
+}
+
+th{
+    padding: 10px;
+    border: 3px solid red;
+}
+
+td{
+    padding: 10px;
+    border: 3px solid blue;
+}
+
 
 
 
@@ -233,3 +305,257 @@ footer{
 
 
 
+.accordion{
+    width: 200px;
+}
+
+#headingOne2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    outline: none;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+
+.clicked #headingOne2 {
+    background-color: #005aba;
+}
+
+
+.active, #headingOne2:hover {
+    background-color: #005aba;
+
+}
+
+#headingOne2:after {
+    /*content: '\002B';  Unicode character for "plus" sign (+)*/ 
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    /*content: "\2212"; Unicode character for "plus" sign (-)*/ 
+}
+
+
+#headingTwo2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingTwo2:hover {
+    background-color: #005aba;
+}
+
+#headingTwo2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingThree2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingThree2:hover {
+    background-color: #005aba;
+}
+
+#headingThree2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingFour2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingFour2:hover {
+    background-color: #005aba;
+}
+
+#headingFour2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingFive2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingFive2:hover {
+    background-color: #005aba;
+}
+
+#headingFive2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingSix2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingSix2:hover {
+    background-color: #005aba;
+}
+
+#headingSix2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingSeven2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingSeven2:hover {
+    background-color: #005aba;
+}
+
+#headingSeven2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingEight2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingEight2:hover {
+    background-color: #005aba;
+}
+
+#headingEight2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingNine2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingNine2:hover {
+    background-color: #005aba;
+}
+
+#headingNine2:after {
+    color: white;
+    font-weight: bold;
+}
+
+#headingTen2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: center;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
+}
+.active, #headingTen2:hover {
+    background-color: #005aba;
+}
+
+#headingTen2:after {
+    color: white;
+    font-weight: bold;
+}
+
+
+
+
+
+.filterButton
+{
+
+    border: 1px solid #6666ff;
+    cursor:pointer;
+    user-select: none;
+    transition-duration: 0.4s;
+    background-color: white;
+    text-align:center;
+    padding: 10px;
+    font-family: 'Muli', sans-serif;
+}
+
+
+
+.filterButton:hover
+{
+
+    background-color: #9999ff;
+    color: black;
+
+}
+
+.card-body{
+    padding: 0;
+}
+
+/*.card
+{
+    background-color: #007bff;
+    color: white;
+}
+
+.card:hover{
+    background-color: #005aba;
+}
+
+.card:after {
+  color: white;
+  font-weight: bold;
+}*/

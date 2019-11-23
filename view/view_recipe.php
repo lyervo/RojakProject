@@ -288,48 +288,7 @@ $user = getUserByID($recipe['author']);
             <p id="likes"></p>
             <a href="#comments">write a review</a>
             <br><br>
-            <h5>Ingredents:</h5>
-            <?php
-            foreach ($ingredients as $ing) {
-                $ingredient_name = getIngredientNameByID($ing['ingredient_id']);
-
-                echo "<p>" . $ingredient_name . ", " . $ing['amount'];
-
-                if ($ing['unit'] != "null") {
-                    echo " " . $ing['unit'];
-                }
-
-                if ($ing['modifier'] != "null") {
-                    echo "," . $ing['modifier'];
-                }
-
-                echo "</p>";
-            }
-            ?>
-            <br>
-            <p>Servings: <?php echo $recipe['serving'] ?></p>
-
-        </div>
-        <!-- /.col-lg-3 -->
-
-        <!--        body div-->
-        <div class="col-lg-8">
-
-            <h2><?php echo $recipe['recipe_name']; ?></h2>
-            <p>By <?php echo "<a href='?action=user_profile&user_id=" . $user['user_id'] . "'>" . $user['username'] . "</a>" ?>
-
-            <p><?php echo $recipe['description'] ?></p>
-
-
-
-            <br>
-            <div id="sharing_plugins">
-                <div class="fb-share-button" data-href="http://127.0.0.1/RojakProject/view/view_recipe.php?id=<?php echo $id; ?>" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-
-            </div>
-            <br>
-
-            <button><a role='button' data-toggle='modal' data-target='#report_recipe' >Report</a></button> 
+            <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this recipe</a></button> 
 
             <div class="modal fade" id="report_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 
@@ -388,6 +347,55 @@ $user = getUserByID($recipe['author']);
                     </div>
                 </div>
             </div>
+            <br><br>
+            <h5>Ingredents:</h5>
+            <?php
+            
+            $table = "<table id='ing_table'><tr><th>Ingredent</th><th>Unit</th></tr>";
+            
+            foreach ($ingredients as $ing) {
+                $ingredient_name = getIngredientNameByID($ing['ingredient_id']);
+
+                $table = $table . "<tr><td>" . $ingredient_name . "</td><td> " . $ing['amount'] . " ";
+
+                if ($ing['unit'] != "null") {
+                    $table = $table . $ing['unit'];
+                }
+
+                if ($ing['modifier'] != "null") {
+                    $table = $table . $ing['modifier'];
+                }
+
+                $table = $table . "</td></tr>";
+                
+            }
+            $table = $table . "</table>";
+            echo $table;
+            ?>
+            <br><br>
+            <p>Servings: <?php echo $recipe['serving'] ?></p>
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <!--        body div-->
+        <div class="col-lg-8">
+
+            <h2><?php echo $recipe['recipe_name']; ?></h2>
+            <p>By <?php echo "<a href='?action=user_profile&user_id=" . $user['user_id'] . "'>" . $user['username'] . "</a>" ?>
+
+            <p><?php echo $recipe['description'] ?></p>
+
+
+
+            <br>
+            <div id="sharing_plugins">
+                <div class="fb-share-button" data-href="http://127.0.0.1/RojakProject/view/view_recipe.php?id=<?php echo $id; ?>" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+            </div>
+            <br>
+
+            
 
 
 
@@ -483,7 +491,8 @@ $user = getUserByID($recipe['author']);
 
                 <textarea placeholder="write a comment..." id="commentInput"></textarea>
                 <br>
-                <button onclick="checkLoginStatus(2)" >Comment</button>
+                <button id="comment_button" class="btn btn-info" onclick="checkLoginStatus(2)" >Comment</button>
+                <br><br>
             </div> 
 
             <br>

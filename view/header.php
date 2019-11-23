@@ -38,7 +38,8 @@ if (isset($_SESSION['user_id'])) {
         <link href="../css/shop-homepage.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
-
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Muli:700&display=swap" rel="stylesheet">
 
         <script src="../JS/JavaScript.js" type="text/javascript"></script>
 
