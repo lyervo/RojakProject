@@ -1,4 +1,4 @@
-0<?php
+<?php
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
@@ -10,7 +10,7 @@ if ($action == NULL) {
 
 switch($action){
 case 'home':
-    $bodyTag = "<body onload='changeColourOnHover()'>";
+    $bodyTag = "<body>";
     include('../view/index.php');
     break;
 

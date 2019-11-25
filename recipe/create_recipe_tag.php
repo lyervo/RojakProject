@@ -8,8 +8,6 @@
     
     echo $tagName;
     
-    $tagName = ucfirst($tagName);
-    
     $result = getTagByName($tagName);
     
     if(empty($result))

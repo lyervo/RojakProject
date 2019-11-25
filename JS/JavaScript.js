@@ -1,6 +1,5 @@
 function searchRecipe()
 {
-    
     var term = document.getElementById("term").value;
 
     var sort = document.getElementById("sort").value;
@@ -19,8 +18,6 @@ function searchRecipe()
     var first = true;
 
     var checked = false;
-
-    var searchByTag = false;
 
     for (var i = 0; i < tags.length; i++)
     {
@@ -41,10 +38,6 @@ function searchRecipe()
     if (!checked)
     {
         tagString = "null";
-        
-    }else
-    {
-        searchByTag = true;
     }
 
     checked = false;
@@ -71,36 +64,26 @@ function searchRecipe()
     if (!checked)
     {
         noTagString = "null";
-    }else
-    {
-        searchByTag = true;
     }
 
-    if (term.length == 0&&searchByTag)
+    if (term.length == 0)
     {
-        term = "null";
+        document.getElementById("result").innerHTML = "";
 
     } else
     {
-        document.getElementById("result").innerHTML = "";
-        return;
-    }
-    
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
-                
                 document.getElementById("result").innerHTML = this.responseText;
             }
         };
         xmlhttp.open("GET", "../recipe/search_recipe.php?term=" + term + "&sort=" + sort + "&order=" + order + "&tag=" + tagString + "&noTag=" + noTagString, true);
         xmlhttp.send();
-    
+    }
 }
-
-
 
 function collapsible(){
 var coll = document.getElementsByClassName("collapsible");
@@ -298,6 +281,3 @@ function changeColourOnHoverButton()
     }
     
 }
-
-
-

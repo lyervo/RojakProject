@@ -47,7 +47,7 @@ if (isset($_POST['Login'])) {
 
     if ($user === false) {
 
-        echo '<p id="login_error">Incorrect username</p>';
+        echo '<div id="login_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>Incorrect username</div>';
     } else {
 
         $validPassword = password_verify($passwordAttempt, $user['password']);
@@ -75,7 +75,7 @@ if (isset($_POST['Login'])) {
             exit;
         } else {
 
-            echo '<p id="login_error">Incorrect password</p>';
+            echo '<div id="login_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>Incorrect password</div>';
         }
     }
 }
@@ -109,25 +109,28 @@ if (isset($_POST['register'])) {
     $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 
     if ($row2['num'] > 0) {
-        echo '<p id="reg_error">That Username already exists!</p>';
+        echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>That Username already exists!</div>';
     } 
     else if ($row['num'] > 0) {
-        echo '<p id="reg_error">That Email already exists!</p>';
+        echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>That Email already exists!</div>';
     } 
     else if($username == ""){
-        echo '<p id="reg_error">You must Enter a username!</p>';
+        echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>You must Enter a username!</div>';
     }
     else if($email == ""){
-        echo '<p id="reg_error">You must Enter an email!</p>';
+        echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>You must Enter an email!</div>';
     }
     else if($password == ""){
-        echo '<p id="reg_error">You must Enter a password!</p>';
+        echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>You must Enter a password!</div>';
     }
-    elseif(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)){
-        echo '<p id="reg_error">You must enter a valid email</p>';
-    }
+//    else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)){
+//        echo '<p id="reg_error">You must enter a valid email</p>';
+//    }
+    else if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z]{8,12}$/', $password)) {
+    echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>Enter the correct password requirements</div>';
+}
     else if ($password != $confirm_password) {
-        echo '<p id="reg_error">Passwords do not match!</p>';
+        echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>Passwords do not match!</div>';
     } 
     else {
 
@@ -148,7 +151,7 @@ if (isset($_POST['register'])) {
 
         if ($result) {
             //What you do here is up to you!
-            echo '<p id="reg_success">Thank you ' . $username . ', for registering with UniMeals.</p>';
+            echo '<div id="reg_success"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-check-circle"></i><br><br>Thank you ' . $username . ', for registering with UniMeals.</div>';
         }
     }
 }

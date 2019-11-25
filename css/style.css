@@ -5,11 +5,92 @@ and open the template in the editor.
 */
 /* 
     Created on : 29-Sep-2019, 16:10:03
-    Author     : franc
+    Author     : franc/*
 */
+
+
+.container{
+
+
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    min-width: 992px !important;
+    max-width: 85em;
+    margin-left: 30px;
+
+
+}
+
+.col-lg-1{
+    position: relative;
+    margin-left: 85%;
+}
+
+.row{
+    margin-top: 1em;
+    width: 100%;
+
+}
+
+.sorting{
+    background-color: #6666ff;
+    color: white;
+    height: 60px;
+    width: 95%;
+    text-align: center;
+    padding: 10px;
+}
+
+#sort{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+    margin-right: 25%;
+    margin-top: 0.2em;
+}
+
+#order{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+
+    margin-left: 12%;
+    margin-top: -3.2em;
+    position: absolute;
+}
+
+/*.sticky {
+    position: fixed;
+    top: 100;
+    width: 63.7%;
+}*/
+
 #web_title{
     color: white;
     font-family: 'Courgette', cursive;
+}
+
+#sort_title{
+    color: white;
+    font-family: 'Courgette', cursive;
+    position: absolute;
+    margin-left: 18%;
+    margin-top: 0.5em;
+    
+}
+
+#sort_title2{
+    color: white;
+    font-family: 'Courgette', cursive;
+    
+    position: absolute;
+    margin-left: 48%;
+    margin-top: -3em;
 }
 
 .current{
@@ -17,11 +98,9 @@ and open the template in the editor.
 }
 
 .col-lg-8{
-    
+
     padding-left: 4em;
 }
-
-
 
 nav{
     background-color: #6666ff;
@@ -64,30 +143,58 @@ footer{
 }
 
 #comments{
-    border: 2px dotted red;
+    border: 2px;
+
 
 }
 
 #one_comment{
-    border: 2px solid red;
+    border: 2px solid #7f7fff;
+    border-radius: 70px;
+    background-color: white;
     padding: 4px;
 }
 
+#comment_context{
+    margin-left: 50px;
+}
+
+#comment_date{
+    font-size: 12px;
+    color: blue;
+    margin-left: 400px;
+}
+
+#report_button{
+    margin-left: 400px;
+    background-color: white;
+    border: none;
+    color: red;
+    font-size: 12px;
+}
+
 #commentInput{
-    width: 100%;
+    width: 94%;
     height: 100px;
+    margin-left: 3%;
+    margin-top: 2%;
+}
+
+#comment_button{
+    margin-left: 3%;
 }
 
 .comment_contain{
-    border: 2px solid blue;
+    border: 10px solid #b2b2ff;
     width: 100%;
-    height: 400px;
+    height: 450px;
     overflow: auto;
 }
 
 .comment_section{
-    border: 2px solid green;
+    border: 2px solid #b2b2ff;
     width: 80%;
+    background-color: #ccccff;
 
 }
 
@@ -99,7 +206,15 @@ footer{
 }
 
 #recipe_picture{
-    border: 2px solid pink;
+    border: 2px solid #6666ff;
+}
+
+#profile_picture{
+    border-radius: 50%;
+}
+
+#default_profile{
+    border-radius: 50%;
 }
 
 #likeButton{
@@ -107,47 +222,62 @@ footer{
     background-color: white;
     font-size: 3em;
     color: red;
+    outline: none;
 
+}
+
+#comment{
+    margin-top: 10px;
 }
 
 #login_error{
-    margin-top: 2em;
+    margin-top: 15%;
+    margin-left: 40%;
     position: absolute;
-    width: 200px;
+    width: 400px;
     text-align: center;
-    height: 40px;
+    height: 200px;
     background-color: white;
-    border: 2px solid red;
+    border: 10px solid red;
     color: red;
     z-index: 9;
+
+    
+    
 }
 
 #reg_error{
-    margin-top: 2em;
+    margin-top: 15%;
+    margin-left: 40%;
     position: absolute;
-    width: 250px;
+    width: 400px;
     text-align: center;
-    height: 40px;
+    height: 200px;
     background-color: white;
-    border: 2px solid red;
+    border: 10px solid red;
     color: red;
     z-index: 9;
 }
 
 #reg_success{
-    margin-top: 2em;
+    margin-top: 15%;
+    margin-left: 40%;
     position: absolute;
-    width: 400px;
+    width: 450px;
     text-align: center;
-    height: 40px;
+    height: 200px;
     background-color: white;
-    border: 2px solid limegreen;
+    border: 10px solid limegreen;
     color: limegreen;
     z-index: 9;
 }
 
 #form_title{
     color: #6666ff;
+}
+
+#form_title_report{
+    color: red;
 }
 
 #term{
@@ -165,6 +295,59 @@ footer{
     border-radius: 50%;
     border: 1px solid #6666ff;
     outline: none;
+}
+
+#report_recipe_button{
+    background-color: white;
+    color: red;
+
+}
+
+.step_line{
+    border-left: 7px solid #6666ff;
+    padding-left: 10px;
+}
+
+#step{
+    color: #6666ff;
+    font-family: 'Courgette', cursive;
+    font-size: 18px;
+}
+
+#step, #step_method{
+    display: inline;
+    position: relative;
+}
+
+
+
+
+
+#ing_table{
+    border: 3px solid black;
+
+}
+
+th{
+    color: white;
+    background-color: #3232ff;
+    font-weight: normal;
+    font-family: 'Courgette', cursive;
+    padding: 10px;
+    border: 3px solid #3232ff;
+}
+
+#mid1{
+    border-right: 3px solid white;
+}
+
+#mid{
+    border-left: 3px solid white;
+}
+
+td{
+    padding: 10px;
+    border: 3px solid #6666ff;
 }
 
 
@@ -214,211 +397,257 @@ footer{
     color: #55ACEE;
 }
 
-                       /*CSS FOR THE FILTER SYSTEM*/                        
-                
-#headingOne2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
+/*https://codepen.io/matthewcain/pen/ZepbeR*/
+
+#top_button {
+  display: inline-block;
+  background-color: #6666ff;
+  width: 50px;
+  height: 50px;
   text-align: center;
-  outline: none;
-  padding-bottom: 0px;
-  font-family: 'Muli', sans-serif;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s, 
+    opacity .5s, visibility .5s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+#top_button::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
+}
+#top_button:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+#top_button:active {
+  background-color: #555;
+}
+#top_button.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
+
+
+
+.accordion{
+    width: 200px;
+}
+
+#headingOne2 {
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    outline: none;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 
 .clicked #headingOne2 {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 
 .active, #headingOne2:hover {
-  background-color: #005aba;
-  
+    background-color: #005aba;
+
 }
 
 #headingOne2:after {
-  /*content: '\002B';  Unicode character for "plus" sign (+)*/ 
-  color: white;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
+    /*content: '\002B';  Unicode character for "plus" sign (+)*/ 
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
 }
 
 .active:after {
-  /*content: "\2212"; Unicode character for "plus" sign (-)*/ 
+    /*content: "\2212"; Unicode character for "plus" sign (-)*/ 
 }
 
 
 #headingTwo2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-  font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingTwo2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingTwo2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingThree2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingThree2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingThree2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingFour2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingFour2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingFour2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingFive2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingFive2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingFive2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingSix2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingSix2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingSix2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingSeven2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingSeven2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingSeven2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingEight2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingEight2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingEight2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingNine2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingNine2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingNine2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 #headingTen2 {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
+    background-color: #6666ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    outline: none;
     text-align: center;
-     padding-bottom: 0px;
-     font-family: 'Muli', sans-serif;
+    padding-bottom: 0px;
+    font-family: 'Muli', sans-serif;
 }
 .active, #headingTen2:hover {
-  background-color: #005aba;
+    background-color: #005aba;
 }
 
 #headingTen2:after {
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 }
 
 
@@ -427,31 +656,31 @@ footer{
 
 .filterButton
 {
-   
-   border: 1px solid #007bff;
-   cursor:pointer;
-   user-select: none;
-   transition-duration: 0.4s;
-   background-color: white;
-   text-align:center;
-   padding: 10px;
-   font-family: 'Muli', sans-serif;
+
+    border: 1px solid #6666ff;
+    cursor:pointer;
+    user-select: none;
+    transition-duration: 0.4s;
+    background-color: white;
+    text-align:center;
+    padding: 10px;
+    font-family: 'Muli', sans-serif;
 }
 
 
 
 .filterButton:hover
 {
-    
-    background-color: #007bff;
+
+    background-color: #9999ff;
     color: black;
-  
+
 }
 
 .card-body{
     padding: 0;
 }
- 
+
 /*.card
 {
     background-color: #007bff;

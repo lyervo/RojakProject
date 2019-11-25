@@ -8,11 +8,9 @@
     $mod = $_REQUEST['mod'];
     $unit = $_REQUEST['unit'];
     $recipe_id = $_REQUEST['recipeID'];
-    $vegan = 0;
+    $vegan = $_REQUEST['vegan'];
     
     $ingredient_id = getIngredientIDByName($name);
-    
-    $name = ucfirst($name);
     
     if($ingredient_id===null)
     {

@@ -1,9 +1,9 @@
 <?php
 
-function create_ticket($detail,$type,$link,$review_id,$recipe_id,$user_id)
+function create_ticket($type,$link,$review_id,$recipe_id,$user_id)
 {
     global $db;
-    $query = "insert into ticket values(null,null,'".$type."','".$detail."','".$link."','".$review_id."','".$recipe_id."','".$user_id."');";
+    $query = "insert into ticket values(null,null,'".$type."','".$link."','".$review_id."','".$recipe_id."','".$user_id."');";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();

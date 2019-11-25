@@ -4,7 +4,6 @@ include 'header.php';
 
 include "../model/db_connect.php";
 require "../recipe/recipe_db.php";
-include '../user/user_db.php';
 
 $id = $_REQUEST['id'];
 
@@ -242,8 +241,8 @@ $user = getUserByID($recipe['author']);
     {
 
         report_review_id = id;
-        getTargetComment();
-        document.getElementById("report_tab").style.display = "block";
+        //getTargetComment();
+        //document.getElementById("report_tab").style.display = "block";
     }
 
     function getTargetComment()
@@ -276,6 +275,8 @@ $user = getUserByID($recipe['author']);
 
         <!--        side div-->
         <div class="col-lg-4">
+            
+            <a id="top_button"></a>
 
             <?php
             if ($recipe['image_blob'] == null) {
@@ -284,30 +285,96 @@ $user = getUserByID($recipe['author']);
                 echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" height="280px" width="400px"/>';
             }
             ?>
-            
+
             <button id="likeButton" onclick="checkLoginStatus(1)"></button>
             <p id="likes"></p>
             <a href="#comments">write a review</a>
             <br><br>
-            <h5>Ingredents:</h5>
+            <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this recipe</a></button> 
+
+            <div class="modal fade" id="report_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <img class="img-circle" id="img_logo" src="../images/logo.jpg">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
+                            </button>
+                        </div>
+
+                        <!-- Begin # DIV Form -->
+                        <div id="div-forms">
+
+                            <!-- Begin # Login Form -->
+                            <form action="" method="post">
+                                <div class="modal-body">
+                                    <h4 id="form_title_report">Report</h4>
+
+                                    <div style="border: 1px solid black;padding:5px" id="report_drop">
+                                        <div id="targetedComment"></div>
+                                        Report this recipe: 
+                                        <select id="reportReasonRecipe" >
+                                            <option value='' selected disabled hidden>Select Reason</option>
+                                            <option value="missing allergen">Missing allergen</option>
+                                            <option value="incorrect recipe">Incorrect recipe</option>
+                                            <option value="duplicate recipe">Duplicate recipe</option>
+                                            <option value="malicious links">Malicious links</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <input type="text" id="report_textbox" name="report_reason" placeholder="enter reason for report">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div>
+                                        <input type="submit" name="report" value="Report" class="btn btn-danger">
+                                    </div>
+
+                                </div>
+
+                            </form>
+                            <!-- End # Login Form -->
+
+
+                            <!-- End | Register Form -->
+
+                        </div>
+                        <!-- End # DIV Form -->
+
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            
             <?php
+            
+            $table = "<table id='ing_table'><tr><th id='mid1'>Ingredent</th><th id='mid'>Unit</th></tr>";
+            
             foreach ($ingredients as $ing) {
                 $ingredient_name = getIngredientNameByID($ing['ingredient_id']);
 
-                echo "<p>" . $ingredient_name . ", " . $ing['amount'];
+                $table = $table . "<tr><td>" . $ingredient_name . "</td><td> " . $ing['amount'] . " ";
 
                 if ($ing['unit'] != "null") {
-                    echo " " . $ing['unit'];
+                    $table = $table . $ing['unit'];
                 }
 
                 if ($ing['modifier'] != "null") {
-                    echo "," . $ing['modifier'];
+                    $table = $table . $ing['modifier'];
                 }
 
-                echo "</p>";
+                $table = $table . "</td></tr>";
+                
             }
+            $table = $table . "</table>";
+            echo $table;
             ?>
-            <br>
+            <br><br>
             <p>Servings: <?php echo $recipe['serving'] ?></p>
 
         </div>
@@ -317,8 +384,8 @@ $user = getUserByID($recipe['author']);
         <div class="col-lg-8">
 
             <h2><?php echo $recipe['recipe_name']; ?></h2>
-            <p>By <?php echo "<a href='?action=user_profile&user_id=" . $user['user_id'] . "'>" . $user['username'] . "</a>"?>
-            
+            <p>By <?php echo "<a href='?action=user_profile&user_id=" . $user['user_id'] . "'>" . $user['username'] . "</a>" ?>
+
             <p><?php echo $recipe['description'] ?></p>
 
 
@@ -329,26 +396,25 @@ $user = getUserByID($recipe['author']);
 
             </div>
             <br>
-            Report this recipe: 
-            <select id="reportReasonRecipe" onchange='checkLoginStatus(4)'>
-                <option value='' selected disabled hidden>Select Reason</option>
-                <option value="missing allergen">Missing allergen</option>
-                <option value="incorrect recipe">Incorrect recipe</option>
-                <option value="duplicate recipe">Duplicate recipe</option>
-                <option value="malicious links">Malicious links</option>
-                <option value="other">Other</option>
-            </select>
 
-            <h5>Method</h5>
+            
+
+
+
+
+
+
+            <u style="color: #6666ff;"><h4 style="color: #6666ff; font-family: 'Courgette', cursive;">Method</h4></u>
             <?php
             $num = 1;
 
             foreach ($steps as $step) {
-                echo "<p>" . $num . ". " . $step['description'] . "</p>";
+                echo "<div class='step_line'><div id='step'>Step " . $num . ":</div>&nbsp<div id='step_method'> " . $step['description'] . "</div><br><br>" ;
                 if ($step['step_image'] == null) {
+                    echo '</div>';
                     
                 } else {
-                    echo '<img src="data:image/jpeg;base64,' . base64_encode($step['step_image']) . '" height="40px"/><br>';
+                    echo '<img id="method_image" src="data:image/jpeg;base64,' . base64_encode($step['step_image']) . '" height="200px" width="370px;"/></div><br>';
                 }
                 $num += 1;
             }
@@ -361,18 +427,64 @@ $user = getUserByID($recipe['author']);
 
 
 
-            <div style="display:none;border: 1px solid black;padding:5px" id="report_tab">
-                <div id="targetedComment"></div>
-                Report this comment: 
-                <select id="reportReason" onchange='checkLoginStatus(3)'>
-                    <option value='' selected disabled hidden>Select Reason</option>
-                    <option value="profanity">Profanity</option>
-                    <option value="advertisement">Advertisement</option>
-                    <option value="malicious link">Malicious Link</option>
-                    <option value="other">Other</option>
 
-                </select>
-                <br>
+
+            <div class="modal fade" id="report_tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <img class="img-circle" id="img_logo" src="../images/logo.jpg">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
+                            </button>
+                        </div>
+
+                        <!-- Begin # DIV Form -->
+                        <div id="div-forms">
+
+                            <!-- Begin # Login Form -->
+                            <form action="" method="post">
+                                <div class="modal-body">
+                                    <h4 id="form_title_report">Report</h4>
+
+                                    <div style="border: 1px solid black;padding:5px" id="report_drop">
+                                        <div id="targetedComment"></div>
+                                        Report this comment: 
+                                        <select id="reportReason">
+                                            <option value='' selected disabled hidden>Select Reason</option>
+                                            <option value="profanity">Profanity</option>
+                                            <option value="advertisement">Advertisement</option>
+                                            <option value="malicious link">Malicious Link</option>
+                                            <option value="other">Other</option>
+
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <input type="text" id="report_textbox" name="report_reason" placeholder="enter reason for report">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div>
+                                        <input type="submit" name="report" value="Report" class="btn btn-danger">
+                                    </div>
+
+                                </div>
+
+                            </form>
+                            <!-- End # Login Form -->
+
+
+                            <!-- End | Register Form -->
+
+                        </div>
+                        <!-- End # DIV Form -->
+
+                    </div>
+                </div>
             </div>
 
             <div class="comment_section">
@@ -382,11 +494,12 @@ $user = getUserByID($recipe['author']);
 
                 <textarea placeholder="write a comment..." id="commentInput"></textarea>
                 <br>
-                <button onclick="checkLoginStatus(2)" >Comment</button>
+                <button id="comment_button" class="btn btn-info" onclick="checkLoginStatus(2)" >Comment</button>
+                <br><br>
             </div> 
-            
+
             <br>
-            
+
             <h2>Simular Recipes</h2>
             ...
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -402,6 +515,23 @@ $user = getUserByID($recipe['author']);
 
 </div>
 <!-- /.container -->
+
+<script>
+    var btn = $('#top_button');
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop: 0}, '300');
+    });
+</script>
 
 <?php
 include 'footer.php';
