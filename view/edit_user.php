@@ -74,19 +74,19 @@ $user = getUserByID($_SESSION['user_id']);
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-10">
-                        <input type="text" name="username" class="form-control" id="inputEmail3" placeholder="<?php echo $user['username']; ?>" required>
+                        <input type="text" name="username" class="form-control" id="inputEmail3" value="<?php echo $user['username']; ?>" >
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="<?php echo $user['email']; ?>" required>
+                        <input type="email" name="email" class="form-control" id="inputEmail3" value="<?php echo $user['email']; ?>" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-2 col-form-label">New Password</label>
                     <div class="col-sm-10">
-                        <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                        <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" >
                     </div>
                 </div>
                 <div class="form-group row">

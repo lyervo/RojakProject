@@ -22,6 +22,11 @@ and open the template in the editor.
 
 }
 
+.col-lg-1{
+    position: relative;
+    margin-left: 85%;
+}
+
 .row{
     margin-top: 1em;
     width: 100%;
@@ -43,6 +48,8 @@ and open the template in the editor.
     outline: none;
     width: 150px;
     height: 35px;
+    margin-right: 25%;
+    margin-top: 0.2em;
 }
 
 #order{
@@ -51,17 +58,39 @@ and open the template in the editor.
     outline: none;
     width: 150px;
     height: 35px;
+
+    margin-left: 12%;
+    margin-top: -3.2em;
+    position: absolute;
 }
 
-.sticky {
+/*.sticky {
     position: fixed;
     top: 100;
     width: 63.7%;
-}
+}*/
 
 #web_title{
     color: white;
     font-family: 'Courgette', cursive;
+}
+
+#sort_title{
+    color: white;
+    font-family: 'Courgette', cursive;
+    position: absolute;
+    margin-left: 18%;
+    margin-top: 0.5em;
+    
+}
+
+#sort_title2{
+    color: white;
+    font-family: 'Courgette', cursive;
+    
+    position: absolute;
+    margin-left: 48%;
+    margin-top: -3em;
 }
 
 .current{
@@ -202,40 +231,43 @@ footer{
 }
 
 #login_error{
-    margin-top: 12em;
-    margin-left: 70%;
+    margin-top: 15%;
+    margin-left: 40%;
     position: absolute;
-    width: 200px;
+    width: 400px;
     text-align: center;
-    height: 40px;
+    height: 200px;
     background-color: white;
-    border: 2px solid red;
+    border: 10px solid red;
     color: red;
     z-index: 9;
+
+    
     
 }
 
 #reg_error{
-    margin-top: 2em;
-    
+    margin-top: 15%;
+    margin-left: 40%;
     position: absolute;
-    width: 250px;
+    width: 400px;
     text-align: center;
-    height: 40px;
+    height: 200px;
     background-color: white;
-    border: 2px solid red;
+    border: 10px solid red;
     color: red;
     z-index: 9;
 }
 
 #reg_success{
-    margin-top: 2em;
+    margin-top: 15%;
+    margin-left: 40%;
     position: absolute;
-    width: 400px;
+    width: 450px;
     text-align: center;
-    height: 40px;
+    height: 200px;
     background-color: white;
-    border: 2px solid limegreen;
+    border: 10px solid limegreen;
     color: limegreen;
     z-index: 9;
 }
@@ -271,6 +303,24 @@ footer{
 
 }
 
+.step_line{
+    border-left: 7px solid #6666ff;
+    padding-left: 10px;
+}
+
+#step{
+    color: #6666ff;
+    font-family: 'Courgette', cursive;
+    font-size: 18px;
+}
+
+#step, #step_method{
+    display: inline;
+    position: relative;
+}
+
+
+
 
 
 #ing_table{
@@ -279,13 +329,25 @@ footer{
 }
 
 th{
+    color: white;
+    background-color: #3232ff;
+    font-weight: normal;
+    font-family: 'Courgette', cursive;
     padding: 10px;
-    border: 3px solid red;
+    border: 3px solid #3232ff;
+}
+
+#mid1{
+    border-right: 3px solid white;
+}
+
+#mid{
+    border-left: 3px solid white;
 }
 
 td{
     padding: 10px;
-    border: 3px solid blue;
+    border: 3px solid #6666ff;
 }
 
 

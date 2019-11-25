@@ -18,6 +18,24 @@ $result = searchRecipe($term, $sort, $order);
 
 $response = "";
 
+?>
+
+<div class="sorting" id="sortNav">
+                Sort by 
+                <select id="sort">
+                    <option value="recipe_name">Name</option>
+                    <option value="time">Submitted Date</option>
+                    <option value="rating">User Rating</option>
+                    <option value="cooking_time">Cooking Time</option>
+
+                </select>
+                order by
+                <select id="order">
+                    <option value="asc">Ascending Order</option>
+                    <option value="desc">Descending Order</option>
+                </select>
+            </div>
+<?php
 
 foreach ($result as $res) {
 

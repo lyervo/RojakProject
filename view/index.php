@@ -3,7 +3,6 @@ $current = 'home';
 include 'header.php';
 require '../recipe/recipe_db.php';
 $user = showuser();
-
 ?>
 
 
@@ -301,25 +300,22 @@ $user = showuser();
         <!--        body div-->
         <div class="col-lg-9"id="result">
 
-            <div class="sorting" id="sortNav">
-                Sort by 
-                <select id="sort">
-                    <option value="recipe_name">Name</option>
-                    <option value="time">Submitted Date</option>
-                    <option value="rating">User Rating</option>
-                    <option value="cooking_time">Cooking Time</option>
+            <div class="sorting">
+                <p id="sort_title">Sort by<p> 
+                    <select id="sort">
+                        <option value="recipe_name">Name</option>
+                        <option value="time">Submitted Date</option>
+                        <option value="rating">User Rating</option>
+                        <option value="cooking_time">Cooking Time</option>
 
-                </select>
-                order by
+                    </select>
+                <p id="sort_title2">Order By</p>
                 <select id="order">
                     <option value="asc">Ascending Order</option>
                     <option value="desc">Descending Order</option>
                 </select>
             </div>
 
-
-
-            <div >Popular Recipes</div>
             <?php
             $response = '';
 
@@ -332,8 +328,8 @@ $user = showuser();
                     <div class="recipecard">
 
 
-                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($v['image_blob']) . '" height="160px" width="250px"/>'; ?>
-                        <div class="name"> <h2><?php echo $v['recipe_name'] ?></h2></div>
+                        <?php echo '<a href="?action=view_recipe&id=' . $v['recipe_id'] . '"><img src="data:image/jpeg;base64,' . base64_encode($v['image_blob']) . '" height="160px" width="250px"/></a>'; ?>
+                        <div class="name"> <h2 id="recipe_title"><?php echo "<a style='text-decoration: none; color: black;' href='?action=view_recipe&id=" . $v['recipe_id'] . "'> " . $v['recipe_name'] . "</a>" ?></h2></div>
                         <div class="prod_details_tab">
                             <?php
                             $dif = $v['difficulty'];
@@ -346,7 +342,7 @@ $user = showuser();
                                 <a>
 
                                     <i id="iconEasy" class="fas fa-utensils">
-                                        <div id="diff">Easy</div>
+                                        <div id="diff"><p id="diff_title">Easy</p></div>
                                     </i>
                                 </a>     
                                 <?php
@@ -372,17 +368,17 @@ $user = showuser();
 
                         </div>
                         <br>
-                        <p class="info"></a>By:<?php echo $v['username'] ?></p>
-                        <p class="info"></a>Cooking Time Mins: <?php echo $v['cooking_time'] ?></p>
+                        <p class="info"></a>By <?php echo "<a href='?action=user_profile&user_id=" . $v['user_id'] . "'>" . $v['username'] . "</a>" ?></p>
+                        <p class="info"></a>Cooking Time: <?php echo $v['cooking_time'] ?> min</p>
 
                         <div class="fadeingdescriptions">
                             <p><?php echo $v['description'] ?></p>
                         </div>
-                        
-                        <p><?php echo "<button><a id='view_button' href='?action=view_recipe&id=" . $v['recipe_id'] . "'>View</a></button>"?></p>
-                       
+
+                        <p><?php echo "<button id='button_view'><a id='view_button' href='?action=view_recipe&id=" . $v['recipe_id'] . "'>View</a></button>" ?></p>
+
                     </div>
-                    
+
 
                 </div>
                 <?php
@@ -392,6 +388,57 @@ $user = showuser();
 
 
 
+
+        </div>
+
+        <div class="col-lg-1">
+
+            <div class="icons">
+
+                <table>
+                    <tr>
+                        <th>
+                            diff
+                        </th>
+                        <th>
+                            forks
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            easygoing
+                        </td>
+                        <td>
+                            <i id="iconEasy"class="fas fa-utensils"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Medium
+                        </td>
+                        <td>
+                            <i id="iconEasy"class="fas fa-utensils"></i>
+                            <i id="iconEasy"class="fas fa-utensils"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Hard
+                        </td>
+                        <td>
+                            <i id="iconEasy"class="fas fa-utensils"></i>
+                            <i id="iconEasy"class="fas fa-utensils"></i>
+                            <i id="iconEasy"class="fas fa-utensils"></i>
+                        </td>
+                    </tr>
+
+
+
+
+
+
+                </table>
+            </div>
 
         </div>
 

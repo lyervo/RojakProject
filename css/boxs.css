@@ -10,12 +10,12 @@ color:#000;
 /*formatting the whole div around the card, images and others */
 .div1
 {
-    max-height: 600px;
-    min-height: 600px;
+    max-height: 520px;
+    min-height: 520px;
     padding-top:0px;
     display:inline-block;
     word-wrap:break-word;
-    padding:0px 35px 10px 10px;
+    padding:30px 35px 10px 10px;
     overflow: hidden;
 }
 
@@ -27,7 +27,6 @@ color:#000;
     padding-top:0px;
     display:inline-block;
     word-wrap:break-word;
-
     overflow: hidden;
 }
 /*css for the name inside the divs so it spaces it correctly */
@@ -35,12 +34,11 @@ color:#000;
 { 
     max-width:200px;
     min-width:200px;
-    max-height:120px;
-    min-height:120px;
+    max-height:90px;
+    min-height:90px;
     overflow: hidden;
     padding-bottom:0px;
     text-align: center;
-    background-color: pink;
     margin-left: 10%;
     margin-right: 15%;
 }
@@ -89,12 +87,12 @@ color:#000;
 
 .info {
 
-    font-size: 15px;
-    color: #6666ff;
+    font-size: 13px;
+    color: black;
     padding:0px 0 0px 0;
     font-weight:bold;
     text-align: center;
-    background-color: yellow;
+    
 }
 
 .recipecard button {
@@ -294,14 +292,32 @@ a.prod_details{
     border-radius: 5px;
 }
 
+#diff_title{
+    color: white;
+    font-family: 'Courgette', cursive;
+    font-size: 20px;
+    font-weight: normal;
+}
+
 .prod_details_tab:hover #diff{
     display: block;
 }
 
 #view_button{
+    text-decoration:none;
+    color: white;
+    display: block;
     width: 100%;
-    height: 40px;
-    background-color: blue;
+    padding: 10px;
+    background-color: #6666ff;
+}
+
+#button_view{
+    padding: 0;
+}
+
+#recipe_title{
+    font-size: 25px;
 }
 
 

@@ -350,10 +350,10 @@ $user = getUserByID($recipe['author']);
                 </div>
             </div>
             <br><br>
-            <h5>Ingredents:</h5>
+            
             <?php
             
-            $table = "<table id='ing_table'><tr><th>Ingredent</th><th>Unit</th></tr>";
+            $table = "<table id='ing_table'><tr><th id='mid1'>Ingredent</th><th id='mid'>Unit</th></tr>";
             
             foreach ($ingredients as $ing) {
                 $ingredient_name = getIngredientNameByID($ing['ingredient_id']);
@@ -404,16 +404,17 @@ $user = getUserByID($recipe['author']);
 
 
 
-            <h5>Method</h5>
+            <u style="color: #6666ff;"><h4 style="color: #6666ff; font-family: 'Courgette', cursive;">Method</h4></u>
             <?php
             $num = 1;
 
             foreach ($steps as $step) {
-                echo "<p>" . $num . ". " . $step['description'] . "</p>";
+                echo "<div class='step_line'><div id='step'>Step " . $num . ":</div>&nbsp<div id='step_method'> " . $step['description'] . "</div><br><br>" ;
                 if ($step['step_image'] == null) {
+                    echo '</div>';
                     
                 } else {
-                    echo '<img src="data:image/jpeg;base64,' . base64_encode($step['step_image']) . '" height="40px"/><br>';
+                    echo '<img id="method_image" src="data:image/jpeg;base64,' . base64_encode($step['step_image']) . '" height="200px" width="370px;"/></div><br>';
                 }
                 $num += 1;
             }
