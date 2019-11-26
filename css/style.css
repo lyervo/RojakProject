@@ -37,7 +37,7 @@ and open the template in the editor.
     background-color: #6666ff;
     color: white;
     height: 60px;
-    width: 95%;
+    width: 100%;
     text-align: center;
     padding: 10px;
 }
@@ -48,7 +48,7 @@ and open the template in the editor.
     outline: none;
     width: 150px;
     height: 35px;
-    margin-right: 25%;
+    margin-left: 10%;
     margin-top: 0.2em;
 }
 
@@ -58,8 +58,7 @@ and open the template in the editor.
     outline: none;
     width: 150px;
     height: 35px;
-
-    margin-left: 12%;
+    margin-left: 22%;
     margin-top: -3.2em;
     position: absolute;
 }
@@ -79,7 +78,7 @@ and open the template in the editor.
     color: white;
     font-family: 'Courgette', cursive;
     position: absolute;
-    margin-left: 18%;
+    margin-left: 37%;
     margin-top: 0.5em;
     
 }
@@ -89,12 +88,27 @@ and open the template in the editor.
     font-family: 'Courgette', cursive;
     
     position: absolute;
-    margin-left: 48%;
+    margin-left: 59%;
     margin-top: -3em;
+}
+
+#sort_title3{
+    color: white;
+    font-family: 'Courgette', cursive;
+    position: absolute;
+    margin-left: 0%;
+    
+    
 }
 
 .current{
     border-bottom: 3px solid white;
+}
+
+#icons
+{
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 .col-lg-8{
@@ -149,8 +163,14 @@ footer{
 }
 
 #one_comment{
-    border: 2px solid #7f7fff;
-    border-radius: 70px;
+    border-bottom: 2px solid whitesmoke; 
+    border-top: 2px solid whitesmoke;
+    border-left: 5px solid #6666ff;
+   
+    
+/*    border-bottom: 5px;
+    border-color: red;*/
+/*    border-radius: 70px;*/
     background-color: white;
     padding: 4px;
 }
@@ -184,18 +204,24 @@ footer{
     margin-left: 3%;
 }
 
-.comment_contain{
+/*.comment_contain{
     border: 10px solid #b2b2ff;
     width: 100%;
     height: 450px;
-    overflow: auto;
-}
+    
+}*/
 
 .comment_section{
-    border: 2px solid #b2b2ff;
+    
     width: 80%;
-    background-color: #ccccff;
+    background-color: white;
+    height: auto;
+    word-wrap: break-word;
 
+}
+
+#charcount{
+    font-size: 13px;
 }
 
 #profile_pic{
@@ -437,7 +463,9 @@ td{
 }
 
 
-
+#heart{
+    font-weight: normal;
+}
 
 
 

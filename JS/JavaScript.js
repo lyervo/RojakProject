@@ -1,3 +1,33 @@
+function init()
+{
+    document.getElementById("term").addEventListener("keydown",
+        function(event)
+        {
+            if(event.keyCode==13)
+            {
+                
+                searchRecipe();
+            }
+        });
+    changeColorOnHover();
+    getAllRecipe();
+}
+
+function getAllRecipe()
+{
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                
+                document.getElementById("result").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "../recipe/getAllRecipe.php", true);
+        xmlhttp.send();
+}
+
 function searchRecipe()
 {
     var term = document.getElementById("term").value;
@@ -19,6 +49,8 @@ function searchRecipe()
 
     var checked = false;
 
+    var searchByTag = false;
+
     for (var i = 0; i < tags.length; i++)
     {
         if (tags[i].checked)
@@ -38,6 +70,10 @@ function searchRecipe()
     if (!checked)
     {
         tagString = "null";
+        
+    }else
+    {
+        searchByTag = true;
     }
 
     checked = false;
@@ -64,26 +100,36 @@ function searchRecipe()
     if (!checked)
     {
         noTagString = "null";
+    }else
+    {
+        searchByTag = true;
     }
 
-    if (term.length == 0)
+    if (term.length == 0&&searchByTag)
+    {
+        term = "null";
+
+    } else if(term.length == 0)
     {
         document.getElementById("result").innerHTML = "";
-
-    } else
-    {
+        return;
+    }
+    
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
+                
                 document.getElementById("result").innerHTML = this.responseText;
             }
         };
         xmlhttp.open("GET", "../recipe/search_recipe.php?term=" + term + "&sort=" + sort + "&order=" + order + "&tag=" + tagString + "&noTag=" + noTagString, true);
         xmlhttp.send();
-    }
+    
 }
+
+
 
 function collapsible(){
 var coll = document.getElementsByClassName("collapsible");
@@ -115,6 +161,7 @@ function checkTag(tagName)
     {
         if(tags[i].value == tagName)
         {
+            
             tags[i].checked = !tags[i].checked;
             if(tags[i].checked)
             {
@@ -281,3 +328,6 @@ function changeColourOnHoverButton()
     }
     
 }
+
+
+

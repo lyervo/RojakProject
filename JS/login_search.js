@@ -1,4 +1,7 @@
-
+function inti()
+{
+    recommendRecipe();
+}
 
 function searchRecipe()
 {

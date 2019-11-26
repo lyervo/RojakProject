@@ -7,12 +7,17 @@
     
     $user_id = $_REQUEST['user_id'];
     $recipe_id = $_REQUEST['recipe_id'];
-    
     $response = getLike($recipe_id, $user_id);
     
     
     
     
     
-    echo $response;
+    if(empty($response))
+    {
+        echo -1;
+    }else
+    {
+        echo 1;
+    }
     

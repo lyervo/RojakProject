@@ -172,4 +172,27 @@ function add_user_image($user_id,$blob)
     $statement->closeCursor();
 }
 
+
+
+function getUserByReviewID($review_id)
+{
+    global $db;
+    $query = "select user.username,user.email from user inner join review on user.user_id = review.user_id where review.review_id = ".$review_id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
+
+function getUserByRecipeID($recipe_id)
+{
+    global $db;
+    $query = "select user.username,user.email from user inner join recipe on user.user_id = recipe.author where recipe.recipe_id = ".$recipe_id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+}
 ?>

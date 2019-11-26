@@ -41,7 +41,6 @@ function suggestIngredient(i)
 
 function insertIngredientStep(recipeID)
 {
-    alert(recipeID);
     for (var i = 0; i < ingredientAjax.length; i++)
     {
         ajaxRecipeIngredientRequest(ingredientAjax[i] + "&recipeID=" + recipeID);

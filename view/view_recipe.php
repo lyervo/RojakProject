@@ -15,42 +15,50 @@ $steps = getStepByID($id);
 
 $user = getUserByID($recipe['author']);
 ?>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
-    init();
+
 
     var user_id;
 
-
+    var review_id;
 
     function init()
     {
+        console.log("init");
+        checkLoginStatus(0);
         refreshComments();
         refreshLikes();
 
         setInterval(refreshComments, 5000);
         setInterval(refreshLikes, 10000);
-        checkLike();
+        
+        
     }
 
     function checkLike()
     {
+       
+       
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
+                
                 if (this.responseText == 1)
                 {
                     document.getElementById("likeButton").innerHTML = "<i class='fas fa-heart'></i>";
                 } else
                 {
+                   
                     document.getElementById("likeButton").innerHTML = "<i class='far fa-heart'></i>";
                 }
             }
         };
-        xmlhttp.open("GET", "../like/checkLiked.php?recipe_id=" +<?php echo $id ?> + "&user_id=" + 1, true);
+        xmlhttp.open("GET", "../like/checkLiked.php?recipe_id=" +<?php echo $id ?> + "&user_id=" + user_id, true);
         xmlhttp.send();
     }
 
@@ -70,16 +78,14 @@ $user = getUserByID($recipe['author']);
 
     function refreshComments()
     {
-
-        console.log("Im upddating the comments");
-
+        
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
-                document.getElementById("comments").innerHTML = this.responseText;
-
+                
+                document.getElementById("getComments").innerHTML = this.responseText;
             }
         };
         xmlhttp.open("GET", "../review/getReviews.php?recipe_id=" +<?php echo $id ?>, true);
@@ -92,9 +98,10 @@ $user = getUserByID($recipe['author']);
 
         var comment = document.getElementById("commentInput").value;
 
+
         if (comment.length === 0)
         {
-
+            
         } else
         {
             var xmlhttp = new XMLHttpRequest();
@@ -102,7 +109,9 @@ $user = getUserByID($recipe['author']);
             {
                 if (this.readyState == 4 && this.status == 200)
                 {
+                    console.log(this.responseText);
                     refreshComments();
+                    
                 }
             };
 
@@ -120,14 +129,8 @@ $user = getUserByID($recipe['author']);
         {
             if (this.readyState == 4 && this.status == 200)
             {
-                if (this.responseText == 1)
-                {
-                    document.getElementById("likeButton").innerHTML = "<i class='fas fa-heart'></i>";
-
-                } else
-                {
-                    document.getElementById("likeButton").innerHTML = "<i class='far fa-heart'></i>";
-                }
+                
+                checkLike();
 
                 refreshLikes();
             }
@@ -149,9 +152,9 @@ $user = getUserByID($recipe['author']);
             {
 
                 like();
+                
             } else if (task === 2)
             {
-
                 comment();
             } else if (task === 3)
             {
@@ -162,6 +165,7 @@ $user = getUserByID($recipe['author']);
 
                 submitReportRecipe();
             }
+            return;
         }
 
         var xmlhttp = new XMLHttpRequest();
@@ -187,13 +191,22 @@ $user = getUserByID($recipe['author']);
                     {
                         user_id = this.responseText;
                         submitReportRecipe();
+                    }else
+                    {
+                        
+                        user_id = this.responseText;
+                        checkLike();
+                       
                     }
 
 
                 } else
                 {
-                    alert("Sorry, you need to login to perform this action.");
-                    $('#login-modal').modal('show');
+                    if(task!=0)
+                    {
+                        alert("Sorry, you need to login to perform this action.");
+                        $('#login-modal').modal('show');
+                    }
                 }
             }
         };
@@ -203,8 +216,15 @@ $user = getUserByID($recipe['author']);
 
     function submitReportComment()
     {
+        
+        var type = document.getElementById("reportReasonReview").value;
+        var detail = document.getElementById("report_detail_textbox").value;
 
-        var type = document.getElementById("reportReason").value;
+        if(detail=="")
+        {
+            alert("You must provide details for your report");
+            return;
+        }
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
@@ -212,9 +232,10 @@ $user = getUserByID($recipe['author']);
             if (this.readyState == 4 && this.status == 200)
             {
                 alert(this.responseText);
+                review_id = 0;
             }
         };
-        xmlhttp.open("GET", "../ticket/submitTicket.php?action=1&recipe_id=" +<?php echo $id ?> + "&type=" + type + "&review_id=" + report_review_id, true);
+        xmlhttp.open("GET", "../ticket/submitTicket.php?action=1&user_id=0&recipe_id=" +<?php echo $id ?> + "&type=" + type + "&review_id=" + review_id + "&detail="+detail, true);
         xmlhttp.send();
     }
 
@@ -222,6 +243,14 @@ $user = getUserByID($recipe['author']);
     {
 
         var type = document.getElementById("reportReasonRecipe").value;
+        
+        var detail = document.getElementById("report_textbox").value;
+
+        if(detail=="")
+        {
+            alert("You must provide details for your report");
+            return;
+        }
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
@@ -231,7 +260,7 @@ $user = getUserByID($recipe['author']);
                 alert(this.responseText);
             }
         };
-        xmlhttp.open("GET", "../ticket/submitTicket.php?action=1&recipe_id=" +<?php echo $id ?> + "&type=" + type + "&review_id=0", true);
+        xmlhttp.open("GET", "../ticket/submitTicket.php?action=1&recipe_id=" +<?php echo $id ?> + "&type=" + type + "&review_id=0" + "&user_id=0&detail="+detail, true);
         xmlhttp.send();
     }
 
@@ -264,6 +293,17 @@ $user = getUserByID($recipe['author']);
 
     }
 
+    function setReviewId(id)
+    {
+        review_id = id;
+    }
+
+
+
+    function charcountupdate(str) {
+	var lng = str.length;
+	document.getElementById("charcount").innerHTML = lng + ' out of 250 characters';
+}
 
 </script>
 
@@ -299,7 +339,7 @@ $user = getUserByID($recipe['author']);
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header" align="center">
-                            <img class="img-circle" id="img_logo" src="../images/logo.jpg">
+                            <i style="font-size: 3em; color: red; text-align: center;" class='fas fa-flag'></i>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
                             </button>
@@ -436,7 +476,7 @@ $user = getUserByID($recipe['author']);
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header" align="center">
-                            <img class="img-circle" id="img_logo" src="../images/logo.jpg">
+                            <i style="font-size: 3em; color: red; text-align: center;" class='fas fa-flag'></i>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
                             </button>
@@ -486,16 +526,22 @@ $user = getUserByID($recipe['author']);
                     </div>
                 </div>
             </div>
+            
+            <u style="color: #6666ff;"><h4 style="color: #6666ff; font-family: 'Courgette', cursive;">Review Section</h4></u>
 
             <div class="comment_section">
+                <textarea onkeyup="charcountupdate(this.value)" maxlength="250" placeholder="write a comment..." id="commentInput"></textarea>
+                <br>
+                <button id="comment_button" class="btn btn-primary" onclick="checkLoginStatus(2)" >Comment</button>
+                 <span id="charcount"></span>
+                <br><br>
                 <div class="comment_contain">
                     <div id="comments">Reviews</div>
+                    <div id="getComments"></div>
                 </div>
 
-                <textarea placeholder="write a comment..." id="commentInput"></textarea>
-                <br>
-                <button id="comment_button" class="btn btn-info" onclick="checkLoginStatus(2)" >Comment</button>
-                <br><br>
+                
+                
             </div> 
 
             <br>

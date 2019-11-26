@@ -11,11 +11,28 @@ $user = showuser();
 <div class="container">
 
     <div class="row">
+        
+        <div class="sorting">
+            <p id="sort_title3"> <input  type="text" id="term" placeholder="Search..."><button id="search_icon" onclick="searchRecipe()"><i class="fas fa-search"></i></button></p>
+                <p id="sort_title">Sort by<p> 
+                    <select id="sort" onchange="searchRecipe()">
+                        <option value="recipe_name">Name</option>
+                        <option value="time">Submitted Date</option>
+                        <option value="rating">User Rating</option>
+                        <option value="cooking_time">Cooking Time</option>
+
+                    </select>
+                <p id="sort_title2">Order By</p>
+                <select id="order" onchange="searchRecipe()">
+                    <option value="asc">Ascending Order</option>
+                    <option value="desc">Descending Order</option>
+                </select>
+            </div>
 
         <!--        side div-->
         <div class="col-lg-3">
 
-            <input type="text" id="term" placeholder="Search..."><button id="search_icon" onclick="searchRecipe()"><i class="fas fa-search"></i></button>
+            
 
             <br><br>
 
@@ -287,113 +304,9 @@ $user = showuser();
                 </div>
 
             </div>
-
-
-
-
-
-
-
-        </div>
-        <!-- /.col-lg-3 -->
-
-        <!--        body div-->
-        <div class="col-lg-9"id="result">
-
-            <div class="sorting">
-                <p id="sort_title">Sort by<p> 
-                    <select id="sort">
-                        <option value="recipe_name">Name</option>
-                        <option value="time">Submitted Date</option>
-                        <option value="rating">User Rating</option>
-                        <option value="cooking_time">Cooking Time</option>
-
-                    </select>
-                <p id="sort_title2">Order By</p>
-                <select id="order">
-                    <option value="asc">Ascending Order</option>
-                    <option value="desc">Descending Order</option>
-                </select>
-            </div>
-
-            <?php
-            $response = '';
-
-            foreach ($user as $v) {
-                ?>
-
-                <div class="div1">
-
-
-                    <div class="recipecard">
-
-
-                        <?php echo '<a href="?action=view_recipe&id=' . $v['recipe_id'] . '"><img src="data:image/jpeg;base64,' . base64_encode($v['image_blob']) . '" height="160px" width="250px"/></a>'; ?>
-                        <div class="name"> <h2 id="recipe_title"><?php echo "<a style='text-decoration: none; color: black;' href='?action=view_recipe&id=" . $v['recipe_id'] . "'> " . $v['recipe_name'] . "</a>" ?></h2></div>
-                        <div class="prod_details_tab">
-                            <?php
-                            $dif = $v['difficulty'];
-                            $easy = 'Easy';
-                            $medium = 'Medium';
-                            $hard = 'Hard';
-
-                            if ($v['difficulty'] == $easy) {
-                                ?>
-                                <a>
-
-                                    <i id="iconEasy" class="fas fa-utensils">
-                                        <div id="diff"><p id="diff_title">Easy</p></div>
-                                    </i>
-                                </a>     
-                                <?php
-                            }
-                            if ($v['difficulty'] == $hard) {
-                                ?>
-
-                                <a>
-                                    <i id="icon1Hard" class="fas fa-utensils"></i></a> 
-                                <a>
-                                    <i id="icon2Hard" class="fas fa-utensils"></i></a> 
-                                <a>
-                                    <i id="icon3Hard" class="fas fa-utensils"></i></a>
-                                <?php
-                            }
-                            if ($v['difficulty'] == $medium) {
-                                ?>
-                                <a>
-                                    <i id="icon1Med" class="fas fa-utensils"></i></a> 
-                                <a>
-                                    <i id="icon2Med" class="fas fa-utensils"></i></a> 
-                            <?php } ?>
-
-                        </div>
-                        <br>
-                        <p class="info"></a>By <?php echo "<a href='?action=user_profile&user_id=" . $v['user_id'] . "'>" . $v['username'] . "</a>" ?></p>
-                        <p class="info"></a>Cooking Time: <?php echo $v['cooking_time'] ?> min</p>
-
-                        <div class="fadeingdescriptions">
-                            <p><?php echo $v['description'] ?></p>
-                        </div>
-
-                        <p><?php echo "<button id='button_view'><a id='view_button' href='?action=view_recipe&id=" . $v['recipe_id'] . "'>View</a></button>" ?></p>
-
-                    </div>
-
-
-                </div>
-                <?php
-            }
-            ?>  
-
-
-
-
-
-        </div>
-
-        <div class="col-lg-1">
-
-            <div class="icons">
+            <br>
+            
+            <div id="icons">
 
                 <table>
                     <tr>
@@ -440,7 +353,33 @@ $user = showuser();
                 </table>
             </div>
 
+
+
+
+
+
+
         </div>
+        <!-- /.col-lg-3 -->
+
+        <!--        body div-->
+        <div class="col-lg-9"id="result">
+
+            
+
+           
+
+
+
+
+
+        </div>
+
+        
+
+            
+
+        
 
 
         <!-- /.col-lg-9 -->
@@ -469,10 +408,10 @@ $user = showuser();
     });
 </script>
 
-<!--<script>
+<script>
 window.onscroll = function() {myFunction()};
 
-var sort = document.getElementById("sortNav");
+var sort = document.getElementById("icons");
 var sticky = sort.offsetTop;
 
 function myFunction() {
@@ -483,7 +422,7 @@ function myFunction() {
   }
 }
 
-</script>-->
+</script>
 
 <?php
 include 'footer.php';

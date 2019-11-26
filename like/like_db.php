@@ -23,6 +23,16 @@ function likeRecipe($recipe_id,$user_id)
     
 }
 
+function deleteLikeByID($recipe_id)
+{
+    global $db;
+    $query = "delete from likes where recipe_id = ".$recipe_id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+
+    $statement->closeCursor();
+    
+}
 
 
 function getLike($recipe_id,$user_id)
@@ -33,6 +43,7 @@ function getLike($recipe_id,$user_id)
     $statement->execute();
     $result = $statement->fetch();
     $statement->closeCursor();
+    
     return $result;
 }
 
