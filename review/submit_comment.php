@@ -13,3 +13,5 @@
     $recipe_id = $_REQUEST['recipe_id'];
     
     create_review($review, $user_id, $recipe_id);
+    
+    echo "operation done";

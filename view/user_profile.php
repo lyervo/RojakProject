@@ -85,6 +85,7 @@ $user = getUserByID($id);
     {
 
         var type = document.getElementById("reportReasonUser").value;
+        var detail = document.getElementById("report_textbox_user").value;
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
@@ -94,7 +95,7 @@ $user = getUserByID($id);
                 alert(this.responseText);
             }
         };
-        xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&user_id=" +<?php echo $id ?> + "&type=" + type, true);
+        xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&recipe_id=0&review_id=0&user_id=" +<?php echo $id ?> + "&type=" + type +"&detail="+detail, true);
         xmlhttp.send();
     }
 
@@ -139,7 +140,7 @@ $user = getUserByID($id);
             </div>
 
             <h2>Uploaded Recipes</h2>
-            no posts yet :(
+
             <?php
             if (isset($_SESSION['user_id'])) {
                 if ($_SESSION['user_id'] == $user['user_id']) {
@@ -150,18 +151,88 @@ $user = getUserByID($id);
             <br>
             
 
-            Report this user: 
-            <select id="reportReasonUser" onchange='checkLoginStatus(1)'>
-                <option value='' selected disabled hidden>Select Reason</option>
-                <option value="illegal content">Illegal content</option>
-                <option value="impersonation">Impersonation</option>
-                <option value="malicious link">Malicious Link</option>
-                <option value="other">Other</option>
-
-            </select>
+            <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this user</a></button> 
+            
+            <?php
+            
+            if(isset($_SESSION['user_id']))
+            {
+                if($_SESSION['user_id'] == $user['user_id'])
+                {
+                    include "../recipe/getUserListOfRecipe.php";
+                }else
+                {
+                    include "../recipe/getUserListOfRecipeVisitor.php";
+                }  
+            }else
+            {
+                include "../recipe/getUserListOfRecipeVisitor.php";
+            }
+            
+            ?>
+            
         </div>
     </div>
+    
+    <div class="modal fade" id="report_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <i style="font-size: 3em; color: red; text-align: center;" class='fas fa-flag'></i>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
+                            </button>
+                        </div>
+
+                        <!-- Begin # DIV Form -->
+                        <div id="div-forms">
+
+                            <!-- Begin # Login Form -->
+                           
+                                <div class="modal-body">
+                                    <h4 id="form_title_report">Report</h4>
+
+                                    <div style="border: 1px solid black;padding:5px" id="report_drop">
+                                        <div id="targetedComment"></div>
+                                        Report this user: 
+                                        <select id="reportReasonUser">
+                                            <option value='' selected disabled hidden>Select Reason</option>
+                                            <option value="impersonation">Impersonation</option>
+                                            <option value="profanity">Profanity</option>
+                                            <option value="malicious link">Malicious Link</option>
+                                            <option value="other">Other</option>
+
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <input type="text" id="report_textbox_user" name="report_reason" placeholder="enter reason for report">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div>
+                                        <input type="submit" name="report" value="Report" class="btn btn-danger" onclick="submitReportUser()">
+                                    </div>
+
+                                </div>
+
+                          
+                            <!-- End # Login Form -->
+
+
+                            <!-- End | Register Form -->
+
+                        </div>
+                        <!-- End # DIV Form -->
+
+                    </div>
+                </div>
+            </div>
 </div>
+
 
 <?php
 include 'footer.php';

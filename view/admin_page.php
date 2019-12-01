@@ -207,6 +207,7 @@
             function checkLoginAdminStatus()
             {
                 
+                
                 var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function()
                     {
@@ -233,7 +234,11 @@
             function getTickets()
             {
  
-
+                var type = document.getElementById("type").value;
+                var content = document.getElementById("content").value;
+                var order = document.getElementById("report_order").value;
+                var sort = document.getElementById("report_sort").value;
+                
                 var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function()
                     {
@@ -242,7 +247,7 @@
                             document.getElementById("tickets").innerHTML = this.responseText;
                         }
                     };
-                    xmlhttp.open("GET", "../ticket/getTickets.php?order=ticket_id", true);
+                    xmlhttp.open("GET", "../ticket/getTickets.php?order="+sort+"&asc="+order+"&content="+content+"&type="+type, true);
                     xmlhttp.send();
             
             }
@@ -423,7 +428,19 @@
                     xmlhttp.send();
             }
             
-            
+            function setWarning(ticket_id)
+            {
+                var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                        {
+                            
+                        }
+                    };
+                    xmlhttp.open("GET", "../ticket/set_warning.php?ticket_id="+ticket_id, true);
+                    xmlhttp.send();
+            }
         
         </script>
         
@@ -445,7 +462,40 @@
             <input type="number" id="strikes">
             <button onclick="checkUserAdmin(0,3)">Deleted</button>
         </div>
+        Sort By:
+        <select id="report_sort" onchange="getTickets()" class="ignore-class">
+            <option value="date_submitted">Submitted Date</option>
+            <option value="deadline">Deadline</option>
+        </select>
+       
+        <select id="report_order" onchange="getTickets()" class="ignore-class">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+        <br>
+        Content Type:
+        <select id="content" onchange="getTickets()">
+            <option value="all">All</option>
+            <option value="user">User</option>
+            <option value="recipe">Recipe</option>
+            <option value="review">Review</option>
+        </select>
         
+        <br>
+        Report Type:
+        <select id="type" onchange="getTickets()">
+            <option value="all">All</option>
+            <option value="profanity">Profanity</option>
+            <option value="impersonation">Impersonation</option>
+            <option value="malicious links">Malicious Links</option>
+            <option value="missing allergen">Missing Allergen</option>
+            <option value="incorrect recipe">Incorrect recipe</option>
+            <option value=""></option>
+        </select>
+        <br>
+        <div>
+        
+       
         <div id="tickets"></div>
     </body>
 </html>

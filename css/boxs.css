@@ -10,8 +10,7 @@ color:#000;
 /*formatting the whole div around the card, images and others */
 .div1
 {
-    max-height: 520px;
-    min-height: 520px;
+    
     padding-top:0px;
     display:inline-block;
     word-wrap:break-word;
@@ -20,8 +19,9 @@ color:#000;
 }
 
 .div2
-{   max-height: 690px;
-    min-height: 690px;
+{   
+    max-height: 520px;
+    min-height: 520px;
     padding:50% 50%  50%;
     padding-left:50px;
     padding-top:0px;
@@ -85,6 +85,14 @@ color:#000;
     padding:10px 10px 10px 10px;
 }
 
+div.sticky{
+    position: -webkit-sticky;
+    position: fixed;
+    top:0;
+    padding-top:70px;
+  
+}
+
 .info {
 
     font-size: 13px;
@@ -111,26 +119,7 @@ color:#000;
     opacity: 0.7;
 }
 
-div.sticky{
-    position: -webkit-sticky;
-    position: fixed;
-    margin-left:90%;
 
-    float:right;
-    top:0;
-    height:250px;
-    background-color:#6666ff;
-    padding:0px;
-    font-size:20px;
-    max-height: 250px;
-}
-.sticky
-{
-    max-height: 250px;
-    float:right;
-
-
-}
 
 /*--------Two below scale the boxs---------*/
 .product_title{

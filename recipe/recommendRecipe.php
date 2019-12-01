@@ -30,7 +30,7 @@
     foreach($resultA as $res)
     {
         $response = "";
-        echo "<p><b><h1>".getTagNameById($res['tag_id'])."</h1></b></p>";
+        
         $result = getRecipeWithTag(getTagNameById($res['tag_id']));
         if(empty($result))
         {
@@ -41,12 +41,14 @@
             foreach ($result as $resTag) 
             {
 
-                $response = $response . "<p><h2><a href='?action=view_recipe&id=" . $resTag['recipe_id'] . "'>" . $resTag['recipe_name'] . "</h2></a></p><p>" . $resTag['description'] . "</p>";
+                $response = $response . printRecipe($resTag);
 
 
             }
             echo $response;
         }
         
-    }echo $response;
+    }
+    
+    echo $response;
     

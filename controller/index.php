@@ -10,8 +10,20 @@ if ($action == NULL) {
 
 switch($action){
 case 'home':
-    $bodyTag = "<body>";
+    $bodyTag = "<body onload='init()')>";
     include('../view/index.php');
+    break;
+
+case 'admin_page';
+    $bodyTag = "<body onload='getTickets()'>";
+    $current = "admin_page";
+    include('../view/admin_page.php');
+    break;
+
+case 'edit_recipe';
+    $bodyTag = "<body onload='init()'";
+    $current = "edit_recipe";
+    include('../view/editRecipe.php');
     break;
 
 case 'about':

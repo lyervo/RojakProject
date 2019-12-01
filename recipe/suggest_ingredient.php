@@ -5,6 +5,7 @@
     
     
     $name = $_REQUEST['name'];
+    $id = $_REQUEST['id'];
     
     $results = searchIngredient($name);
     
@@ -12,7 +13,7 @@
     
     foreach($results as $result)
     {
-        $response = $response."<p>".$result['ingredient_name']."</p>";
+        $response = $response."<button onclick=\"setIngredient('".$id."','".$result['ingredient_name']."')\">".$result['ingredient_name']."</button>";
     }
     
     echo $response;
