@@ -40,7 +40,7 @@ function getTickets($order,$type,$content,$asc)
             $query = $query."review_id = 0 and recipe_id = 0 ";
         }else if($content == "review")
         {
-            $query = $query."user_id = 0 ";
+            $query = $query."user_id = 0 and not(review_id = 0)";
         }else if($content == "recipe")
         {
             $query = $query."review_id = 0 and user_id = 0 ";
@@ -49,6 +49,8 @@ function getTickets($order,$type,$content,$asc)
     }
     
     $query = $query.'order by '.$order.' '.$asc;
+    
+
     
     $statement = $db->prepare($query);
     $statement->execute();
@@ -114,3 +116,21 @@ function setTicketDeadline($ticket_id)
     
 }
 
+function setRecipeWarning($ticket)
+{
+    global $db;
+    $warning = "Warning: This recipe has been mark by the admin for the following reason - ".$ticket['ticket_type']." - ".$ticket['detail'].", caution is adviced for users who intend to follow this recipe.";
+    $query = "update recipe set warning = '".$warning."' where recipe_id=".$ticket['recipe_id'];
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function removeRecipeWarning($ticket)
+{
+    global $db;
+    $query = "update recipe set warning = null where recipe_id=".$ticket['recipe_id'];
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
+}

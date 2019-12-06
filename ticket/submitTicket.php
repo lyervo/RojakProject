@@ -19,13 +19,13 @@
     
     if($user_id!=0)
     {
-        $link = "user_profile.php?user_id=".$user_id;
+        $link = "?action=user_profile&user_id=".$user_id;
     }else if($review_id!=0)
     {
-        $link = "view_recipe.php?id=".$recipe_id."#review".$review_id;
+        $link = "?action=view_recipe&id=".$recipe_id."#review".$review_id;
     }else
     {
-        $link = "view_recipe.php?id=".$recipe_id;
+        $link = "?action=view_recipe&id=".$recipe_id;
     }
     create_ticket($detail,$type,$link,$review_id,$recipe_id,$user_id);
     echo "Report Submitted";

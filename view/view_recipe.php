@@ -4,7 +4,8 @@ include 'header.php';
 
 include "../model/db_connect.php";
 require "../recipe/recipe_db.php";
-
+require "../like/like_db.php";
+require 'print_unit_select.php';
 $id = $_REQUEST['id'];
 
 $recipe = getRecipeByID($id);
@@ -27,7 +28,15 @@ $user = getUserByID($recipe['author']);
 
     function init()
     {
-        console.log("init");
+        document.getElementById("commentInput").addEventListener("keydown",
+        function(event)
+        {
+            if(event.keyCode==13)
+            {
+                
+                comment();
+            }
+        });
         checkLoginStatus(0);
         refreshComments();
         refreshLikes();
@@ -37,16 +46,89 @@ $user = getUserByID($recipe['author']);
         
         
     }
+    
+    function convertValue(i)
+    {
+        
+        
+        var oriUnit = document.getElementById("oriUnit"+i).value;
+        var oriValue = document.getElementById("oriValue"+i).value;
+        
+        var result;
+        
+        var newUnit = document.getElementById("unit"+i).value;
+        
+        
+        
+        switch(oriUnit)
+        {
+            case "g":
+                result = oriValue;
+                break;
+            
+            case "kg":
+                result = oriValue*1000;
+                break;
+            
+            case "ml":
+                result = oriValue;
+                break;
+                
+            case "l":
+                result = oriValue*1000;
+                break;
+                
+            case "lb":
+                result = oriValue*453.592;
+                break;
+            
+            case "oz":
+                result = oriValue*28.3495;
+                break;
+                
+        }
+        
+        switch(newUnit)
+        {
+            case "g":
+                result = oriValue;
+                break;
+            
+            case "kg":
+                result = oriValue/1000;
+                break;
+            
+            case "ml":
+                result = oriValue;
+                break;
+                
+            case "l":
+                result = oriValue/1000;
+                break;
+                
+            case "lb":
+                result = oriValue/453.592;
+                break;
+            
+            case "oz":
+                result = oriValue/28.3495;
+                break;
+        }
+        
+        document.getElementById("amount"+i).innerHTML = result;
+        
+    }
 
     function checkLike()
     {
-       
-       
+
+     
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
             if (this.readyState == 4 && this.status == 200)
             {
+                
                 
                 if (this.responseText == 1)
                 {
@@ -109,7 +191,7 @@ $user = getUserByID($recipe['author']);
             {
                 if (this.readyState == 4 && this.status == 200)
                 {
-                    console.log(this.responseText);
+                    document.getElementById("commentInput").value = "";
                     refreshComments();
                     
                 }
@@ -141,7 +223,6 @@ $user = getUserByID($recipe['author']);
 
     }
 
-    var user_id;
 
     function checkLoginStatus(task)
     {
@@ -173,6 +254,9 @@ $user = getUserByID($recipe['author']);
         {
             if (this.readyState == 4 && this.status == 200)
             {
+            
+                
+    
                 if (this.responseText >= 1)
                 {
                     if (task === 1)
@@ -194,12 +278,11 @@ $user = getUserByID($recipe['author']);
                     }else
                     {
                         
-                        user_id = this.responseText;
-                        checkLike();
+                        
                        
                     }
-
-
+                    
+                    
                 } else
                 {
                     if(task!=0)
@@ -210,6 +293,7 @@ $user = getUserByID($recipe['author']);
                 }
             }
         };
+        
         xmlhttp.open("GET", "../user/checkLoginStatus.php", true);
         xmlhttp.send();
     }
@@ -217,8 +301,8 @@ $user = getUserByID($recipe['author']);
     function submitReportComment()
     {
         
-        var type = document.getElementById("reportReasonReview").value;
-        var detail = document.getElementById("report_detail_textbox").value;
+        var type = document.getElementById("reportReasonComment").value;
+        var detail = document.getElementById("report_textbox_comment").value;
 
         if(detail=="")
         {
@@ -326,8 +410,41 @@ $user = getUserByID($recipe['author']);
             }
             ?>
 
-            <button id="likeButton" onclick="checkLoginStatus(1)"></button>
+            <button id="likeButton" onclick="checkLoginStatus(1)">
+                
+                <?php
+                    
+                
+                    if(isset($_SESSION['user_id']))
+                    {
+                        $check = getLike($id, $_SESSION['user_id']);
+                        if(empty($check))
+                        {
+                            echo "<i class='far fa-heart'></i>";
+                        } else
+                        {
+                            echo "<i class='fas fa-heart'></i>";
+                            
+                        }
+                        
+                    }else
+                    {
+                        echo "<i class='far fa-heart'></i>";
+                    }
+                
+                ?>
+                
+                
+            </button>
             <p id="likes"></p>
+            <?php
+            
+            if($recipe['warning'] != null)
+            {
+                echo "<p style='color:red;'>".$recipe['warning']."</p>";
+            }
+            
+            ?>
             <a href="#comments">write a review</a>
             <br><br>
             <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this recipe</a></button> 
@@ -349,7 +466,7 @@ $user = getUserByID($recipe['author']);
                         <div id="div-forms">
 
                             <!-- Begin # Login Form -->
-                            <form action="" method="post">
+                            
                                 <div class="modal-body">
                                     <h4 id="form_title_report">Report</h4>
 
@@ -372,12 +489,12 @@ $user = getUserByID($recipe['author']);
                                 </div>
                                 <div class="modal-footer">
                                     <div>
-                                        <input type="submit" name="report" value="Report" class="btn btn-danger">
+                                        <input type="submit" name="report" value="Report" class="btn btn-danger" onclick="submitReportRecipe()">
                                     </div>
 
                                 </div>
 
-                            </form>
+                         
                             <!-- End # Login Form -->
 
 
@@ -393,22 +510,48 @@ $user = getUserByID($recipe['author']);
             
             <?php
             
-            $table = "<table id='ing_table'><tr><th id='mid1'>Ingredent</th><th id='mid'>Unit</th></tr>";
+            $table = "<table id='ing_table'><tr><th id='mid1'>Ingredent</th><th id='mid'>Amount</th><th id='mid'>Unit</th><th id='mid'>Modifier</th></tr>";
             
+            $i = 1;
             foreach ($ingredients as $ing) {
                 $ingredient_name = getIngredientNameByID($ing['ingredient_id']);
 
-                $table = $table . "<tr><td>" . $ingredient_name . "</td><td> " . $ing['amount'] . " ";
+                $table = $table . "<tr><td>" . $ingredient_name . "</td><td id='amount".$i."'> " . $ing['amount'] . "</td>";
 
-                if ($ing['unit'] != "null") {
-                    $table = $table . $ing['unit'];
+                if ($ing['unit'] != "null")
+                {
+                    if($ing['unit'] == 'g' || $ing['unit'] == 'kg' || $ing['unit'] == 'lb' || $ing['unit'] == 'oz' || $ing['unit'] == 'l' || $ing['unit'] == 'ml')
+                    {
+                        $table = $table."<td><select id='unit".$i."'onchange='convertValue(".$i.")'>";
+                        $table = $table.print_unit_select('g', $ing['unit']);
+                        $table = $table.print_unit_select('kg', $ing['unit']);
+                        $table = $table.print_unit_select('l', $ing['unit']);
+                        $table = $table.print_unit_select('ml', $ing['unit']);
+                        $table = $table.print_unit_select('oz', $ing['unit']);
+                        $table = $table.print_unit_select('lb', $ing['unit']);
+                       
+                        $table = $table."</select></td>";
+                        $table = $table."<input type='hidden' id='oriValue".$i."' value='".$ing['amount']."'>";
+                        $table = $table."<input type='hidden' id='oriUnit".$i."' value='".$ing['unit']."'>";
+                        
+                    }else
+                    {
+                        $table = $table . "<td>".$ing['unit']."</td>";
+                    }
+                    
+                }else
+                {
+                    $table = $table."<td></td>";
                 }
 
                 if ($ing['modifier'] != "null") {
-                    $table = $table . $ing['modifier'];
+                    $table = $table ."<td>" .$ing['modifier']."</td>";
+                }else
+                {
+                    $table = $table."<td></td>";
                 }
 
-                $table = $table . "</td></tr>";
+                $table = $table . "</tr>";
                 
             }
             $table = $table . "</table>";
@@ -446,6 +589,14 @@ $user = getUserByID($recipe['author']);
 
             <u style="color: #6666ff;"><h4 style="color: #6666ff; font-family: 'Courgette', cursive;">Method</h4></u>
             <?php
+            if($recipe['youtube'] == null || $recipe['youtube'] == "null")
+            {
+                
+            }else
+            {
+                echo '<a href="'.$recipe['youtube'].'"><i class="fab fa-youtube"></i>Click here for a video Tutorial</a>';
+            }
+            
             $num = 1;
 
             foreach ($steps as $step) {
@@ -454,13 +605,15 @@ $user = getUserByID($recipe['author']);
                     echo '</div>';
                     
                 } else {
-                    echo '<img id="method_image" src="data:image/jpeg;base64,' . base64_encode($step['step_image']) . '" height="200px" width="370px;"/></div><br>';
+                    echo '<img class="method_image" src="data:image/jpeg;base64,' . base64_encode($step['step_image']) . '" height="200px" width="370px;"/></div><br>';
                 }
                 $num += 1;
             }
+            
+            
             ?>
 
-            <a href="#"><i class="fab fa-youtube"></i>Click here for a video Tutorial</a>
+            
 
             <br><br>
 
@@ -486,14 +639,14 @@ $user = getUserByID($recipe['author']);
                         <div id="div-forms">
 
                             <!-- Begin # Login Form -->
-                            <form action="" method="post">
+                           
                                 <div class="modal-body">
                                     <h4 id="form_title_report">Report</h4>
 
                                     <div style="border: 1px solid black;padding:5px" id="report_drop">
                                         <div id="targetedComment"></div>
                                         Report this comment: 
-                                        <select id="reportReason">
+                                        <select id="reportReasonComment">
                                             <option value='' selected disabled hidden>Select Reason</option>
                                             <option value="profanity">Profanity</option>
                                             <option value="advertisement">Advertisement</option>
@@ -504,17 +657,17 @@ $user = getUserByID($recipe['author']);
                                         <br>
                                     </div>
 
-                                    <input type="text" id="report_textbox" name="report_reason" placeholder="enter reason for report">
+                                    <input type="text" id="report_textbox_comment" name="report_reason" placeholder="enter reason for report">
 
                                 </div>
                                 <div class="modal-footer">
                                     <div>
-                                        <input type="submit" name="report" value="Report" class="btn btn-danger">
+                                        <input type="submit" name="report" value="Report" class="btn btn-danger" onclick="submitReportComment()">
                                     </div>
 
                                 </div>
 
-                            </form>
+                          
                             <!-- End # Login Form -->
 
 
@@ -546,8 +699,7 @@ $user = getUserByID($recipe['author']);
 
             <br>
 
-            <h2>Simular Recipes</h2>
-            ...
+            
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 

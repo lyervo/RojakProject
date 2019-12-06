@@ -63,11 +63,11 @@ and open the template in the editor.
     position: absolute;
 }
 
-/*.sticky {
+.sticky {
     position: fixed;
     top: 100;
     width: 63.7%;
-}*/
+}
 
 #web_title{
     color: white;
@@ -80,13 +80,13 @@ and open the template in the editor.
     position: absolute;
     margin-left: 37%;
     margin-top: 0.5em;
-    
+
 }
 
 #sort_title2{
     color: white;
     font-family: 'Courgette', cursive;
-    
+
     position: absolute;
     margin-left: 59%;
     margin-top: -3em;
@@ -97,8 +97,8 @@ and open the template in the editor.
     font-family: 'Courgette', cursive;
     position: absolute;
     margin-left: 0%;
-    
-    
+
+
 }
 
 .current{
@@ -107,8 +107,8 @@ and open the template in the editor.
 
 #icons
 {
-  position: -webkit-sticky;
-  position: sticky;
+    position: -webkit-sticky;
+    position: sticky;
 }
 
 .col-lg-8{
@@ -166,13 +166,18 @@ footer{
     border-bottom: 2px solid whitesmoke; 
     border-top: 2px solid whitesmoke;
     border-left: 5px solid #6666ff;
-   
     
-/*    border-bottom: 5px;
-    border-color: red;*/
-/*    border-radius: 70px;*/
+
+    border-bottom: 5px;
+
     background-color: white;
     padding: 4px;
+}
+
+#save_change{
+    background-color: #007bff;
+    color: white;
+    border: none;
 }
 
 #comment_context{
@@ -181,7 +186,7 @@ footer{
 
 #comment_date{
     font-size: 12px;
-    color: blue;
+    color: #6666ff;
     margin-left: 400px;
 }
 
@@ -204,20 +209,19 @@ footer{
     margin-left: 3%;
 }
 
-/*.comment_contain{
-    border: 10px solid #b2b2ff;
-    width: 100%;
-    height: 450px;
-    
-}*/
+
 
 .comment_section{
-    
+
     width: 80%;
     background-color: white;
     height: auto;
     word-wrap: break-word;
 
+}
+
+#user_page_recipe_title{
+    color: black;
 }
 
 #charcount{
@@ -229,6 +233,14 @@ footer{
     height: 220px;
     border-radius: 50%;
     border: 2px solid red;
+}
+
+#delete_button{
+    background-color: white ;
+    border: none;
+    color: red;
+    padding: 0;
+    
 }
 
 #recipe_picture{
@@ -252,8 +264,20 @@ footer{
 
 }
 
+#likes{
+    font-family: 'Courgette', cursive;
+    color: #6666ff;
+}
+
 #comment{
     margin-top: 10px;
+}
+
+#edit_form{
+    border-left: 5px solid #6666ff;
+    border-bottom: 2px solid whitesmoke;
+    border-top: 2px solid whitesmoke;
+    padding: 10px;
 }
 
 #login_error{
@@ -268,8 +292,8 @@ footer{
     color: red;
     z-index: 9;
 
-    
-    
+
+
 }
 
 #reg_error{
@@ -343,6 +367,50 @@ footer{
 #step, #step_method{
     display: inline;
     position: relative;
+}
+
+#report_sort{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+    margin-left: 0.5em;
+    margin-top: -0.4em;
+    position: absolute;
+}
+
+#report_order{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+    margin-left: 0.5em;
+    margin-top: -0.4em;
+    position: absolute;
+}
+
+.reportContentType{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+    margin-left: 0.5em;
+    margin-top: -0.4em;
+    position: absolute;
+}
+
+.reportType{
+    border: 2px solid blue;
+    border-radius: 20px;
+    outline: none;
+    width: 150px;
+    height: 35px;
+    margin-left: 0.5em;
+    margin-top: -0.4em;
+    position: absolute;
 }
 
 
@@ -426,40 +494,40 @@ td{
 /*https://codepen.io/matthewcain/pen/ZepbeR*/
 
 #top_button {
-  display: inline-block;
-  background-color: #6666ff;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  transition: background-color .3s, 
-    opacity .5s, visibility .5s;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 1000;
+    display: inline-block;
+    background-color: #6666ff;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, 
+        opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
 }
 #top_button::after {
-  content: "\f077";
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2em;
-  line-height: 50px;
-  color: #fff;
+    content: "\f077";
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
 }
 #top_button:hover {
-  cursor: pointer;
-  background-color: #333;
+    cursor: pointer;
+    background-color: #333;
 }
 #top_button:active {
-  background-color: #555;
+    background-color: #555;
 }
 #top_button.show {
-  opacity: 1;
-  visibility: visible;
+    opacity: 1;
+    visibility: visible;
 }
 
 
@@ -495,7 +563,7 @@ td{
 }
 
 #headingOne2:after {
-    /*content: '\002B';  Unicode character for "plus" sign (+)*/ 
+  
     color: white;
     font-weight: bold;
     float: right;
@@ -503,7 +571,7 @@ td{
 }
 
 .active:after {
-    /*content: "\2212"; Unicode character for "plus" sign (-)*/ 
+
 }
 
 
@@ -708,6 +776,10 @@ td{
 .card-body{
     padding: 0;
 }
+
+.ignore-css{all:unset;}
+
+
 
 /*.card
 {

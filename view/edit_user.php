@@ -1,7 +1,7 @@
 <?php
 $current = 'home';
 include 'header.php';
-
+include '../user/editUser.php';
 $user = getUserByID($_SESSION['user_id']);
 ?>
 
@@ -10,6 +10,21 @@ $user = getUserByID($_SESSION['user_id']);
 
 
 <script>
+    
+    function checkSize(file) 
+    {
+        var size = file.files[0].size / 1024 / 1024; 
+        if (size > 0.5)
+        {
+            
+            return false;
+
+        } else
+        {
+            return true;
+        }
+    }
+    
     function uploadUserImage()
     {
 
@@ -21,16 +36,25 @@ $user = getUserByID($_SESSION['user_id']);
         if (imageFileInput.value.length > 0)
         {
             var image_file = imageFileInput.files[0];
-
+            
+            
             formData.append('image_file', image_file, "user_image");
         } else
         {
             alert("Please provide an image");
+            return;
         }
+        
+        if(!checkSize(imageFileInput))
+        {
+            alert("File size must be less than 0.5 mb");
+            return;
+        }
+        
 
 
 
-        formData.append("user_id", user_id);
+        formData.append("user_id", <?php echo $user['user_id']; ?>);
 
 
 
@@ -62,27 +86,69 @@ $user = getUserByID($_SESSION['user_id']);
     <div class="row">
 
         <!--        side div-->
-        <div class="col-lg-10">
+        <div class="col-lg-7">
 
+            <h2 style="color: #6666ff;"><i class="fas fa-user-cog"></i>&nbsp;Account Settings</h2>
+            <br><br>
+     
 
-            <form action="" method="post">
-
+            
                 Upload your profile
                 <input type="file" name="image_file" id="image_file">
-                <button onclick='checkLoginStatus(0)'>Upload Profile Image</button>
-                
+                <button onclick="uploadUserImage()">Upload Profile Image</button>
+            
+
+            <br>
+            
+            <form action="" method="post" id="edit_form">
+
+                <input type="hidden" name="id" value="<?php echo $user['user_id'] ?>" />
+
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-10">
-                        <input type="text" name="username" class="form-control" id="inputEmail3" value="<?php echo $user['username']; ?>" >
+                        <input type="text" name="username" class="form-control" id="inputEmail3" placeholder="<?php echo $user['username']; ?>"  >
                     </div>
                 </div>
+                
+
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="submit" name="edit_user" value="Save Changes" class="btn btn-primary">
+                        
+                    </div>
+                </div>
+            </form>
+            
+            <br>
+
+            <form action="" method="post" id="edit_form">
+
+                <input type="hidden" name="id" value="<?php echo $user['user_id'] ?>" />
+
+               
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" name="email" class="form-control" id="inputEmail3" value="<?php echo $user['email']; ?>" required>
+                        <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="<?php echo $user['email']; ?>" >
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="submit" name="edit_email" value="Save Changes" class="btn btn-primary">
+                        
+                    </div>
+                </div>
+            </form>
+
+            <br>
+
+            <form action="" method="post" id="edit_form">
+
+
+
+                <input type="hidden" name="id" value="<?php echo $user['user_id'] ?>" />
                 <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-2 col-form-label">New Password</label>
                     <div class="col-sm-10">
@@ -99,11 +165,12 @@ $user = getUserByID($_SESSION['user_id']);
 
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <input type="submit" name="edit_user" value="Save Changes" class="btn login_btn">
+                        <input type="submit" name="edit_password" value="Save Changes" class="btn btn-primary">
                     </div>
                 </div>
             </form>
-
+            <br><br>
+           <?php echo ' <a href="../controller/?action=user_profile&user_id="' .$_SESSION['user_id'].'">Return to user page</a>';?>
         </div>
         <!-- /.col-lg-3 -->
 

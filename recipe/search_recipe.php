@@ -14,6 +14,8 @@ $noTag = $_REQUEST['noTag'];
 $result = searchRecipe($term, $sort, $order);
 
 
+$tag = strtolower($tag);
+$noTag = strtolower($noTag);
 
 
 $response = "";

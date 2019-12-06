@@ -24,8 +24,8 @@
     {
         echo '<div id="stepInputGroup1">'
         . '<input id="step1" type="text" placeholder="Enter step 1...">'
-                . '<img id="stepImagePreview1" height="200" class="previewImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">'
-                . 'Upload an image for Step 1:<input id="stepImage1" type="file" onchange="checkFile(this)">'
+                . '<img id="stepImagePreview1" height="200" class="previewImage">'
+                . 'Upload an image for Step 1:<input id="stepImage1" type="file" onclick="removeImage(1)" onchange="checkFile(this)">'
                 . '<button onclick="removeStep(1)">Remove Step 1</button></div>'
                 ."<input type='hidden' id='stepCount' value='".$count."'>";
     }

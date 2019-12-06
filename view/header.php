@@ -5,6 +5,7 @@ include '../user/user_db.php';
 
 if (isset($_SESSION['user_id'])) {
     $userl = getUserByIDPicture($_SESSION['user_id']);
+    $user = getUserByID($_SESSION['user_id']);
 }
 ?>
 <html lang="en">
@@ -24,7 +25,7 @@ if (isset($_SESSION['user_id'])) {
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="../css/footer.css" rel="stylesheet" type="text/css"/>
-        
+        <link href="../css/about.css" rel="stylesheet" type="text/css"/>
         <!-- FAVICON -->
         <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
         
@@ -46,9 +47,9 @@ if (isset($_SESSION['user_id'])) {
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Muli:700&display=swap" rel="stylesheet">
 
-        <script src="../JS/JavaScript.js" type="text/javascript"></script>
+       
 
-<!--        <script src="../JS/addRecipe.js" type="text/javascript"></script>-->
+
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v5.0"></script>
 
@@ -74,6 +75,11 @@ echo $bodyTag;
                 ?> class="nav-item">
                     <a class="nav-link" href="../controller/?action=home">Home</a>
                 </li>
+                
+                
+                
+                
+                
                 <li <?php
                 if ($current == 'about') {
                     echo 'class="current"';
@@ -88,19 +94,39 @@ echo $bodyTag;
                                 <a class="nav-link" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="default_profile" src="../images/fbp.jpg" height="22px" width="22px" />&nbsp;<i class="fas fa-sort-down"></i></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" href="../controller/?action=user_profile&user_id=' . $_SESSION['user_id'] . '">View Profile</a>
-                                    <a class="dropdown-item" href="../controller/?action=submit_recipe">Upload A Recipe</a>
+                                    <a class="dropdown-item" href="../controller/?action=submit_recipe">Upload A Recipe</a>';
+                    
+                    if($user['admin']==1)
+                    {
+                      
+                        echo '<a class="dropdown-item" href="?action=admin_page">Admin Page</a>';
+                             
+                    }
+                    
+                    echo '
                                     <a class="dropdown-item" href="?action=logout">Logout</a>
                                 </div>
                             </div>
                             </li>';
                 } else if (isset($_SESSION['user_id']) && $userl['user_image'] != null) {
+                    
+                    
+                    
                     echo '<li class="nav-item-user">
                                 <div class="dropdown">
                                 <a class="nav-link" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="profile_picture" src="data:image/jpeg;base64,' . base64_encode($userl['user_image']) . '" height="22px" width="22px"/>&nbsp;<i class="fas fa-sort-down"></i></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" href="../controller/?action=user_profile&user_id=' . $_SESSION['user_id'] . '">View Profile</a>
-                                    <a class="dropdown-item" href="../controller/?action=submit_recipe">Upload A Recipe</a>
-                                    <a class="dropdown-item" href="?action=logout">Logout</a>
+                                    <a class="dropdown-item" href="../controller/?action=submit_recipe">Upload A Recipe</a>';
+                                    
+                    if($user['admin']==1)
+                    {
+                      
+                        echo '<a class="dropdown-item" href="?action=admin_page">Admin Page</a>';
+                             
+                    }
+
+                    echo '<a class="dropdown-item" href="?action=logout">Logout</a>
                                 </div>
                             </div>
                             </li>';
@@ -110,6 +136,7 @@ echo $bodyTag;
                             </li>';
                 }
                 ?>
+                
 
 
 

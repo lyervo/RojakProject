@@ -8,7 +8,7 @@ function create_recipe($name, $desc, $serving, $time, $difficulty, $author_id, $
     $statement->closeCursor();
 }
 
-function create_recipe_with_image($name, $desc, $serving, $time, $difficulty, $author_id, $youtube, $blob) {
+function create_recipe_with_image($name, $desc, $serving, $time, $difficulty, $author_id, $blob,$youtube) {
     global $db;
     $query = "insert into recipe values(null,'" . $name . "','" . $desc . "','" . $serving . "','" . $difficulty . "'," . $time . ",1," . $author_id . ",null,null,'" . $youtube . "',:blob);";
     $statement = $db->prepare($query);
@@ -25,22 +25,23 @@ function create_recipe_ingredient($ingredientID, $recipeID, $amount, $unit, $mod
     $statement->closeCursor();
 }
 
-function create_step($recipeID, $step) {
+function create_step($recipeID, $step,$step_order) {
     global $db;
-    $query = "insert into step values(" . $recipeID . ",null,'" . $step . "',null);";
+    $query = "insert into step values(" . $recipeID . ",null,".$step_order.",'" . $step . "',null);";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
 }
 
-function create_step_with_image($recipeID, $step, $blob) {
+function create_step_with_image($recipeID, $step, $step_order,$blob) {
     global $db;
-    $query = "insert into step values(:id,null,:step,:blob);";
+    $query = "insert into step values(:id,null,:step_order,:step,:blob);";
 
     $statement = $db->prepare($query);
     $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->bindParam(':id', $recipeID);
     $statement->bindParam(':step', $step);
+    $statement->bindParam(':step_order',$step_order);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -92,7 +93,7 @@ function getRecipeIngredientByID($id) {
 
 function getStepByID($id) {
     global $db;
-    $query = "select * from step where recipe_id = '" . $id . "'";
+    $query = "select * from step where recipe_id = '" . $id . "' order by step_order";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -259,7 +260,7 @@ function filterResults($tag, $noTag, $recipe_id) {
     foreach ($result as $res) {
 
         if ($noTag !== "null") {
-            if (in_array($res['tag_name'], $noTags)) {
+            if (in_array(strtolower($res['tag_name']), $noTags)) {
                 $valid = false;
             }
         }
@@ -267,7 +268,7 @@ function filterResults($tag, $noTag, $recipe_id) {
         $second_valid = false;
         if ($tag !== "null") {
             foreach ($tags as $t) {
-                $value = strcmp($t, $res['tag_name']);
+                $value = strcmp($t, strtolower($res['tag_name']));
                 if ($value === 0) {
                     $size_valid = $size_valid + 1;
 
@@ -331,13 +332,7 @@ function getRecipeWithTag($tag) {
     return $result;
 }
 
-function setRecipeWarning($recipe_id, $warning) {
-    global $db;
-    $query = "update recipe set warning = '" . $detail . "' where recipe_id = " . $recipe_id;
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $statement->closeCursor();
-}
+
 
 function getAuthorByRecipeId($recipe_id) {
     global $db;
@@ -462,7 +457,7 @@ function showuser() {
 
 function getAllRecipe() {
     global $db;
-    $query = " SELECT * from recipe";
+    $query = " SELECT * from recipe order by rand() ";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -486,12 +481,12 @@ function printRecipe($recipe) {
     $response = $response . '<div class="name"> <h2 id="recipe_title"><a style="text-decoration: none; color: black;" href="?action=view_recipe&id=' . $recipe['recipe_id'] . '">' . $recipe['recipe_name'] . '</h2></div>
                             <div class="prod_details_tab">';
 
-    $dif = $recipe['difficulty'];
-    $easy = 'Easy';
-    $medium = 'Medium';
-    $hard = 'Hard';
+    $dif = strtolower($recipe['difficulty']);
+    $easy = 'easy';
+    $medium = 'medium';
+    $hard = 'hard';
 
-    if ($recipe['difficulty'] == $easy) {
+    if ($dif == $easy) {
 
         $response = $response . '<a>
                                     <i id="iconEasy" class="fas fa-utensils">
@@ -499,7 +494,7 @@ function printRecipe($recipe) {
                                     </i>
                                 </a> ';
     }
-    if ($recipe['difficulty'] == $hard) {
+    if ($dif == $hard) {
 
         $response = $response . '<a>
                                     <i id="icon1Hard" class="fas fa-utensils"></i></a> 
@@ -509,7 +504,7 @@ function printRecipe($recipe) {
                                     <i id="icon3Hard" class="fas fa-utensils"></i></a>';
     }
 
-    if ($recipe['difficulty'] == $medium) {
+    if ($dif == $medium) {
 
         $response = '<a>
                                     <i id="icon1Med" class="fas fa-utensils"></i></a> 
@@ -527,7 +522,12 @@ function printRecipe($recipe) {
 }
 
 function print_my_recipe($recipe) {
-    $respnse = "<tr><td><a href='../controller/?action=view_recipe&id=" . $recipe['recipe_id'] . "'>" . $recipe['recipe_name'] . "</a></td><td><a href='../controller/?action=edit_recipe&recipe_id=" . $recipe['recipe_id'] . "'>Edit this recipe</a></td><td><button onclick='deleteRecipe(" . $recipe['recipe_id'] . ")'>Delete Recipe</button></td></tr>";
+    $response = "<div class='div1'><div class='uploadRecipeCard'><a href='../controller/?action=view_recipe&id=" . $recipe['recipe_id'] . "'><img id='recipe_picture' src='data:image/jpeg;base64," . base64_encode($recipe['image_blob']) . "' height='120px' width='220px'/><br><br><h5 id='user_page_recipe_title'>" . $recipe['recipe_name'] . "</h5></a><br><div class ='user_option'><a href='../controller/?action=edit_recipe&recipe_id=" . $recipe['recipe_id'] . "'><i class='fas fa-edit'></i>&nbspEdit this recipe</a><br><button id='delete_button' onclick='deleteRecipe(" . $recipe['recipe_id'] . ")'><i class='fas fa-trash-alt'></i>&nbsp&nbspDelete Recipe</button></div></div></div>";
+    return $response;
+}
+
+function print_my_recipe_visitor($recipe) {
+    $respnse = "<div class='div1'><div class='uploadRecipeCard'><a href='../controller/?action=view_recipe&id=" . $recipe['recipe_id'] . "'><img id='recipe_picture' src='data:image/jpeg;base64," . base64_encode($recipe['image_blob']) . "' height='120px' width='220px'/><br><br><h5 id='user_page_recipe_title'>" . $recipe['recipe_name'] . "</h5></a><br></div></div>";
     return $respnse;
 }
 

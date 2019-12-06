@@ -11,13 +11,17 @@
     
     
     
-    
-    
-    if(empty($response))
+    if(!is_numeric($user_id))
     {
         echo -1;
     }else
     {
-        echo 1;
-    }
     
+        if(empty($response))
+        {
+            echo -1;
+        }else
+        {
+            echo 1;
+        }
+    }

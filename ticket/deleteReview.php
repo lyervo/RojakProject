@@ -1,10 +1,10 @@
 <?php
 
     include "../model/db_connect.php";
-    require "ticket_db.php";
-    require "../review/review_db.php";
-    require "../user/user_db.php";
-    require '../recipe/recipe_db.php';
+    require_once "ticket_db.php";
+    require_once "../review/review_db.php";
+    require_once "../user/user_db.php";
+    require_once '../recipe/recipe_db.php';
     
     $review_id = $_REQUEST['review_id'];
     $recipe_id = $_REQUEST['recipe_id'];

@@ -4,6 +4,7 @@
     require "like_db.php";
     
     
+    
     $recipe_id = $_REQUEST['recipe_id'];
     
     $likes = getLikeCount($recipe_id);

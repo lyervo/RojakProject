@@ -56,6 +56,7 @@
         function init()
         {
             document.getElementById("recipeName").addEventListener("input",checkDuplicateNameExceptOwn());
+           
             br = document.createElement("br");
             checkLoginStatus(0);
             stepTab = document.getElementById("stepCount").value;
@@ -63,6 +64,37 @@
             tagTab = document.getElementById("tagCount").value;
             resetSrc();
             
+        }
+        
+        function checkPreviewImage()
+        {
+            var image = document.getElementById("previewImageMain");
+                
+            var data = image.src;
+
+            if(data == "")
+            {
+                //not performing any action since there is no image for uploading
+                ajaxRecipeRequest();
+                return;
+            }
+
+            var img = new Image();
+            var c = document.createElement("canvas");
+            var ctx = c.getContext("2d");
+            img.onload = function ()
+            {
+                c.width = this.naturalWidth;     
+                c.height = this.naturalHeight;
+                ctx.drawImage(this, 0, 0);       
+                c.toBlob(function (blob)
+                {  
+                    ajaxRecipeRequest(blob);
+                }, "image/jpeg", 0.75);
+            };
+            img.crossOrigin = "";             
+
+            img.src = image.src;
         }
         
         function suggestIngredient(i)
@@ -669,7 +701,7 @@
             }
         }
 
-        ajaxRecipeRequest();
+        checkPreviewImage();
     }
     
         function insertIngredientStep(recipeID)
@@ -696,6 +728,8 @@
         
             for (var i = 1; i <= stepTab; i++)
             {
+                console.log("Loop");
+                console.log(i+"+"+id);
                 //preBlobStepRequest -> postBlobStepRequest -> Finish operation
                 preBlobStepRequest(i,"stepImagePreview"+i,id);
 
@@ -715,10 +749,11 @@
         
         var image = document.getElementById(imgId);
                 
+        var data = image.src;
         
-        
-        if(data = "")
+        if(data == "")
         {
+            console.log("call");
             //not performing any action since there is no image for uploading
             postBlobStepRequest(i,recipeId);
             return;
@@ -734,6 +769,7 @@
             ctx.drawImage(this, 0, 0);       
             c.toBlob(function (blob)
             {        
+                console.log("run");
                 postBlobStepRequest(i,recipeId,blob);
             }, "image/jpeg", 0.75);
         };
@@ -752,7 +788,7 @@
             
             formData.append("step", step);
             formData.append("recipe_id", recipeId);
-
+            formData.append("step_order",i);
             
             if (blob != null)
             {
@@ -763,7 +799,7 @@
             {
                 if (this.readyState == 4 && this.status == 200)
                 {
-                    
+                    console.log(this.responseText);
                 }
             };
             
@@ -771,7 +807,7 @@
             xmlhttp.send(formData);
     }
 
-    function ajaxRecipeRequest()
+    function ajaxRecipeRequest(blob)
     {
         var time = document.getElementById("recipeTime").value;
         var recipeName = document.getElementById("recipeName").value;
@@ -788,11 +824,10 @@
         var formData = new FormData();
 
         var imageFileInput = document.getElementById('image_file');
-        if (imageFileInput.value.length > 0)
+        if (blob!=null)
         {
-            var image_file = imageFileInput.files[0];
             
-            formData.append('image_file', image_file, "recipe_image");
+            formData.append('image_file', blob, "recipe_image");
         }
         formData.append('time', time);
         formData.append('recipe_name', recipeName);
@@ -909,7 +944,12 @@
         }
     }
     
-    
+    function removeImage(i)
+    {
+        
+        document.getElementById("stepImagePreview"+i).src = "#";
+    }
+
         
         
     

@@ -30,7 +30,7 @@
     foreach($resultA as $res)
     {
         $response = "";
-        echo "<p><b><h1>".getTagNameById($res['tag_id'])."</h1></b></p>";
+        
         $result = getRecipeWithTag(getTagNameById($res['tag_id']));
         if(empty($result))
         {

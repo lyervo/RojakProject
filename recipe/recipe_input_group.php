@@ -32,12 +32,12 @@ function generateStepInputGroup($i,$step)
     
     if($step['step_image'] == "null" || $step['step_image'] == null)
     {
-        $response = $response.'<img id="stepImagePreview'.$i.'" height="200" class="previewImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">';
+        $response = $response.'<img id="stepImagePreview'.$i.'" height="200" class="previewImage">';
     }else
     {
         $response = $response.'<img id="stepImagePreview'.$i.'" height="200" class="previewImage" src="data:image/jpeg;base64,' . base64_encode($step['step_image']) . '">';
     }
-    $response = $response. 'Upload an image for Step '.$i.':<input id="stepImage'.$i.'" type="file"  onchange="checkFile(this)">'
+    $response = $response. 'Upload an image for Step '.$i.':<input id="stepImage'.$i.'" type="file" onclick="removeImage('.$i.')" onchange="checkFile(this)">'
             . '<button onclick="removeStep('.$i.')">Remove Step '.$i.'</button></div>';
     return $response;
 }

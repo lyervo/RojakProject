@@ -71,10 +71,10 @@
                         
                         $response = $response."<td><a id='review_".$review['review_id']."'href='user_profile.php?user_id=".$review['user_id']."'>".$review['username']."</a><p>".$review['comment']."</p><i>".$review['review_date']."</i></td>";
 
-                        $response = $response."<td><button onclick='checkUserAdmin(".$review['review_id'].",1)'>Delete</button></td><td><button onclick='checkUserAdmin(".$res['ticket_id'].",2)'>Remove this report</button></td><td>".$mail."</td><td>".$res['deadline_info']."</td><td>".$res['deadline']."</td></tr>";
+                        $response = $response."<td><button  onclick='checkUserAdmin(".$review['review_id'].",1)' >Delete</button></td><td><button onclick='checkUserAdmin(".$res['ticket_id'].",2)'>Remove this report</button></td><td>".$mail."</td><td>".$res['deadline_info']."</td><td>".$res['deadline']."</td></tr>";
                     }else
                     {
-                         $response = $response."<td></td><td><button onclick='checkUserAdmin(".$res['recipe_id'].",6)'>Delete</button></td><td><button onclick='checkUserAdmin(".$res['ticket_id'].",2)'>Remove this report</button></td><td>".$mail."</td><td>".$res['deadline_info']."</td><td>".$res['deadline']."</td></tr>";
+                         $response = $response."<td></td><td><button class='btn btn-primary' onclick='checkUserAdmin(".$res['recipe_id'].",6)'>Delete</button></td><td><button class='btn btn-primary' onclick='checkUserAdmin(".$res['ticket_id'].",2)'>Remove this report</button></td><td>".$mail."</td><td>".$res['deadline_info']."</td><td>".$res['deadline']."</td></tr>";
 
                     }
 
