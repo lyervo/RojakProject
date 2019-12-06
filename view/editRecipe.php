@@ -1015,18 +1015,18 @@
             <div>
             <p>Exclude:</p>
             <p style="color:red">Attention: Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
-            <input type="checkbox" value="no_wheat" class="noTag">Wheat<br>
-            <input type="checkbox" value="no_crustacean" class="noTag">Crustaceans<br>
-            <input type="checkbox" value="no_egg" class="noTag">Egg<br>
-            <input type="checkbox" value="no_fish" class="noTag">Fish<br>
-            <input type="checkbox" value="no_peanut" class="noTag">Peanuts<br>
-            <input type="checkbox" value="no_soy" class="noTag">Soy<br>
-            <input type="checkbox" value="no_milk" class="noTag">Milk<br>
-            <input type="checkbox" value="no_nuts" class="noTag">Nuts<br>
-            <input type="checkbox" value="no_celery" class="noTag">Celery<br>
-            <input type="checkbox" value="no_mustard" class="noTag">Mustard<br>
-            <input type="checkbox" value="no_sesame" class="noTag">Sesame<br>
-            <input type="checkbox" value="no_shellfish" class="noTag">Shellfish<br>
+            <input type="checkbox" value="Gluten Allergy" class="noTag">Gluten<br>
+            <input type="checkbox" value="Crustacean Allergy" class="noTag">Crustaceans<br>
+            <input type="checkbox" value="Egg Allergy" class="noTag">Egg<br>
+            <input type="checkbox" value="Fish Allergy" class="noTag">Fish<br>
+            <input type="checkbox" value="Peanuts Allergy" class="noTag">Peanuts<br>
+            <input type="checkbox" value="Soy Allergy" class="noTag">Soy<br>
+            <input type="checkbox" value="Lactose Allergy" class="noTag">Lactose<br>
+            <input type="checkbox" value="Nut Allergy" class="noTag">Nuts<br>
+            <input type="checkbox" value="Celery Allergy" class="noTag">Celery<br>
+            <input type="checkbox" value="Mustard Allergy" class="noTag">Mustard<br>
+            <input type="checkbox" value="Sesame Allergy" class="noTag">Sesame<br>
+            <input type="checkbox" value="Shellfish Allergy" class="noTag">Shellfish<br>
 
             
             <p>Optional: Provide a You Tube tutorial video</p>

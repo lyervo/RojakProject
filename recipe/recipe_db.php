@@ -289,8 +289,9 @@ function filterResults($tag, $noTag, $recipe_id) {
 function getUserFrequentTags($user_id) {
     global $db;
     $query = "SELECT recipe_tag.tag_id,COUNT(recipe_tag.tag_id) "
-            . "FROM recipe_tag INNER JOIN likes ON likes.recipe_id = recipe_tag.recipe_id "
-            . "WHERE likes.user_id = " . $user_id . " GROUP BY recipe_tag.tag_id order by count(recipe_tag.tag_id) desc limit 3";
+            . "FROM (recipe_tag INNER JOIN likes ON likes.recipe_id = recipe_tag.recipe_id) "
+            . "inner join tag on tag.tag_id = recipe_tag.tag_id "
+            . "WHERE likes.user_id = " . $user_id . " and (lower(tag.tag_name) not like '%allergy%') GROUP BY recipe_tag.tag_id order by count(recipe_tag.tag_id) desc limit 3";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -300,7 +301,7 @@ function getUserFrequentTags($user_id) {
 
 function getRandomTags($num) {
     global $db;
-    $query = "SELECT tag_id from tag order by rand() limit " . $num;
+    $query = "SELECT tag_id from tag where (lower(tag_name) not like '%allergy%') order by rand() limit  " . $num;
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -320,7 +321,7 @@ function getTagNameById($id) {
 
 function getRecipeWithTag($tag) {
     global $db;
-    $query = "SELECT recipe.recipe_id, recipe.recipe_name, recipe.description "
+    $query = "SELECT recipe.recipe_id,recipe.rating, recipe.recipe_name, recipe.description,recipe.image_blob,recipe.author,recipe.difficulty,recipe.cooking_time "
             . "FROM (recipe INNER join recipe_tag ON recipe.recipe_id = recipe_tag.recipe_id)"
             . " INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id WHERE tag.tag_name = '" . $tag . "'"
             . " order by rand() limit 5";
@@ -513,9 +514,18 @@ function printRecipe($recipe) {
     }
 
     $username = getUserByID($recipe['author']);
-
+    
+    if(!isset($recipe['rating']))
+    {
+        $rating = 0;
+    }else
+    {
+        $rating = $recipe['rating'];
+    }
+    
     $response = $response . '</div><br><p class="info">By <a href="?action=user_profile&user_id=' . $recipe['author'] . '">' . $username['username'] . '</a></p>';
     $response = $response . '<p class="info">Cooking Time: ' . $recipe["cooking_time"] . ' min</p>';
+    $response = $response . '<p class="info">' . $rating . '&#9733;</p>';
 
     $response = $response . '<div class="fadeingdescriptions"><p>' . $recipe['description'] . '</p></div> <p><button id="button_view"><a id="view_button" href="?action=view_recipe&id=' . $recipe['recipe_id'] . '">View</a></button></p></div></div>';
     return $response;
@@ -529,6 +539,15 @@ function print_my_recipe($recipe) {
 function print_my_recipe_visitor($recipe) {
     $respnse = "<tr><td><a href='../controller/?action=view_recipe&id=" . $recipe['recipe_id'] . "'>" . $recipe['recipe_name'] . "</a></td></tr>";
     return $respnse;
+}
+
+function update_rating($recipe_id,$rating)
+{
+    global $db;
+    $query = "update recipe set rating = ".$rating." where recipe_id = ".$recipe_id;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
 }
 
 ?>

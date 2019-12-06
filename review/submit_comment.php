@@ -12,6 +12,22 @@
     
     $recipe_id = $_REQUEST['recipe_id'];
     
-    create_review($review, $user_id, $recipe_id);
+    $rating = $_REQUEST['rating'];
     
-    echo "operation done";
+    if($rating>5)
+    {
+        return;
+    }
+    
+    $result = getReviewByUserIDRecipeID($user_id,$recipe_id);
+    if(empty($result))
+    {
+        create_review($review, $user_id, $recipe_id,$rating);
+    }else
+    {
+        edit_review($result['review_id'],$review, $rating);
+    }
+    
+    $id = $recipe_id;
+    
+    include "refreshRating.php";
