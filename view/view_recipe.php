@@ -18,6 +18,18 @@ $user = getUserByID($recipe['author']);
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+    .star_rating
+    {
+        height: 50px;
+    }
+    
+    .comment_star
+    {
+        height: 25px;
+    }
+
+</style>
 <script>
 
 

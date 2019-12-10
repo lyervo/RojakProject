@@ -28,6 +28,8 @@
         edit_review($result['review_id'],$review, $rating);
     }
     
+    
+    
     $id = $recipe_id;
     
     include "refreshRating.php";

@@ -133,13 +133,8 @@ $user = getUserByID($id);
 
         <div class="col-lg-9">
             <h1><?php echo $user['username']; ?></h1>
-            <h3>Bio:</h3>
-            <h2>Liked Recipes</h2>
-            <div id="favoriteRecipes">
-
-            </div>
-
-            <h2>Uploaded Recipes</h2>
+            <br>
+            <h3 style="font-family: 'Courgette', cursive; color: #6666ff;">Uploaded Recipes</h3>
 
             <?php
             if (isset($_SESSION['user_id'])) {
@@ -147,13 +142,7 @@ $user = getUserByID($id);
                     echo '<button><a href="../controller/?action=submit_recipe">Upload a recipe</a></button>';
                 }
             }
-            ?>
-            <br>
             
-
-            <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this user</a></button> 
-            
-            <?php
             
             if(isset($_SESSION['user_id']))
             {
@@ -170,6 +159,18 @@ $user = getUserByID($id);
             }
             
             ?>
+            <h3 style="font-family: 'Courgette', cursive; color: #6666ff;">Liked Recipes</h3>
+            <div id="favoriteRecipes">
+
+            </div>
+
+            
+            <br>
+            
+
+            <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this user</a></button> 
+            
+            
             
         </div>
     </div>

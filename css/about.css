@@ -1,0 +1,80 @@
+.user-info1 {
+	
+	padding: 2px;
+	position: relative;
+        margin-left: 5em;
+}
+
+.user-info2 {
+	
+	padding: 2px;
+	position: relative;
+        margin-left: 5em;
+}
+
+.user-info3 {
+	
+	padding: 2px;
+	position: relative;
+        margin-left: 5em;
+}
+
+.user-info4 {
+	
+	padding: 2px;
+	position: relative;
+        margin-left: 5em;
+}
+
+.profile-pic {
+    margin-left: 8em;
+	
+	border-radius: 50%;
+	border: 4px solid white;
+	height: 210px;
+	overflow: hidden;
+	transform: translateX(-50%) translateY(-50%);
+	width: 210px;
+	top: 0;        
+	img {
+		box-sizing: border-box;
+		height: 100%;
+		max-height: 100%;
+		position: absolute;
+		transform: translateX(-50%);
+		transition: all 0.15s ease-out;
+		width: auto;
+	}
+	
+}
+
+.aboutText {
+	margin-top: -5em;;
+	text-align: center;
+        margin-left: 3em;
+}
+
+#carouselExampleIndicators
+{
+    
+    height: 22.5em;
+    width: 40em;
+    background-color: white;
+    color: white;
+}
+
+.unimealsDescription
+{
+    margin-left: 13em;
+}
+
+.rojakDescription
+{
+    margin-left: 5em;
+    padding-bottom: 18px;
+}
+
+.decriptionText
+{
+    text-align: center;
+}
