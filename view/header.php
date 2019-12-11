@@ -26,6 +26,7 @@ if (isset($_SESSION['user_id'])) {
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="../css/footer.css" rel="stylesheet" type="text/css"/>
         <link href="../css/about.css" rel="stylesheet" type="text/css"/>
+        
         <!-- FAVICON -->
         <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
         
@@ -89,7 +90,11 @@ echo $bodyTag;
                 </li>
                 <?php
                 if (isset($_SESSION['user_id']) && $userl['user_image'] == null) {
-                    echo '<li class="nav-item-user">
+                    echo '<li ';
+                    if($current == "user"){
+                        echo 'class="current"';
+                    }  
+                    echo 'class="nav-item-user">
                                 <div class="dropdown">
                                 <a class="nav-link" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="default_profile" src="../images/fbp.jpg" height="22px" width="22px" />&nbsp;<i class="fas fa-sort-down"></i></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -110,9 +115,11 @@ echo $bodyTag;
                             </li>';
                 } else if (isset($_SESSION['user_id']) && $userl['user_image'] != null) {
                     
-                    
-                    
-                    echo '<li class="nav-item-user">
+                    echo '<li ';
+                    if($current == "user"){
+                        echo 'class="current"';
+                    }  
+                    echo 'class="nav-item-user">
                                 <div class="dropdown">
                                 <a class="nav-link" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="profile_picture" src="data:image/jpeg;base64,' . base64_encode($userl['user_image']) . '" height="22px" width="22px"/>&nbsp;<i class="fas fa-sort-down"></i></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

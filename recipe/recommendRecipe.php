@@ -13,41 +13,39 @@
     
     if(empty($resultA))
     {
+        
         $resultA = getRandomTags(3);
-    } else
-    {
-        
-        if(count($resultA)<3)
-        {
-            $resultB = getRandomTags(count(3-$resultA));
-            $resultA = array_merge($resultA,$resultB);
-        }
-        
     }
     
     
+    $randIndex = array_rand($resultA);
     
-    foreach($resultA as $res)
+   
+    
+    $result = getRecipeWithTag(getTagNameById($resultA[$randIndex]['tag_id']));
+    
+    while(empty($result))
     {
-        $response = "";
-        
-        $result = getRecipeWithTag(getTagNameById($res['tag_id']));
-        if(empty($result))
+        if(empty($resultA))
         {
-            
-        }else
-        {
-        
-            foreach ($result as $resTag) 
-            {
 
-                $response = $response . printRecipe($resTag);
-
-
-            }
-            echo $response;
+            $resultA = getRandomTags(3);
         }
-        
+
+
+        $randIndex = array_rand($resultA);
+
+
+
+        $result = getRecipeWithTag(getTagNameById($resultA[$randIndex]['tag_id']));
+    }
+
+    
+    $response = "<h3>Recommending:". getTagNameById($resultA[$randIndex]['tag_id'])."</h3>";
+    
+    foreach ($result as $res)
+    {
+        $response = $response.printRecipe($res);
     }
     
     echo $response;

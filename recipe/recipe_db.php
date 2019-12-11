@@ -8,7 +8,7 @@ function create_recipe($name, $desc, $serving, $time, $difficulty, $author_id, $
     $statement->closeCursor();
 }
 
-function create_recipe_with_image($name, $desc, $serving, $time, $difficulty, $author_id, $blob,$youtube) {
+function create_recipe_with_image($name, $desc, $serving, $time, $difficulty, $author_id, $blob, $youtube) {
     global $db;
     $query = "insert into recipe values(null,'" . $name . "','" . $desc . "','" . $serving . "','" . $difficulty . "'," . $time . ",1," . $author_id . ",null,null,'" . $youtube . "',:blob);";
     $statement = $db->prepare($query);
@@ -25,15 +25,15 @@ function create_recipe_ingredient($ingredientID, $recipeID, $amount, $unit, $mod
     $statement->closeCursor();
 }
 
-function create_step($recipeID, $step,$step_order) {
+function create_step($recipeID, $step, $step_order) {
     global $db;
-    $query = "insert into step values(" . $recipeID . ",null,".$step_order.",'" . $step . "',null);";
+    $query = "insert into step values(" . $recipeID . ",null," . $step_order . ",'" . $step . "',null);";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
 }
 
-function create_step_with_image($recipeID, $step, $step_order,$blob) {
+function create_step_with_image($recipeID, $step, $step_order, $blob) {
     global $db;
     $query = "insert into step values(:id,null,:step_order,:step,:blob);";
 
@@ -41,7 +41,7 @@ function create_step_with_image($recipeID, $step, $step_order,$blob) {
     $statement->bindParam(':blob', $blob, PDO::PARAM_LOB);
     $statement->bindParam(':id', $recipeID);
     $statement->bindParam(':step', $step);
-    $statement->bindParam(':step_order',$step_order);
+    $statement->bindParam(':step_order', $step_order);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -289,8 +289,9 @@ function filterResults($tag, $noTag, $recipe_id) {
 function getUserFrequentTags($user_id) {
     global $db;
     $query = "SELECT recipe_tag.tag_id,COUNT(recipe_tag.tag_id) "
-            . "FROM recipe_tag INNER JOIN likes ON likes.recipe_id = recipe_tag.recipe_id "
-            . "WHERE likes.user_id = " . $user_id . " GROUP BY recipe_tag.tag_id order by count(recipe_tag.tag_id) desc limit 3";
+            . "FROM (recipe_tag INNER JOIN likes ON likes.recipe_id = recipe_tag.recipe_id) "
+            . "inner join tag on tag.tag_id = recipe_tag.tag_id "
+            . "WHERE likes.user_id = " . $user_id . " and (lower(tag.tag_name) not like '%allergy%') GROUP BY recipe_tag.tag_id order by count(recipe_tag.tag_id) desc limit 3";
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -300,7 +301,7 @@ function getUserFrequentTags($user_id) {
 
 function getRandomTags($num) {
     global $db;
-    $query = "SELECT tag_id from tag order by rand() limit " . $num;
+    $query = "SELECT tag_id from tag where (lower(tag_name) not like '%allergy%') order by rand() limit  " . $num;
     $statement = $db->prepare($query);
     $statement->execute();
     $result = $statement->fetchAll();
@@ -320,7 +321,7 @@ function getTagNameById($id) {
 
 function getRecipeWithTag($tag) {
     global $db;
-    $query = "SELECT recipe.recipe_id, recipe.recipe_name, recipe.description "
+    $query = "SELECT recipe.recipe_id,recipe.rating, recipe.recipe_name, recipe.description,recipe.image_blob,recipe.author,recipe.difficulty,recipe.cooking_time "
             . "FROM (recipe INNER join recipe_tag ON recipe.recipe_id = recipe_tag.recipe_id)"
             . " INNER JOIN tag ON recipe_tag.tag_id = tag.tag_id WHERE tag.tag_name = '" . $tag . "'"
             . " order by rand() limit 5";
@@ -331,8 +332,6 @@ function getRecipeWithTag($tag) {
     $statement->closeCursor();
     return $result;
 }
-
-
 
 function getAuthorByRecipeId($recipe_id) {
     global $db;
@@ -481,41 +480,62 @@ function printRecipe($recipe) {
     $response = $response . '<div class="name"> <h2 id="recipe_title"><a style="text-decoration: none; color: black;" href="?action=view_recipe&id=' . $recipe['recipe_id'] . '">' . $recipe['recipe_name'] . '</h2></div>
                             <div class="prod_details_tab">';
 
-    $dif = strtolower($recipe['difficulty']);
-    $easy = 'easy';
-    $medium = 'medium';
-    $hard = 'hard';
+    $dif = $recipe['difficulty'];
+    $easy = 'Easy';
+    $medium = 'Medium';
+    $hard = 'Hard';
 
     if ($dif == $easy) {
 
-        $response = $response . '<a>
+        $response = $response . '
                                     <i id="iconEasy" class="fas fa-utensils">
                                         <div id="diff"><p id="diff_title">Easy</p></div>
                                     </i>
-                                </a> ';
+                                 ';
     }
     if ($dif == $hard) {
 
-        $response = $response . '<a>
-                                    <i id="icon1Hard" class="fas fa-utensils"></i></a> 
-                                <a>
-                                    <i id="icon2Hard" class="fas fa-utensils"></i></a> 
-                                <a>
-                                    <i id="icon3Hard" class="fas fa-utensils"></i></a>';
+        $response = $response . '
+                                    <i id="icon1Hard" class="fas fa-utensils">
+                                    
+                                    </i>
+                                
+                                    <i id="icon2Hard" class="fas fa-utensils">
+                                    <div id="diff"><p id="diff_title">Hard</p></div>
+                                    </i>
+                                
+                                    <i id="icon3Hard" class="fas fa-utensils">
+                                    
+                                    </i>';
     }
 
     if ($dif == $medium) {
 
-        $response = '<a>
-                                    <i id="icon1Med" class="fas fa-utensils"></i></a> 
-                                <a>
-                                    <i id="icon2Med" class="fas fa-utensils"></i></a>';
+        $response = $response . '
+                                    <i id="icon1Med" class="fas fa-utensils">
+                                    <div id="diff_m"><p id="diff_title">Medium</p></div>
+                                    </i> 
+                                
+                                    <i id="icon2Med" class="fas fa-utensils">
+                                    
+                                    </i>';
     }
 
     $username = getUserByID($recipe['author']);
 
+    if (!isset($recipe['rating'])) {
+        $rating = 0;
+    } else {
+        $rating = $recipe['rating'];
+    }
+
     $response = $response . '</div><br><p class="info">By <a href="?action=user_profile&user_id=' . $recipe['author'] . '">' . $username['username'] . '</a></p>';
     $response = $response . '<p class="info">Cooking Time: ' . $recipe["cooking_time"] . ' min</p>';
+    //$response = $response . '<p class="info">' . $rating ;
+     for ($i = 1; $i <= $recipe['rating'] ;$i++){
+                $response = $response . '<img id="rate_star_home" src="../images/star_active.png"/>';
+            }  
+    //. '<img id="rate_star_home" src="../images/star_active.png"/></p>';
 
     $response = $response . '<div class="fadeingdescriptions"><p>' . $recipe['description'] . '</p></div> <p><button id="button_view"><a id="view_button" href="?action=view_recipe&id=' . $recipe['recipe_id'] . '">View</a></button></p></div></div>';
     return $response;
@@ -529,6 +549,15 @@ function print_my_recipe($recipe) {
 function print_my_recipe_visitor($recipe) {
     $respnse = "<div class='div1'><div class='uploadRecipeCard'><a href='../controller/?action=view_recipe&id=" . $recipe['recipe_id'] . "'><img id='recipe_picture' src='data:image/jpeg;base64," . base64_encode($recipe['image_blob']) . "' height='120px' width='220px'/><br><br><h5 id='user_page_recipe_title'>" . $recipe['recipe_name'] . "</h5></a><br></div></div>";
     return $respnse;
+}
+
+function update_rating($recipe_id, $rating) {
+    global $db;
+    $query = "update recipe set rating = " . $rating . " where recipe_id = " . $recipe_id;
+    echo $query;
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $statement->closeCursor();
 }
 
 ?>

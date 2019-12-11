@@ -954,6 +954,7 @@
         
     
     </script>
+    <link rel="stylesheet" type="text/css" href="../css/submit_recipe.css">
     <body onload="init()">
         <div class="container">
 
@@ -965,14 +966,15 @@
             
                 if($recipe['image_blob'] == null || $recipe['image_blob'] == "null")
                 {
-                    echo "<img id='previewImageMain'>";
+                    echo "<img id='previewImageMain'> ";
                 } else
                 {
-                    echo '<img id="previewImageMain" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" >';
+                    echo '<img id="previewImageMain" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . ' " height="280px" width="400px>';
                 }
             
             ?>
-            <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)">
+            
+            <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)" >
             <br>
             <input type="text" placeholder="Recipe Name" id="recipeName" value="<?php echo $recipe['recipe_name']; ?>">
             <br>
@@ -1002,7 +1004,7 @@
                 <?php include "../recipe/getEditRecipeStepForm.php"; ?>
                 
             </div>
-            <button onclick="addStepTab()">Add Step</button>
+            <button id="recipebutton" onclick="addStepTab()">Add Step</button>
             <br>
             <br>
             <div id="tagSpace">
@@ -1010,7 +1012,7 @@
                 <?php include "../recipe/getEditRecipeTagForm.php"; ?>
                 
             </div>
-            <button onclick="addTagTab()">Add Tag</button>
+            <button id="recipebutton" onclick="addTagTab()">Add Tag</button>
             <br>
             <div>
             <p>Exclude:</p>
@@ -1034,7 +1036,7 @@
             
             <br>
             
-            <button onclick="checkLoginStatus(1)">Submit Recipe</button>
+            <button id="recipebutton"onclick="checkLoginStatus(1)">Submit Recipe</button>
             </div>
         </div>
     </div>

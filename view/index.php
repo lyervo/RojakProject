@@ -7,20 +7,62 @@ $user = showuser();
 
 <script>
     
+    var allergies = ["Gluten","Lactose","Nuts","Fish","Egg","Peanuts","Celery","Shellfish","Crustacean","Sesame"];
+    
+    var user_id;
+    
     function init()
-{
-    document.getElementById("term").addEventListener("keydown",
-        function(event)
+    {
+        checkLoginStatus();
+        
+        
+        var allergy_card_body = document.createElement("div");
+        allergy_card_body.className = "card-body";
+        
+        for(var i=0;i<allergies.length;i++)
         {
-            if(event.keyCode==13)
+            allergy_card_body.appendChild(createAllergyDivGroup(allergies[i]));
+        }
+        var listDiv = document.getElementById("collapseSix2");
+        listDiv.appendChild(allergy_card_body)
+        document.getElementById("term").addEventListener("keydown",
+            function(event)
             {
-                
-                searchRecipe();
-            }
+                if(event.keyCode==13)
+                {
+
+                    searchRecipe();
+                }
+            });
+        changeColourOnHover();
+        
+    }
+    
+    
+    
+    function createAllergyDivGroup(allergy)
+    {
+        var div = document.createElement("div");
+        div.className = "filterButton";
+        div.id = allergy+" Allergy";
+        div.innerHTML = allergy;
+        div.addEventListener("click",function()
+        {
+            checkTag(allergy+" Allergy");
+            
         });
-    changeColourOnHover();
-    getAllRecipe();
-}
+        var checkbox = document.createElement("input");
+        checkbox.setAttribute("type","checkbox");
+        checkbox.name = allergy+" Allergy";
+        checkbox.value = allergy+" Allergy";
+        checkbox.className = "noTag";
+        checkbox.style.display = "none";
+        
+        div.appendChild(checkbox);
+        return div;
+        
+        
+    }
 
 function getAllRecipe()
 {
@@ -123,7 +165,7 @@ function searchRecipe()
 
     } else if(term.length == 0)
     {
-        document.getElementById("result").innerHTML = "";
+        getRecommend();
         return;
     }
     
@@ -141,109 +183,143 @@ function searchRecipe()
     
 }
 
-
-
-function collapsible(){
-var coll = document.getElementsByClassName("collapsible");
-
-
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight){
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    } 
-  });
-}
-            }
-            
-            
-function checkTag(tagName)
-{
-   
-    let tags = document.getElementsByClassName('tag');
-    let noTags = document.getElementsByClassName('noTag');
-//    let arr2 = document.getElementsByClassName("btn btn-link");
-    
-    for(let i = 0; i < tags.length; i++)
+    function getRecommend()
     {
-        if(tags[i].value == tagName)
+        if(user_id == null)
         {
-            
-            tags[i].checked = !tags[i].checked;
-            if(tags[i].checked)
-            {
-                tags[i].parentElement.style.backgroundColor = "#005aba";
-                tags[i].parentElement.style.color = "white";
-                tags[i].parentElement.style.border = "1px solid #005aba";
-            }else
-            {
-                
-                tags[i].parentElement.style.backgroundColor = "white";
-                tags[i].parentElement.style.color = "black";
-                tags[i].parentElement.style.border = "1px solid #007bff";
-                
-                
-                
-            }
+            user_id = 0;
         }
+
+        var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function ()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
+
+                    document.getElementById("result").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "../recipe/recommendRecipe.php?user_id="+user_id, true);
+            xmlhttp.send();
+    }
+
+    function checkLoginStatus()
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                user_id = this.responseText;
+                getRecommend();
+            }
+        };
+        xmlhttp.open("GET", "../user/checkLoginStatus.php", true);
+        xmlhttp.send();
+    }
+
+    function collapsible()
+    {
+        var coll = document.getElementsByClassName("collapsible");
+
+
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            } 
+          });
+        }
+    }
+            
+            
+    function checkTag(tagName)
+    {
+
+        let tags = document.getElementsByClassName('tag');
+        let noTags = document.getElementsByClassName('noTag');
+    //    let arr2 = document.getElementsByClassName("btn btn-link");
+
+        for(let i = 0; i < tags.length; i++)
+        {
+            if(tags[i].value == tagName)
+            {
+
+                tags[i].checked = !tags[i].checked;
+                if(tags[i].checked)
+                {
+                    tags[i].parentElement.style.backgroundColor = "#005aba";
+                    tags[i].parentElement.style.color = "white";
+                    tags[i].parentElement.style.border = "1px solid #005aba";
+                }else
+                {
+
+                    tags[i].parentElement.style.backgroundColor = "white";
+                    tags[i].parentElement.style.color = "black";
+                    tags[i].parentElement.style.border = "1px solid #007bff";
+
+
+
+                }
+            }
+
+        }
+
+            for(let i = 0; i < noTags.length; i++)
+            {
+                if(noTags[i].value == tagName)
+                {
+                    noTags[i].checked = !noTags[i].checked;
+                      if(noTags[i].checked)
+                {
+                    noTags[i].parentElement.style.backgroundColor = "#005aba";
+                    noTags[i].parentElement.style.color = "white";
+                    noTags[i].parentElement.style.border = "1px solid #005aba";
+                }else
+                {
+
+                    noTags[i].parentElement.style.backgroundColor = "white";
+                    noTags[i].parentElement.style.color = "black";
+                    noTags[i].parentElement.style.border = "1px solid #007bff";
+
+
+
+                }
+                }
+
+            }
+    //    for(let i = 0; i < arr2.length; i++)
+    //    {
+    //        if(arr2[i].value == tagName)
+    //        {
+    //            arr2[i].checked = !arr2[i].checked;
+    //            if(arr2[i].checked)
+    //            {
+    //                arr2[i].parentElement.style.backgroundColor = "#005aba";
+    //
+    //            }else
+    //            {
+    //                
+    //                arr2[i].parentElement.style.backgroundColor = "#007bff";
+    //
+    //                
+    //                
+    //                
+    //            }
+    //        }
+    //
+    //    }
+
+        searchRecipe();
+
+
 
     }
-    
-        for(let i = 0; i < noTags.length; i++)
-        {
-            if(noTags[i].value == tagName)
-            {
-                noTags[i].checked = !noTags[i].checked;
-                  if(noTags[i].checked)
-            {
-                noTags[i].parentElement.style.backgroundColor = "#005aba";
-                noTags[i].parentElement.style.color = "white";
-                noTags[i].parentElement.style.border = "1px solid #005aba";
-            }else
-            {
-                
-                noTags[i].parentElement.style.backgroundColor = "white";
-                noTags[i].parentElement.style.color = "black";
-                noTags[i].parentElement.style.border = "1px solid #007bff";
-                
-                
-                
-            }
-            }
-
-        }
-//    for(let i = 0; i < arr2.length; i++)
-//    {
-//        if(arr2[i].value == tagName)
-//        {
-//            arr2[i].checked = !arr2[i].checked;
-//            if(arr2[i].checked)
-//            {
-//                arr2[i].parentElement.style.backgroundColor = "#005aba";
-//
-//            }else
-//            {
-//                
-//                arr2[i].parentElement.style.backgroundColor = "#007bff";
-//
-//                
-//                
-//                
-//            }
-//        }
-//
-//    }
-
-    searchRecipe();
-
-    
-    
-}
 
 function hoverIn(x)
 {
@@ -527,19 +603,7 @@ function changeColourOnHoverButton()
                     </div>
                     <div id="collapseSix2" class="collapse" aria-labelledby="headingSix2"
                          data-parent="#accordionExample275">
-                        <div class="card-body">
-                            <div class="filterButton" id="no_nuts" onclick="checkTag('no_nuts')">
-                                <input hidden type="checkbox" name="no_nuts" value="no_nuts" class="noTag">Nuts </div>
-
-                            <div class="filterButton" id="Lactose" onclick="checkTag('Lactose')">
-                                <input hidden type="checkbox" name="Lactose" value="Lactose" class="noTag">Lactose </div>
-
-                            <div class="filterButton" id="no_wheat" onclick="checkTag('no_wheat')">
-                                <input hidden  type="checkbox" name="no_wheat" value="no_wheat" class="noTag">Gluten </div>
-
-                            
-
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -659,7 +723,7 @@ function changeColourOnHoverButton()
                     </tr>
                     <tr>
                         <td>
-                            easy
+                            Easy
                         </td>
                         <td>
                             <i id="iconEasy"class="fas fa-utensils"></i>

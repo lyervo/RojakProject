@@ -98,6 +98,25 @@ $user = getUserByID($id);
         xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&recipe_id=0&review_id=0&user_id=" +<?php echo $id ?> + "&type=" + type +"&detail="+detail, true);
         xmlhttp.send();
     }
+    
+    function deleteRecipe(recipe_id)
+    {
+
+        
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function ()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                location.reload();
+            }
+        };
+        xmlhttp.open("GET", "../ticket/deleteRecipe.php?recipe_id="+recipe_id, true);
+        xmlhttp.send();
+    }
+    
+    
 
 
 
@@ -233,6 +252,7 @@ $user = getUserByID($id);
                 </div>
             </div>
 </div>
+<br><br><br>
 
 
 <?php

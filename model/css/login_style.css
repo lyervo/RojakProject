@@ -151,6 +151,12 @@
 }
 
 
+.star_rating
+{
+    height: 50px;
+}
 
-
-
+.comment_star
+{
+    height: 25px;
+}

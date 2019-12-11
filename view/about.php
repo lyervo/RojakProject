@@ -10,16 +10,18 @@ include 'header.php';
     <div class="row">
 
         <!--        side div-->
-        <div class="col-lg-3">
-            <div id="aboutUsTitle">
-            <h1>About Us</h1>
-            </div>
-        </div>
+<!--        <div class="col-lg-3">
+            
+        </div>-->
         <!-- /.col-lg-3 -->
 
         <!--        body div-->
-        <div class="col-lg-9">
-            <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel" >
+        <div class="col-lg-12">
+            
+            <div id="aboutUsTitle">
+                <h1 style="font-size: 4em; font-family: 'Courgette', cursive; color: #6666ff;">About Us</h1><br><br><br><br>
+            </div>
+<!--            <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel" >
                 <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
                         
@@ -53,13 +55,15 @@ include 'header.php';
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
-            </div>
+            </div>-->
 
         </div>
+        
+        
         <div class="col-lg-6">
             
-                <img src="../images/Unimeals.jpg" class="unimealsDescription" alt=""/>
-                
+            <img  src="../images/Unimeals.jpg" class="unimealsDescription" alt=""/>
+                <br><br><br>
                 <div class="decriptionText">
                     Unimeals was started because we felt there isn't enough places for 
                 students to get healthy recipes so we set out with the aim to do just that!
@@ -71,14 +75,12 @@ include 'header.php';
         <div class="col-lg-6">
             
             <img src="../images/Rojak.png" class="rojakDescription" alt=""/>
-            <br><br>
+            <br><br><br><br>
             <div class="decriptionText">
-                Rojak Ltd. started in 1909 as a 
-                local food store in Ireland, blackrock and 
-                has just celebrated its 110th birthday! 
-                so we must be doing something right. 
-                Its goal is the same today as it was back then, 
-                to provide healthy food to everyone we can.
+                Rojak Ltd. founded in 2019, to create the website UniMeals.
+                We are a small company based in Dundalk Institute of Technology.
+                Our team consists of 4 members, Francis (Project lead and UI designer), Timothy(Back-end developer),
+                Thomas(Front-end designer) and Josh (Front-end designer)
             </div>
             <br><br><br><br><br><br>
         </div>
@@ -88,13 +90,15 @@ include 'header.php';
                     <div class="profile-pic">
 
                         <div class="displayedImage1"></div>
-                        <img src="../images/profilePicture1.jpg" alt=""/>
+                        <img id="team_img" src="../images/link.PNG" alt=""/>
                         
                     </div>
                     <div class="aboutText">
-                        Francis - Head Chief
-                        <br>
-                        Cooks the best dishes. We dare you to find better ones!
+                        <h5><b>Francis</b></h5> 
+                       <br>
+                       <p style="opacity: 0.7">Project Leader</p>
+                       
+                       <p style="opacity: 0.7">User Interface Designer</p>
                     </div>
                 </div>
         </div>
@@ -103,7 +107,7 @@ include 'header.php';
                     <div class="profile-pic">
 
                         <div class="displayedImage1"></div>
-                        <img src="../images/profilePicture4.jpg" alt=""/>
+                        <img id="team_img" src="../images/tom.jpg" alt=""/>
                         <div class="layer">
                            
                         </div><a class="image-wrapper" href="#">
@@ -111,9 +115,9 @@ include 'header.php';
                             </form></a>
                     </div>
                     <div class="aboutText">
-                        Thomas - Lead Designer 
+                        <h5><b>Thomas</b></h5>  
                         <br>
-                        Comes up with the best and craziest recipes!
+                        <p style="opacity: 0.7">Front end Developer</p>
                     </div>
                 </div>
         </div>
@@ -122,7 +126,7 @@ include 'header.php';
                     <div class="profile-pic">
 
                         <div class="displayedImage1"></div>
-                        <img src="../images/CA2Persona1Edit.jpg" alt=""/>
+                        <img id="team_img" src="../images/tim.jpg" alt=""/>
                         <div class="layer">
                            
                         </div><a class="image-wrapper" href="#">
@@ -130,9 +134,9 @@ include 'header.php';
                             </form></a>
                     </div>
                     <div class="aboutText">
-                        Timothy - Chief
+                        <h5><b>Timothy</b></h5> 
                         <br>
-                        Helps make everything we come up with!
+                        <p style="opacity: 0.7">Lead Back end Developer</p>
                     </div>
                 </div>
          </div>
@@ -141,7 +145,7 @@ include 'header.php';
                     <div class="profile-pic">
 
                         <div class="displayedImage1"></div>
-                        <img src="../images/profilePic5Edit.jpg" alt=""/>
+                        <img id="team_img" src="../images/josh.jpg" alt=""/>
                         <div class="layer">
                            
                         </div><a class="image-wrapper" href="#">
@@ -149,9 +153,9 @@ include 'header.php';
                             </form></a>
                     </div>
                     <div class="aboutText">
-                        Josh - Food Taster
+                        <h5><b>Josh</b></h5> 
                         <br>
-                        Makes sure only the best comes from us!
+                        <p style="opacity: 0.7">Front end Designer</p>
                     </div>
                 </div>
             

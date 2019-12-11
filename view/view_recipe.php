@@ -18,9 +18,22 @@ $user = getUserByID($recipe['author']);
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+    .star_rating
+    {
+        height: 50px;
+    }
+    
+    .comment_star
+    {
+        height: 25px;
+    }
+
+</style>
 <script>
 
 
+    var rating;
 
     var user_id;
 
@@ -28,6 +41,8 @@ $user = getUserByID($recipe['author']);
 
     function init()
     {
+        rating = 1;
+        
         document.getElementById("commentInput").addEventListener("keydown",
         function(event)
         {
@@ -44,7 +59,7 @@ $user = getUserByID($recipe['author']);
         setInterval(refreshComments, 5000);
         setInterval(refreshLikes, 10000);
         
-        
+        resetRating();
     }
     
     function convertValue(i)
@@ -180,6 +195,7 @@ $user = getUserByID($recipe['author']);
 
         var comment = document.getElementById("commentInput").value;
 
+       
 
         if (comment.length === 0)
         {
@@ -191,13 +207,14 @@ $user = getUserByID($recipe['author']);
             {
                 if (this.readyState == 4 && this.status == 200)
                 {
+                   
                     document.getElementById("commentInput").value = "";
                     refreshComments();
                     
                 }
             };
 
-            xmlhttp.open("GET", "../review/submit_comment.php?recipe_id=" +<?php echo $id ?> + "&user_id=" + user_id + "&review=" + comment, true);
+            xmlhttp.open("GET", "../review/submit_comment.php?recipe_id=" +<?php echo $id ?> + "&user_id=" + user_id + "&review=" + comment +"&rating="+rating, true);
             xmlhttp.send();
         }
 
@@ -389,6 +406,44 @@ $user = getUserByID($recipe['author']);
 	document.getElementById("charcount").innerHTML = lng + ' out of 250 characters';
 }
 
+    function resetRating()
+    {
+        var arr = document.getElementsByClassName("star_rating");
+        
+        for(var i=0;i<arr.length;i++)
+        {
+            arr[i].src = "../images/star_inactive.png";
+        }
+        
+        
+        for(var i=1;i<=rating;i++)
+        {
+            document.getElementById("star"+i).src = "../images/star_active.png";
+        }
+    }
+    
+    function setRating(r)
+    {
+        rating = r;
+    }
+    
+    function setRatingHover(r)
+    {
+        var arr = document.getElementsByClassName("star_rating");
+        
+        for(var i=0;i<arr.length;i++)
+        {
+            arr[i].src = "../images/star_inactive.png";
+        }
+        
+        
+        for(var i=1;i<=r;i++)
+        {
+            document.getElementById("star"+i).src = "../images/star_active.png";
+        }
+    }
+    
+
 </script>
 
 
@@ -408,8 +463,14 @@ $user = getUserByID($recipe['author']);
             } else {
                 echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" height="280px" width="400px"/>';
             }
+            echo "<br><br>";
+            echo "<u style='color: #6666ff;'><h4 id='ratee'>Rating: </h4></u>";
+            for ($i = 1; $i <= $recipe['rating'] ;$i++){
+                echo '<img id="rate_star" src="../images/star_active.png"/>';
+            }            
             ?>
 
+            <br><br>
             <button id="likeButton" onclick="checkLoginStatus(1)">
                 
                 <?php
@@ -445,7 +506,7 @@ $user = getUserByID($recipe['author']);
             }
             
             ?>
-            <a href="#comments">write a review</a>
+            <a href="#stars">write a review</a>
             <br><br>
             <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this recipe</a></button> 
 
@@ -552,7 +613,7 @@ $user = getUserByID($recipe['author']);
                 }
 
                 $table = $table . "</tr>";
-                
+                $i = $i +1;
             }
             $table = $table . "</table>";
             echo $table;
@@ -683,6 +744,17 @@ $user = getUserByID($recipe['author']);
             <u style="color: #6666ff;"><h4 style="color: #6666ff; font-family: 'Courgette', cursive;">Review Section</h4></u>
 
             <div class="comment_section">
+                
+                <div id="stars">
+                    <img src="../images/star_inactive.png" id="star1" class="star_rating" onclick="setRating(1)" onmouseout="resetRating()" onmouseenter="setRatingHover(1)">
+                    <img src="../images/star_inactive.png" id="star2" class="star_rating" onclick="setRating(2)" onmouseout="resetRating()" onmouseenter="setRatingHover(2)">
+                    <img src="../images/star_inactive.png" id="star3" class="star_rating" onclick="setRating(3)" onmouseout="resetRating()" onmouseenter="setRatingHover(3)">
+                    <img src="../images/star_inactive.png" id="star4" class="star_rating" onclick="setRating(4)" onmouseout="resetRating()" onmouseenter="setRatingHover(4)">
+                    <img src="../images/star_inactive.png" id="star5" class="star_rating" onclick="setRating(5)" onmouseout="resetRating()" onmouseenter="setRatingHover(5)">
+                    
+                </div>
+                
+                
                 <textarea onkeyup="charcountupdate(this.value)" maxlength="250" placeholder="write a comment..." id="commentInput"></textarea>
                 <br>
                 <button id="comment_button" class="btn btn-primary" onclick="checkLoginStatus(2)" >Comment</button>

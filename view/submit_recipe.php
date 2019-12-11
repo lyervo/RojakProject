@@ -1,5 +1,5 @@
 <?php
-$current = 'home';
+$current = 'user';
 include 'header.php';
 ?>
 
@@ -20,6 +20,8 @@ include 'header.php';
 
 
         var name = document.getElementById("recipeName").value;
+        
+        
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
@@ -27,13 +29,15 @@ include 'header.php';
             {
                 if (this.responseText == -1)
                 {
-
+                    
                     document.getElementById("nameWarning").innerHTML = "";
+                   
                     return false;
                 } else
                 {
 
                     document.getElementById("nameWarning").innerHTML = "Duplicate recipe name, please use a different name.";
+                    
                     return true;
                 }
             }
@@ -111,7 +115,7 @@ include 'header.php';
         setTimeout(function () {
 
             alert("Operation complete, You can find the recipe at the home page");
-//            window.location.href = "../controller/index.php?action=home";
+            window.location.href = "../controller/index.php?action=home";
 
         })
     }
@@ -951,7 +955,7 @@ include 'header.php';
 
         <div class="col-lg-4" id="submit4">
             <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Submit an image of the recipe</h5>
-            <img id="previewImageMain" id="previewImage">
+            <img id="previewImageMain">
             <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)">
             <br>
             <input  type="number" placeholder="Recommended servings" id="recipeServing" min="1">
@@ -963,12 +967,12 @@ include 'header.php';
         </div>
 
         <div class="col-lg-8" id="submit8">
-            <input id="createInput" type="text" placeholder="Recipe Name" id="recipeName" onchange="checkDuplicateName()">
+            <input type="text" placeholder="Recipe Name" id="recipeName" onchange="checkDuplicateName()">
             <br>
             <p id="nameWarning"></p>
             <br>
 
-            <input id="createInput" type="text" placeholder="Recipe Description" id="recipeDesc">
+            <input type="text" placeholder="Recipe Description" id="recipeDesc">
 
             <br>
 

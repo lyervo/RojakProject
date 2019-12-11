@@ -33,6 +33,9 @@ $user = getUserByID($_SESSION['user_id']);
         var formData = new FormData();
 
         var imageFileInput = document.getElementById('image_file');
+        
+       
+        
         if (imageFileInput.value.length > 0)
         {
             var image_file = imageFileInput.files[0];
@@ -65,7 +68,8 @@ $user = getUserByID($_SESSION['user_id']);
         {
             if (this.readyState == 4 && this.status == 200)
             {
-                alert(this.responseText);
+               alert("Profile picture successfully updated");
+               location.reload();
             }
         };
         xmlhttp.onload = function ()
@@ -92,11 +96,11 @@ $user = getUserByID($_SESSION['user_id']);
             <br><br>
      
 
-            
-                Upload your profile
+            <div class="profile_upload">
+                Upload your profile picture: 
                 <input type="file" name="image_file" id="image_file">
-                <button onclick="uploadUserImage()">Upload Profile Image</button>
-            
+                <button class="btn btn-primary" onclick="uploadUserImage()">Upload Profile Image</button>
+            </div>
 
             <br>
             
@@ -170,7 +174,6 @@ $user = getUserByID($_SESSION['user_id']);
                 </div>
             </form>
             <br><br>
-           <?php echo ' <a href="../controller/?action=user_profile&user_id="' .$_SESSION['user_id'].'">Return to user page</a>';?>
         </div>
         <!-- /.col-lg-3 -->
 

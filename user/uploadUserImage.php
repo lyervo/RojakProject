@@ -14,7 +14,7 @@
         $blob = fopen($filePath, 'rb');
         
         add_user_image($user_id, $blob);
-        echo "Operation complete.";
+        
     }else
     {
         echo "Not valid file";

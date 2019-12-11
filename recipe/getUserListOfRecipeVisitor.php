@@ -14,12 +14,12 @@
     }else
     {
         
-        $response = "<br>";
+        $response = "";
         foreach($result as $res)
         {
             $response = $response.print_my_recipe_visitor($res);
         }
-       ;
+        $response = $response."</table>";
         echo $response;
         
     }

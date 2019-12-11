@@ -14,11 +14,11 @@
     font-family: 'Roboto', sans-serif;
 }
 
-#login-modal .modal-dialog {
+#report_tab .modal-dialog {
     width: 350px;
 }
 
-#login-modal input[type=text], input[type=password] {
+#report_tab input[type=text], input[type=password] {
 	margin-top: 10px;
 }
 
@@ -149,8 +149,6 @@
 .form-control {
   border-radius: 0px;
 }
-
-
 
 
 
