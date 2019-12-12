@@ -27,6 +27,7 @@ if (isset($_SESSION['user_id'])) {
         <link href="../css/footer.css" rel="stylesheet" type="text/css"/>
         <link href="../css/about.css" rel="stylesheet" type="text/css"/>
         
+        
         <!-- FAVICON -->
         <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
         

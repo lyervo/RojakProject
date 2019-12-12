@@ -11,12 +11,36 @@ and open the template in the editor.
 
 
 #recipeDesc{
-    padding-bottom: 5px;
+
     min-width:250px;
-    margin:0px;
-    padding-bottom: 0px;
-    min-height: 50px;
-    word-wrap:inherit;
+    width: 100%;
+    min-height: 150px;
+    word-wrap: break-word;
+}
+
+.wow{
+    margin-left: 17em;
+}
+
+.btn btn-dark{
+    margin-top: 2em;
+}
+
+.amount{
+    height: 100px;
+}
+
+.tagz{
+    font-size: 5em;
+}
+
+.noTag{
+    height: 50px;
+}
+
+.part{
+    border: 3px solid red;
+    padding: 10px;
 }
 
 button{
@@ -25,15 +49,14 @@ button{
 
     margin-left:5px;
     border: none;
-    background-color:#007bff;
+    background-color:red;
     color:white;
     max-width: 250px;
 }
 
 #difficulty,#ingredientSpace,#image_file,#stepSpace,#tagSpace{
-    padding-bottom: 5px;
+    
     min-width:250px;
-    margin-left:0px;
     word-wrap: break-word;
 
 }

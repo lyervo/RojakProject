@@ -8,6 +8,7 @@
             <file>file:/C:/xampp/htdocs/RojakProject/view/index.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/css/report_recipe_modal.css</file>
             <file>file:/C:/xampp/htdocs/RojakProject/recipe/recipe_db.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/review/submit_comment.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/ticket/getTickets.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/user/user_db.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/user/likedRecipe.php</file>
@@ -15,6 +16,7 @@
             <file>file:/C:/xampp/htdocs/RojakProject/recipe/getUserListOfRecipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/recipe/getAllRecipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/submit_recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/model/css/style.css</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/footer.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/user/editUser.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/review/refreshRating.php</file>
@@ -42,6 +44,7 @@
             <file>file:/C:/xampp/htdocs/RojakProject/css/boxs.css</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/user_profile.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/review/review_db.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/review/getReviewByID.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/review/getReviews.php</file>
         </group>
     </open-files>

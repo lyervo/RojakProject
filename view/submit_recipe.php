@@ -20,8 +20,8 @@ include 'header.php';
 
 
         var name = document.getElementById("recipeName").value;
-        
-        
+
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
         {
@@ -29,15 +29,15 @@ include 'header.php';
             {
                 if (this.responseText == -1)
                 {
-                    
+
                     document.getElementById("nameWarning").innerHTML = "";
-                   
+
                     return false;
                 } else
                 {
 
                     document.getElementById("nameWarning").innerHTML = "Duplicate recipe name, please use a different name.";
-                    
+
                     return true;
                 }
             }
@@ -385,11 +385,12 @@ include 'header.php';
             previewImg.src = src;
         }
 
-        previewImg.setAttribute("height", "200");
+        previewImg.setAttribute("height", "160px");
+        previewImg.setAttribute("width", "250px");
 
         previewImg.className = "previewImage";
 
-        var text = document.createTextNode("Upload an image for Step " + i + ":");
+        var text = document.createTextNode("  Upload an image for Step " + i + ":  ");
 
 
         var stepImageInput = createElement("input", "stepImage" + i, null, "change", function () {
@@ -401,11 +402,12 @@ include 'header.php';
 
         stepImageInput.setAttribute("type", "file");
 
-        var removeButton = createElement("button", null, "btn btn-primary", "click", function () {
+        var removeButton = createElement("button", null, "btn btn-dark", "click", function () {
             removeStep(i);
         });
 
-        removeButton.innerHTML = "Remove Step " + i;
+        removeButton.innerHTML = "Remove Step " + i ;
+      
 
         step.appendChild(stepTextInput);
         step.appendChild(br);
@@ -414,6 +416,7 @@ include 'header.php';
         step.appendChild(text);
         step.appendChild(stepImageInput);
         step.appendChild(br);
+        
         step.appendChild(removeButton);
         step.appendChild(br);
         return step;
@@ -464,7 +467,7 @@ include 'header.php';
             suggestIngredient(i);
         });
         nameInput.setAttribute("type", "text");
-        nameInput.setAttribute("placeholder", "Enter ingredient " + i + "...");
+        nameInput.setAttribute("placeholder", "Enter new Ingredient " + i + "...");
 
 
         if (value1 != null)
@@ -476,7 +479,7 @@ include 'header.php';
         var suggestDiv = createElement("div", "suggest" + i);
 
 
-        var amountInput = createElement("input", "ingredientAmount" + i);
+        var amountInput = createElement("input", "ingredientAmount" + i, "amount");
         amountInput.setAttribute("type", "number");
         amountInput.setAttribute("placeholder", "Enter amount...");
         amountInput.setAttribute("min", "1");
@@ -542,7 +545,6 @@ include 'header.php';
         {
             unitInput.value = value3;
         }
-
         var modInput = createElement("input", "ingredientMod" + i);
         modInput.setAttribute("type", "text");
         modInput.setAttribute("placeholder", "Modifiers(Chopped?Diced?Blended?)");
@@ -552,7 +554,7 @@ include 'header.php';
             modInput.value = value4;
         }
 
-        var removeButton = createElement("button", null, null, "click", function () {
+        var removeButton = createElement("button", '', null, "click", function () {
             removeIngredient(i);
         });
         removeButton.innerHTML = "Remove Ingredient";
@@ -953,70 +955,101 @@ include 'header.php';
 
     <div class="row">
 
-        <div class="col-lg-4" id="submit4">
-            <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Submit an image of the recipe</h5>
-            <img id="previewImageMain">
-            <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)">
+        <div class="col-lg-8 wow" id="submit8">
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Submit an image for the recipe</h5>
+                <img id="previewImageMain">
+                <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)">
+            </div>
             <br>
-            <input  type="number" placeholder="Recommended servings" id="recipeServing" min="1">
-            <br>   
-            <div id="ingredientSpace"></div>
-
-            <button type="button" onclick="addIngredientTab()" class="btn btn-primary">Add Ingredient</button>
-
-        </div>
-
-        <div class="col-lg-8" id="submit8">
-            <input type="text" placeholder="Recipe Name" id="recipeName" onchange="checkDuplicateName()">
-            <br>
-            <p id="nameWarning"></p>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Recommended Servings:</h5>
+                <input  type="number" placeholder="1, 2, 3" id="recipeServing" min="1">
+            </div>
             <br>
 
-            <input type="text" placeholder="Recipe Description" id="recipeDesc">
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter ingredient(s):</h5>
+                <div id="ingredientSpace"></div>
+                <br>
+                <button type="button" onclick="addIngredientTab()" class="btn btn-primary">Add new Ingredient</button>
 
+            </div>
+            <br>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter Recipe Name:</h5>
+                <input type="text" placeholder="" id="recipeName" onchange="checkDuplicateName()">
+                <p id="nameWarning"></p>
+            </div>
             <br>
 
-            <select id="difficulty">
-                <option value="Easy">College Student(Easy)</option>
-                <option value="Medium">Chef(Medium)</option>
-                <option value="Hard">Michelin Chef(Hard)</option>
-            </select>
-            <br><br>
-            <input type="number" placeholder="Cooking time(Minutes)" id="recipeTime" min="1">
             <br>
-            <br>
-            <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter a step(s)</h5>
-            <div id="stepSpace"></div>
-
-            <button type="button" onclick="addStepTab()" class="btn btn-primary">Add Step</button>
-
-            <br>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter Recipe Description:</h5>
+                <textarea type="text" placeholder="..." id="recipeDesc"></textarea>
+            </div>
             <br>
 
-            <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter a tag(s)</h5>
-            <div id="tagSpace"></div>
-            <button type="button" onclick="addTagTab()" class="btn btn-primary">Add Tag</button>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Difficulty:</h5>
+                <select id="difficulty">
+                    <option value="Easy">College Student(Easy)</option>
+                    <option value="Medium">Chef(Medium)</option>
+                    <option value="Hard">Michelin Chef(Hard)</option>
+                </select>
+            </div>
+            <br>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Cooking time:</h5>
+                <input type="number" placeholder="(Minutes)" id="recipeTime" min="1">
+            </div>
+            <br>
+
+
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter a step(s):</h5>
+                <div id="stepSpace"></div>
+
+                <br>
+                <button type="button" onclick="addStepTab()" class="btn btn-primary">Add Step</button>
+            </div>
+
+            <br>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter a tag(s):</h5>
+                <div id="tagSpace"></div>
+                <br>
+                <button type="button" onclick="addTagTab()" class="btn btn-primary">Add Tag</button>
+            </div>
             <br>
             <p>Exclude:</p>
-            
-            <p style="color:red">Attention: Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
-            <input  type="checkbox" id="check_box" value="no_wheat" class="noTag">Wheat<br>
-            <input type="checkbox" value="no_crustacean" class="noTag">Crustaceans<br>
-            <input type="checkbox" value="no_egg" class="noTag">Egg<br>
-            <input type="checkbox" value="no_fish" class="noTag">Fish<br>
-            <input type="checkbox" value="no_peanut" class="noTag">Peanuts<br>
-            <input type="checkbox" value="no_soy" class="noTag">Soy<br>
-            <input type="checkbox" value="no_milk" class="noTag">Milk<br>
-            <input type="checkbox" value="no_nuts" class="noTag">Nuts<br>
-            <input type="checkbox" value="no_celery" class="noTag">Celery<br>
-            <input type="checkbox" value="no_mustard" class="noTag">Mustard<br>
-            <input type="checkbox" value="no_sesame" class="noTag">Sesame<br>
-            <input type="checkbox" value="no_shellfish" class="noTag">Shellfish<br>
 
-            <p>Optional: Provide a You Tube tutorial video</p>
+
+            <p style="color:red">Attention: Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
+            <div class="part tagz" >
+                
+                <input type="checkbox"  value="no_wheat" class="noTag">Wheat<br>
+                <input type="checkbox" value="no_crustacean" class="noTag">Crustaceans<br>
+                <input type="checkbox" value="no_egg" class="noTag">Egg<br>
+                <input type="checkbox" value="no_fish" class="noTag">Fish<br>
+                <input type="checkbox" value="no_peanut" class="noTag">Peanuts<br>
+                <input type="checkbox" value="no_soy" class="noTag">Soy<br>
+                <input type="checkbox" value="no_milk" class="noTag">Milk<br>
+                <input type="checkbox" value="no_nuts" class="noTag">Nuts<br>
+                <input type="checkbox" value="no_celery" class="noTag">Celery<br>
+                <input type="checkbox" value="no_mustard" class="noTag">Mustard<br>
+                <input type="checkbox" value="no_sesame" class="noTag">Sesame<br>
+                <input type="checkbox" value="no_shellfish" class="noTag">Shellfish<br>
+            </div>
+            <br><br>
+            <img src="../images/yt.png" height="100px" width="100px"/>
+            <p>Optional: Provide a YouTube tutorial video</p>
             <input tyep="text" id="youtube" placeholder="Paste link here...">
+            <br><br>
+
+            <button type="button" onclick="checkLoginStatus()" class="btn btn-success">Submit Recipe</button>
         </div> 
-        <button type="button" onclick="checkLoginStatus()" class="btn btn-primary">Submit Recipe</button>
+
 
     </div>
 </div>
