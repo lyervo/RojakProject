@@ -127,7 +127,7 @@ include 'header.php';
         for (var i = 1; i <= stepTab; i++)
         {
             //preBlobStepRequest -> postBlobStepRequest -> Finish operation
-            preBlobStepRequest(i, "stepImagePreview" + i, id)
+            preBlobStepRequest(i, "stepImagePreview" + i, id);
 
         }
 
