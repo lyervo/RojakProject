@@ -402,12 +402,12 @@ include 'header.php';
 
         stepImageInput.setAttribute("type", "file");
 
-        var removeButton = createElement("button", null, "btn btn-dark", "click", function () {
+        var removeButton = createElement("button", null, "btn btn-warning", "click", function () {
             removeStep(i);
         });
 
-        removeButton.innerHTML = "Remove Step " + i ;
-      
+        removeButton.innerHTML = "Remove Step " + i;
+
 
         step.appendChild(stepTextInput);
         step.appendChild(br);
@@ -416,7 +416,7 @@ include 'header.php';
         step.appendChild(text);
         step.appendChild(stepImageInput);
         step.appendChild(br);
-        
+
         step.appendChild(removeButton);
         step.appendChild(br);
         return step;
@@ -522,8 +522,22 @@ include 'header.php';
 
         var slice = createElement("option");
         slice.setAttribute("value", "slice");
-        slice.innerHTML = "slice";
+        slice.innerHTML = "Slice";
+        
+        
 
+        var tbs = createElement("option");
+        tbs.setAttribute("value", "tbs");
+        tbs.innerHTML = "Table Spoon";
+        unitInput.appendChild(tbs);
+        
+        //sample for adding more unit type
+        var none = createElement("option");
+        none.setAttribute("value", "(none)");
+        none.innerHTML = "(none)";
+        unitInput.appendChild(none);
+        
+        
 
 
         unitInput.appendChild(g);
@@ -791,7 +805,9 @@ include 'header.php';
 
         if (recipeName === "" || recipeDesc === "" || recipeServing === "")
         {
+            //document.getElementById("recipeName").scrollIntoView();
             alert("Missing Recipe information please try again.");
+            
             return;
         }
 
@@ -809,6 +825,7 @@ include 'header.php';
 
             if (ingredientName === "" || ingredientAmount === "")
             {
+                //document.getElementById("ingredientName"+i).scrollIntoView();
                 alert("Missing ingredient name/amount, please try again.");
                 return;
             }
@@ -842,7 +859,9 @@ include 'header.php';
             var tag = "tag=" + document.getElementById("tag" + i).value;
             if (tag === "")
             {
+                //document.getElementById("tag"+i).scrollIntoView();
                 alert("Empty fields in tag, please try again.");
+                
                 return;
             }
 
@@ -956,10 +975,19 @@ include 'header.php';
     <div class="row">
 
         <div class="col-lg-8 wow" id="submit8">
+            
+             <h1 style="font-family: 'Courgette', cursive; color: #6666ff;">Upload a Recipe to UniMeals</h1>
+             <br>
             <div class="part">
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Submit an image for the recipe</h5>
                 <img id="previewImageMain">
                 <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)">
+            </div>
+            <br>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter Recipe Name:</h5>
+                <input type="text" placeholder="" id="recipeName" onchange="checkDuplicateName()">
+                <p id="nameWarning"></p>
             </div>
             <br>
             <div class="part">
@@ -975,13 +1003,9 @@ include 'header.php';
                 <button type="button" onclick="addIngredientTab()" class="btn btn-primary">Add new Ingredient</button>
 
             </div>
-            <br>
-            <div class="part">
-                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter Recipe Name:</h5>
-                <input type="text" placeholder="" id="recipeName" onchange="checkDuplicateName()">
-                <p id="nameWarning"></p>
-            </div>
-            <br>
+         
+            
+           
 
             <br>
             <div class="part">
@@ -1022,29 +1046,33 @@ include 'header.php';
                 <button type="button" onclick="addTagTab()" class="btn btn-primary">Add Tag</button>
             </div>
             <br>
-            <p>Exclude:</p>
 
-
-            <p style="color:red">Attention: Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
             <div class="part tagz" >
-                
-                <input type="checkbox"  value="no_wheat" class="noTag">Wheat<br>
-                <input type="checkbox" value="no_crustacean" class="noTag">Crustaceans<br>
-                <input type="checkbox" value="no_egg" class="noTag">Egg<br>
-                <input type="checkbox" value="no_fish" class="noTag">Fish<br>
-                <input type="checkbox" value="no_peanut" class="noTag">Peanuts<br>
-                <input type="checkbox" value="no_soy" class="noTag">Soy<br>
-                <input type="checkbox" value="no_milk" class="noTag">Milk<br>
-                <input type="checkbox" value="no_nuts" class="noTag">Nuts<br>
-                <input type="checkbox" value="no_celery" class="noTag">Celery<br>
-                <input type="checkbox" value="no_mustard" class="noTag">Mustard<br>
-                <input type="checkbox" value="no_sesame" class="noTag">Sesame<br>
-                <input type="checkbox" value="no_shellfish" class="noTag">Shellfish<br>
+
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Exclude(s):</h5>
+
+
+                <p style="color:red; font-size: 1em;"><u>Attention:</u> Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
+
+                <input type="checkbox"  value="no_wheat" class="noTag">&nbsp;&nbsp;Wheat<br>
+                <input type="checkbox" value="no_crustacean" class="noTag">&nbsp;&nbsp;Crustaceans<br>
+                <input type="checkbox" value="no_egg" class="noTag">&nbsp;&nbsp;Egg<br>
+                <input type="checkbox" value="no_fish" class="noTag">&nbsp;&nbsp;Fish<br>
+                <input type="checkbox" value="no_peanut" class="noTag">&nbsp;&nbsp;Peanuts<br>
+                <input type="checkbox" value="no_soy" class="noTag">&nbsp;&nbsp;Soy<br>
+                <input type="checkbox" value="no_milk" class="noTag">&nbsp;&nbsp;Milk<br>
+                <input type="checkbox" value="no_nuts" class="noTag">&nbsp;&nbsp;Nuts<br>
+                <input type="checkbox" value="no_celery" class="noTag">&nbsp;&nbsp;Celery<br>
+                <input type="checkbox" value="no_mustard" class="noTag">&nbsp;&nbsp;Mustard<br>
+                <input type="checkbox" value="no_sesame" class="noTag">&nbsp;&nbsp;Sesame<br>
+                <input type="checkbox" value="no_shellfish" class="noTag">&nbsp;&nbsp;Shellfish<br>
             </div>
             <br><br>
-            <img src="../images/yt.png" height="100px" width="100px"/>
-            <p>Optional: Provide a YouTube tutorial video</p>
-            <input tyep="text" id="youtube" placeholder="Paste link here...">
+            <div class="part">
+                <img src="../images/yt.png" height="100px" width="100px"/>
+                <p><b><u>Optional:</u></b> Provide a YouTube tutorial video</p>
+                <input type="text" id="youtube" placeholder="Paste link here...">
+            </div>
             <br><br>
 
             <button type="button" onclick="checkLoginStatus()" class="btn btn-success">Submit Recipe</button>

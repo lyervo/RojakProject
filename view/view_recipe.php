@@ -49,7 +49,7 @@ $user = getUserByID($recipe['author']);
             if(event.keyCode==13)
             {
                 
-                comment();
+                checkLoginStatus(2);
             }
         });
         checkLoginStatus(0);
@@ -195,7 +195,7 @@ $user = getUserByID($recipe['author']);
 
         var comment = document.getElementById("commentInput").value;
 
-       
+       alert(comment);
 
         if (comment.length === 0)
         {

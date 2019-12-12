@@ -22,6 +22,11 @@ and open the template in the editor.
 
 }
 
+.col-lg-8{
+     word-wrap:break-word;
+     
+}
+
 .col-lg-1{
     position: relative;
     margin-left: 85%;

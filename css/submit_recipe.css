@@ -9,7 +9,6 @@ and open the template in the editor.
 */
 
 
-
 #recipeDesc{
 
     min-width:250px;
@@ -27,19 +26,47 @@ and open the template in the editor.
 }
 
 .amount{
-    height: 100px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid lightgrey;
 }
 
 .tagz{
-    font-size: 5em;
+    font-size: 1em;
 }
 
-.noTag{
-    height: 50px;
+input[type=checkbox]
+{
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    transform: scale(1.5);
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Might want to wrap a span around your checkbox text */
+.checkboxtext
+{
+    /* Checkbox text */
+    font-size: 110%;
+    display: inline;
+
+}
+
+#suggest{
+    color: #6666ff;
+    background-color: whitesmoke;
+    
 }
 
 .part{
-    border: 3px solid red;
+    border-left: 5px solid #6666ff;
+    border-top: 3px solid whitesmoke;
+    border-bottom: 3px solid whitesmoke;
+    border-right: 3px solid whitesmoke;
     padding: 10px;
 }
 
@@ -55,7 +82,7 @@ button{
 }
 
 #difficulty,#ingredientSpace,#image_file,#stepSpace,#tagSpace{
-    
+
     min-width:250px;
     word-wrap: break-word;
 

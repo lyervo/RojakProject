@@ -33,7 +33,10 @@
     
     $response = getRecipeIDByName($name);
     
-    
+    while($response == -1)
+    {
+        $response = getRecipeIDByName($name);
+    }
     
     echo $response;
 

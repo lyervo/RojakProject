@@ -9,11 +9,11 @@
     
     $results = searchIngredient($name);
     
-    $response = "";
+    $response = "Suggestion(s):";
     
     foreach($results as $result)
     {
-        $response = $response."<button onclick=\"setIngredient('".$id."','".$result['ingredient_name']."')\">".$result['ingredient_name']."</button>";
+        $response = $response." <button id='suggest' onclick=\"setIngredient('".$id."','".$result['ingredient_name']."')\">".$result['ingredient_name']."</button>";
     }
     
     echo $response;

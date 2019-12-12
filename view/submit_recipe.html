@@ -648,6 +648,7 @@
                 
                 if(recipeName===""||recipeDesc===""||recipeServing==="")
                 {
+                    document.getElementById("recipeName").scrollIntoView();
                     alert("Missing Recipe information please try again.");
                     return;
                 }
@@ -666,7 +667,9 @@
                     
                     if(ingredientName===""||ingredientAmount==="")
                     {
+                        document.getElementById("ingredientName").scrollIntoView();
                         alert("Missing ingredient name/amount, please try again.");
+                        
                         return;
                     }
                     
