@@ -27,8 +27,12 @@ function create_recipe_ingredient($ingredientID, $recipeID, $amount, $unit, $mod
 
 function create_step($recipeID, $step, $step_order) {
     global $db;
-    $query = "insert into step values(" . $recipeID . ",null," . $step_order . ",'" . $step . "',null);";
+    $query = "insert into step values(:id,null,:step_order,:step,null);";
+
     $statement = $db->prepare($query);
+    $statement->bindParam(':id', $recipeID);
+    $statement->bindParam(':step', $step);
+    $statement->bindParam(':step_order', $step_order);
     $statement->execute();
     $statement->closeCursor();
 }

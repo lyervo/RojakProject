@@ -110,14 +110,14 @@ include 'header.php';
 
         for (var i = 0; i < tagAjax.length; i++)
         {
-            ajaxRecipeTagRequest(tagAjax[i] + "&recipe_id=" + recipeID);
+            ajaxRecipeTagRequest(tagAjax[i] + "&recipe_id=" + recipeID,i);
         }
-        setTimeout(function () {
-
-            alert("Operation complete, You can find the recipe at the home page");
-            window.location.href = "../controller/index.php?action=home";
-
-        })
+        
+        setTimeout(function(){
+           alert("Operation complete");
+           window.location.href("../controller/index.php?action=user_profile")
+        });
+        
     }
 
     function ajaxRecipeStepRequest(id)
@@ -195,7 +195,8 @@ include 'header.php';
         {
             if (this.readyState == 4 && this.status == 200)
             {
-
+                console.log(step);
+                
             }
         };
 
@@ -307,6 +308,8 @@ include 'header.php';
             xmlhttp.open("GET", "../recipe/create_recipe_tag.php?" + request, true);
             xmlhttp.send();
         }
+        
+        
 
 
     }

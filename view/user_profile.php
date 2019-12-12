@@ -13,7 +13,7 @@ $user = getUserByID($id);
 
     init();
 
-    
+
 
 
 
@@ -95,14 +95,14 @@ $user = getUserByID($id);
                 alert(this.responseText);
             }
         };
-        xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&recipe_id=0&review_id=0&user_id=" +<?php echo $id ?> + "&type=" + type +"&detail="+detail, true);
+        xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&recipe_id=0&review_id=0&user_id=" +<?php echo $id ?> + "&type=" + type + "&detail=" + detail, true);
         xmlhttp.send();
     }
-    
+
     function deleteRecipe(recipe_id)
     {
 
-        
+
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function ()
@@ -112,11 +112,11 @@ $user = getUserByID($id);
                 location.reload();
             }
         };
-        xmlhttp.open("GET", "../ticket/deleteRecipe.php?recipe_id="+recipe_id, true);
+        xmlhttp.open("GET", "../ticket/deleteRecipe.php?recipe_id=" + recipe_id, true);
         xmlhttp.send();
     }
-    
-    
+
+
 
 
 
@@ -146,55 +146,16 @@ $user = getUserByID($id);
                 ?>
 
             </div>
-
-        </div>
-
-
-        <div class="col-lg-9">
-            <h1><?php echo $user['username']; ?></h1>
             <br>
-            <h3 style="font-family: 'Courgette', cursive; color: #6666ff;">Uploaded Recipes</h3>
-
+            
             <?php
-            if (isset($_SESSION['user_id'])) {
-                if ($_SESSION['user_id'] == $user['user_id']) {
-                    echo '<button><a href="../controller/?action=submit_recipe">Upload a recipe</a></button>';
-                }
+            if (!isset($_SESSION['user_id'])){
+                echo '<button id="report_recipe_button"><a role="button" data-toggle="modal" data-target="#report_recipe" ><i class="fas fa-flag"></i>&nbsp;Report this user</a></button>';
             }
-            
-            
-            if(isset($_SESSION['user_id']))
-            {
-                if($_SESSION['user_id'] == $user['user_id'])
-                {
-                    include "../recipe/getUserListOfRecipe.php";
-                }else
-                {
-                    include "../recipe/getUserListOfRecipeVisitor.php";
-                }  
-            }else
-            {
-                include "../recipe/getUserListOfRecipeVisitor.php";
-            }
-            
             ?>
-            <h3 style="font-family: 'Courgette', cursive; color: #6666ff;">Liked Recipes</h3>
-            <div id="favoriteRecipes">
-
-            </div>
-
+             
             
-            <br>
-            
-
-            <button id="report_recipe_button"><a role='button' data-toggle='modal' data-target='#report_recipe' ><i class='fas fa-flag'></i>&nbsp;Report this user</a></button> 
-            
-            
-            
-        </div>
-    </div>
-    
-    <div class="modal fade" id="report_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal fade" id="report_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 
 
 
@@ -211,35 +172,35 @@ $user = getUserByID($id);
                         <div id="div-forms">
 
                             <!-- Begin # Login Form -->
-                           
-                                <div class="modal-body">
-                                    <h4 id="form_title_report">Report</h4>
 
-                                    <div style="border: 1px solid black;padding:5px" id="report_drop">
-                                        <div id="targetedComment"></div>
-                                        Report this user: 
-                                        <select id="reportReasonUser">
-                                            <option value='' selected disabled hidden>Select Reason</option>
-                                            <option value="impersonation">Impersonation</option>
-                                            <option value="profanity">Profanity</option>
-                                            <option value="malicious link">Malicious Link</option>
-                                            <option value="other">Other</option>
+                            <div class="modal-body">
+                                <h4 id="form_title_report">Report</h4>
 
-                                        </select>
-                                        <br>
-                                    </div>
+                                <div style="border: 1px solid black;padding:5px" id="report_drop">
+                                    <div id="targetedComment"></div>
+                                    Report this user: 
+                                    <select id="reportReasonUser">
+                                        <option value='' selected disabled hidden>Select Reason</option>
+                                        <option value="impersonation">Impersonation</option>
+                                        <option value="profanity">Profanity</option>
+                                        <option value="malicious link">Malicious Link</option>
+                                        <option value="other">Other</option>
 
-                                    <input type="text" id="report_textbox_user" name="report_reason" placeholder="enter reason for report">
-
-                                </div>
-                                <div class="modal-footer">
-                                    <div>
-                                        <input type="submit" name="report" value="Report" class="btn btn-danger" onclick="submitReportUser()">
-                                    </div>
-
+                                    </select>
+                                    <br>
                                 </div>
 
-                          
+                                <input type="text" id="report_textbox_user" name="report_reason" placeholder="enter reason for report">
+
+                            </div>
+                            <div class="modal-footer">
+                                <div>
+                                    <input type="submit" name="report" value="Report" class="btn btn-danger" onclick="submitReportUser()">
+                                </div>
+
+                            </div>
+
+
                             <!-- End # Login Form -->
 
 
@@ -251,6 +212,50 @@ $user = getUserByID($id);
                     </div>
                 </div>
             </div>
+
+        </div>
+
+
+        <div class="col-lg-9">
+            <h1><?php echo $user['username']; ?></h1>
+            <br>
+            <h3 style="font-family: 'Courgette', cursive; color: #6666ff;">Uploaded Recipes</h3>
+
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                if ($_SESSION['user_id'] == $user['user_id']) {
+                    echo '<button><a href="../controller/?action=submit_recipe">Upload a recipe</a></button>';
+                }
+            }
+
+
+            if (isset($_SESSION['user_id'])) {
+                if ($_SESSION['user_id'] == $user['user_id']) {
+                    include "../recipe/getUserListOfRecipe.php";
+                } else {
+                    include "../recipe/getUserListOfRecipeVisitor.php";
+                }
+            } else {
+                include "../recipe/getUserListOfRecipeVisitor.php";
+            }
+            ?>
+            <h3 style="font-family: 'Courgette', cursive; color: #6666ff;">Liked Recipes</h3>
+            <div id="favoriteRecipes">
+
+            </div>
+
+
+            <br>
+
+
+            
+
+
+
+        </div>
+    </div>
+
+
 </div>
 <br><br><br>
 
