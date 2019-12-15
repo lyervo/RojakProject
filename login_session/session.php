@@ -110,30 +110,23 @@ if (isset($_POST['register'])) {
 
     if ($row2['num'] > 0) {
         echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>That Username already exists!</div>';
-    } 
-    else if ($row['num'] > 0) {
+    } else if ($row['num'] > 0) {
         echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>That Email already exists!</div>';
-    } 
-    else if($username == ""){
+    } else if ($username == "") {
         echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>You must Enter a username!</div>';
-    }
-    else if($email == ""){
+    } else if ($email == "") {
         echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>You must Enter an email!</div>';
-    }
-    else if($password == ""){
+    } else if ($password == "") {
         echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>You must Enter a password!</div>';
     }
 //    else if(!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)){
 //        echo '<p id="reg_error">You must enter a valid email</p>';
 //    }
-    
-    else if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z]{8,}/', $password)) {
-    echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>Enter the correct password requirements</div>';
-}
-    else if ($password != $confirm_password) {
+    else if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z]{8,}/', $password)) {
+        echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>Enter the correct password requirements</div>';
+    } else if ($password != $confirm_password) {
         echo '<div id="reg_error"><i style="font-size:4em; margin-top:0.5em;" class="fas fa-exclamation-circle"></i><br><br>Passwords do not match!</div>';
-    } 
-    else {
+    } else {
 
 
         //Hash the password as we do NOT want to store our passwords in plain text.

@@ -2,11 +2,14 @@
         <div class="container">
           <div class="row row-30">
             <div class="col-md-4 col-xl-5">
-                <div class="pr-xl-4"><a class="brand" href="index.html"><img class="brand-logo-light" src="" alt="" width="140" height="37" srcset="images/agency/logo-retina-inverse-280x74.png 2x"></a>
+                <div class="pr-xl-4"><a class="brand" href="index.html"></a>
                     <h3 id="footerTitle">UniMeals</h3>
-                <p>We are an award-winning creative agency, dedicated to the best result in web design, promotion, business consulting, and marketing.</p>
+                <p>Unimeals was started because we felt there isn't enough places for 
+                students to get healthy recipes so we set out with the aim to do just that!
+                At Unimeals you can find all the easy to make healthy meals you could want, but thats 
+                not all, with our upload system there's always something new for you to check out</p>
                 <!-- Rights-->
-                <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>Waves</span><span>. </span><span>All Rights Reserved.</span></p>
+                <p class="rights"><span>©  </span><span class="copyright-year">2018</span><span> </span><span>UniMeals</span><span>. </span><span>All Rights Reserved.</span></p>
               </div>
             </div>
             <div class="col-md-4">
@@ -28,16 +31,15 @@
             <div class="col-md-4 col-xl-3">
                 <h5 id="footerTitle">Links</h5>
               <ul class="nav-list">
+                  <li><a href="../controller/?action=home">Home</a></li>
                 <li><a href="../controller/?action=about">About</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contacts</a></li>
-                <li><a href="#">Pricing</a></li>
+                <li><a href="http://generator.lorem-ipsum.info/terms-and-conditions" target="_blank">Terms & conditions</a></li>
+               
                 <br>
-                <span class="social_face"><i class="fab fa-facebook"></i></span>
-                <span class="social_in"><i class="fab fa-instagram"></i></span>
-                <span class="social_goog"><i class="fab fa-google-plus"></i></span>
-                <span class="social_twit"><i class="fab fa-twitter"></i></span>
+                <a style="text-decoration: none;" target="_blank" href="https://www.facebook.com/"><span  class="social_face"><i class="fab fa-facebook"></i></span></a>
+                <a style="text-decoration: none;" target="_blank" href="https://www.instagram.com/"><span class="social_in"><i class="fab fa-instagram"></i></span></a>
+                <a style="text-decoration: none;" target="_blank" href="https://accounts.google.com"><span class="social_goog"><i class="fab fa-google-plus"></i></span></a>
+                <a style="text-decoration: none;" target="_blank" href="https://twitter.com/"><span class="social_twit"><i class="fab fa-twitter"></i></span></a>
               </ul>
             </div>
           </div>

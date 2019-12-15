@@ -1,5 +1,6 @@
 <?php
 include "../model/db_connect.php";
+$current = 'user';
 include 'header.php';
 require '../login_session/session.php';
 ?>

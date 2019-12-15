@@ -526,7 +526,8 @@ function printRecipe($recipe) {
     }
 
     $username = getUserByID($recipe['author']);
-
+    
+   
     if (!isset($recipe['rating'])) {
         $rating = 0;
     } else {
@@ -534,7 +535,13 @@ function printRecipe($recipe) {
     }
 
     $response = $response . '</div><br><p class="info">By <a href="?action=user_profile&user_id=' . $recipe['author'] . '">' . $username['username'] . '</a></p>';
-    $response = $response . '<p class="info">Cooking Time: ' . $recipe["cooking_time"] . ' min</p>';
+     if (check_vegan($recipe['recipe_id'])){
+        $response = $response . "<p class='info vegan_tag'><i class='fas fa-check-circle'></i>&nbspVegan</p>";
+    }else{
+        $response = $response . '<p class="info">Cooking Time: ' . $recipe["cooking_time"] . ' min</p>';
+    }
+
+    
     //$response = $response . '<p class="info">' . $rating ;
      for ($i = 1; $i <= $recipe['rating'] ;$i++){
                 $response = $response . '<img id="rate_star_home" src="../images/star_active.png"/>';
@@ -545,8 +552,10 @@ function printRecipe($recipe) {
     return $response;
 }
 
+
+
 function print_my_recipe($recipe) {
-    $response = "<div class='div1'><div class='uploadRecipeCard'><a href='../controller/?action=view_recipe&id=" . $recipe['recipe_id'] . "'><img id='recipe_picture' src='data:image/jpeg;base64," . base64_encode($recipe['image_blob']) . "' height='120px' width='220px'/><br><br><h5 id='user_page_recipe_title'>" . $recipe['recipe_name'] . "</h5></a><br><div class ='user_option'><a href='../controller/?action=edit_recipe&recipe_id=" . $recipe['recipe_id'] . "'><i class='fas fa-edit'></i>&nbspEdit this recipe</a><br><button id='delete_button' onclick='deleteRecipe(" . $recipe['recipe_id'] . ")'><i class='fas fa-trash-alt'></i>&nbsp&nbspDelete Recipe</button></div></div></div>";
+    $response = "<div class='div1'><div class='uploadRecipeCard'><a href='../controller/?action=view_recipe&id=" . $recipe['recipe_id'] . "'><img id='recipe_picture' src='data:image/jpeg;base64," . base64_encode($recipe['image_blob']) . "' height='120px' width='220px'/><br><br><h5 id='user_page_recipe_title'>" . $recipe['recipe_name'] . "</h5></a><br><div class ='user_option'><a href='../controller/?action=edit_recipe&recipe_id=" . $recipe['recipe_id'] . "'><i class='fas fa-edit'></i>&nbspEdit this recipe</a><br><button id='delete_button' ><a role='button' data-toggle='modal' data-target='#delete_recipe' ><i class='fas fa-trash-alt'></i>&nbsp&nbspDelete Recipe</a></button></div></div></div>";
     return $response;
 }
 
@@ -562,6 +571,26 @@ function update_rating($recipe_id, $rating) {
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
+}
+
+function check_vegan($recipe_id){
+    global $db;
+    $query = "select tag.tag_name from recipe_tag inner join recipe on recipe_tag.recipe_id = recipe.recipe_id inner join tag on tag.tag_id = recipe_tag.tag_id where lower(tag.tag_name) = lower('vegan') and recipe.recipe_id = :recipe_id";
+    $statement = $db->prepare($query);
+    $statement->bindParam(':recipe_id', $recipe_id);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    if(empty($result))
+    {
+        return false;
+    }else
+    {
+        return true;
+    }
+    
+    
+    
 }
 
 ?>

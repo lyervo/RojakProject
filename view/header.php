@@ -157,6 +157,7 @@ echo $bodyTag;
 
 
 
+
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 
     <div class="modal-dialog">
@@ -180,7 +181,7 @@ echo $bodyTag;
                         if (isset($_COOKIE["username"])) {
                             echo $_COOKIE["username"];
                         }
-                        ?>" placeholder="Username" required>
+                        ?>" placeholder="Username" required>               
                         <input id="login_password" class="form-control" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password" value="<?php
                         if (isset($_COOKIE["password"])) {
                             echo $_COOKIE["password"];
@@ -196,47 +197,28 @@ echo $bodyTag;
                         <div>
                             <input type="submit" name="Login" value="Login" class="btn btn-primary">
                         </div>
-                        <div>
-                            <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
+                        <div>       
                             <button id="login_register_btn" type="button" class="btn btn-link">Register</button>
                         </div>
                     </div>
                 </form>
                 <!-- End # Login Form -->
 
-                <!-- Begin | Lost Password Form -->
-                <form id="lost-form" style="display:none;">
-                    <div class="modal-body">
-                        <div id="div-lost-msg">
-                            <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
-                            <span id="text-lost-msg">Type your e-mail.</span>
-                        </div>
-                        <input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
-                    </div>
-                    <div class="modal-footer">
-                        <div>
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
-                        </div>
-                        <div>
-                            <button id="lost_login_btn" type="button" class="btn btn-link">Log In</button>
-                            <button id="lost_register_btn" type="button" class="btn btn-link">Register</button>
-                        </div>
-                    </div>
-                </form>
-                <!-- End | Lost Password Form -->
-
+                
                 <!-- Begin | Register Form -->
                 <form action="" method="post" id="register-form" style="display:none;">
                     <div class="modal-body">
 
                         <h4 id="form_title">Register an account</h4>
-                        <input id="register_username" class="form-control" type="text" name="username" placeholder="Username" required>
-                        <input id="register_email" class="form-control" type="email" name="email" placeholder="E-Mail" required>
-                        <input id="register_password" class="form-control" type="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" required>
-                        <input id="register_password" class="form-control" type="password" name="confirm_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Confirm Password" required>
+                        <input id="register_username" class="form-control" type="text" name="username" placeholder="Username" value="<?php if (isset($_POST['username'])){$user = $_POST['username']; echo $user;}?>" required/>
+                        
+                        <input id="register_email" class="form-control" type="email" name="email" placeholder="E-Mail" value="<?php if (isset($_POST['email'])){$email = $_POST['email']; echo $email;}?>" required/>
+                        <input id="register_password" class="form-control" type="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" required/>
                         <small id="passwordHelpBlock" class="form-text text-muted">
                             Your password must be 8-20 characters long, contain Uppercase and Lowercase letters and numbers, and must not contain spaces or special characters.
                         </small>
+                        <input id="register_password" class="form-control" type="password" name="confirm_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Confirm Password" required/>
+                        
                     </div>
                     <div class="modal-footer">
                         <div>
@@ -245,7 +227,6 @@ echo $bodyTag;
                         </div>
                         <div>
                             <button id="register_login_btn" type="button" class="btn btn-link">Log In</button>
-                            <button id="register_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
                         </div>
                     </div>
                 </form>

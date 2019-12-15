@@ -6,7 +6,8 @@ $recipe_id = $_REQUEST['recipe_id'];
 
 $recipe = getRecipeByID($recipe_id);
 
-include "header.php";
+$current = 'user';
+include 'header.php';
 ?>
 <script>
 
@@ -271,7 +272,8 @@ include "header.php";
             previewImg.src = src;
         }
 
-        previewImg.setAttribute("height", "200");
+        previewImg.setAttribute("height", "160px");
+        previewImg.setAttribute("width", "250px");
 
         previewImg.className = "previewImage";
 
@@ -731,12 +733,17 @@ include "header.php";
         {
             ajaxRecipeTagRequest(tagAjax[i] + "&recipe_id=" + recipeID);
         }
+        
+        
+        setTimeout(function(){
+           alert("Operation complete");
+           window.location.href = "../controller/index.php?action=home";
+        });
+        
     }
 
     function ajaxRecipeStepRequest(id)
     {
-
-
         for (var i = 1; i <= stepTab; i++)
         {
             console.log("Loop");
@@ -745,10 +752,6 @@ include "header.php";
             preBlobStepRequest(i, "stepImagePreview" + i, id);
 
         }
-
-
-
-
     }
 
     //this function is call to check if a step input group has an uploaded image, 
@@ -973,12 +976,12 @@ include "header.php";
             <div class="col-lg-9 wow">
 
                 <div class="part">
-                    <p>Submit an image of the recipe</p>
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the recipe image:</h5>
                     <?php
                     if ($recipe['image_blob'] == null || $recipe['image_blob'] == "null") {
                         echo "<img id='previewImageMain'> ";
                     } else {
-                        echo '<img id="previewImageMain" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . ' " height="280px" width="400px>';
+                        echo '<img id="previewImageMain" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . ' " height="280" width="400">';
                     }
                     ?>
 
@@ -986,6 +989,7 @@ include "header.php";
                 </div>
                 <br>
                 <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the recipe name:</h5>
                     <input type="text" placeholder="Recipe Name" id="recipeName" value="<?php echo $recipe['recipe_name']; ?>">
                     <p id="nameWarning"></p>
                 </div>
@@ -993,15 +997,18 @@ include "header.php";
 
                 <br>
                 <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the description:</h5>
                     <input type="text" placeholder="Recipe Description" id="recipeDesc" value="<?php echo $recipe['description']; ?>">
                 </div>
                 <br>
                 <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the serving time:</h5>
                     <input type="number" placeholder="Recommended servings" id="recipeServing" min="1" value="<?php echo $recipe['serving']; ?>">
                 </div>
 
                 <br>
                 <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the recipe Difficulty:</h5>
                     <select id="difficulty">
                         <option value="easy" <?php
                         if ($recipe['difficulty'] == "easy") {
@@ -1021,32 +1028,47 @@ include "header.php";
                     </select>
                 </div>
                 <br>
-                <input type="number" placeholder="Cooking time(Minutes)" id="recipeTime" min="1" value="<?php echo $recipe['cooking_time']; ?>">
-                <br>
-                <br>
-                <div id="ingredientSpace">
-
-                    <?php include "../recipe/getEditRecipeIngredientForm.php"; ?>
-
+                <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the cooking time:</h5>
+                    <input type="number" placeholder="Cooking time(Minutes)" id="recipeTime" min="1" value="<?php echo $recipe['cooking_time']; ?>">
                 </div>
-                <button onclick="addIngredientTab()">Add Ingredient</button>
-                <div id="stepSpace">
+                <br>
+                <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the recipe ingredient(s):</h5>
+                    <div id="ingredientSpace">
 
-                    <?php include "../recipe/getEditRecipeStepForm.php"; ?>
+                        <?php include "../recipe/getEditRecipeIngredientForm.php"; ?>
 
+                    </div>
+
+
+                    <button onclick="addIngredientTab()" class="btn btn-primary">Add new Ingredient</button>
                 </div>
-                <button id="recipebutton" onclick="addStepTab()">Add Step</button>
                 <br>
-                <br>
-                <div id="tagSpace">
+                <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the recipe step(s):</h5>
+                    <div id="stepSpace">
 
-                    <?php include "../recipe/getEditRecipeTagForm.php"; ?>
+                        <?php include "../recipe/getEditRecipeStepForm.php"; ?>
 
+                    </div>
+                    <button id="recipebutton" class="btn btn-primary" onclick="addStepTab()">Add new Step</button>
                 </div>
-                <button id="recipebutton" onclick="addTagTab()">Add Tag</button>
                 <br>
-                <div>
-                    <p>Exclude:</p>
+
+                <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the recipe tag(s):</h5>
+                    <div id="tagSpace">
+
+                        <?php include "../recipe/getEditRecipeTagForm.php"; ?>
+
+                    </div>
+                    <button id="recipebutton" onclick="addTagTab()" class="btn btn-primary">Add new Tag</button>
+                </div>
+                <br>
+                <div class="part">
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the recipe excludes:</h5>
+
                     <p style="color:red">Attention: Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
                     <input type="checkbox" value="no_wheat" class="noTag">Wheat<br>
                     <input type="checkbox" value="no_crustacean" class="noTag">Crustaceans<br>
@@ -1061,17 +1083,23 @@ include "header.php";
                     <input type="checkbox" value="no_sesame" class="noTag">Sesame<br>
                     <input type="checkbox" value="no_shellfish" class="noTag">Shellfish<br>
 
-
-                    <p>Optional: Provide a You Tube tutorial video</p>
-                    <input tyep="text" id="youtube" placeholder="Paste link here..." value="<?php echo $recipe['youtube']; ?>">
+                    <br>
+                    <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Edit the YouTube link:</h5>
+                    <input type="text" id="youtube" placeholder="Paste link here..." value="<?php echo $recipe['youtube']; ?>">
 
                     <br>
 
-                    <button id="recipebutton"onclick="checkLoginStatus(1)">Submit Recipe</button>
+
                 </div>
+
+                <button class="btn btn-success" id="recipebutton"onclick="checkLoginStatus(1)">Finish Edit</button>
             </div>
         </div>
     </div>
+
+    <?php
+    include 'footer.php';
+    ?>
 
 </body>
 </html>

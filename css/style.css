@@ -22,9 +22,43 @@ and open the template in the editor.
 
 }
 
+.col-lg-6{
+    word-wrap: break-word;
+}
+
+.col-lg-4{
+   word-wrap: break-word;
+}
+
 .col-lg-8{
-     word-wrap:break-word;
-     
+     word-wrap:break-word; 
+}
+
+.formInput{
+    margin-left: 17em;
+   
+}
+
+.vegan_tag{
+    color: green;
+    font-family: 'Courgette', cursive;
+}
+
+#recom{
+    color: #6666ff;
+    font-family: 'Courgette', cursive;
+}
+
+.rev_div{
+    margin-left: 12em;
+}
+
+.like_div{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-top: -12em;
+    margin-left: 0em;
 }
 
 .col-lg-1{
@@ -162,19 +196,17 @@ footer{
 }
 
 #comments{
-    border: 2px;
+   /* border: 2px;*/
 
 
 }
 
 #one_comment{
-    border-bottom: 2px solid whitesmoke; 
+    
     border-top: 2px solid whitesmoke;
     border-left: 5px solid #6666ff;
-
-
-    border-bottom: 5px;
-
+    border-right: 2px solid whitesmoke;
+    border-bottom: 2px solid whitesmoke;
     background-color: white;
     padding: 4px;
 }
@@ -192,11 +224,11 @@ footer{
 #comment_date{
     font-size: 12px;
     color: #6666ff;
-    margin-left: 400px;
+    margin-left: 330px;
 }
 
 #report_button{
-    margin-left: 400px;
+    margin-left: 360px;
     background-color: white;
     border: none;
     color: red;
@@ -206,12 +238,13 @@ footer{
 #commentInput{
     width: 94%;
     height: 100px;
-    margin-left: 3%;
     margin-top: 2%;
 }
 
-#comment_button{
-    margin-left: 3%;
+#rate_sign{
+    font-size: 18px;
+    font-family: 'Courgette', cursive;
+    color: #ffc107;
 }
 
 
@@ -282,6 +315,7 @@ footer{
     border-left: 5px solid #6666ff;
     border-bottom: 2px solid whitesmoke;
     border-top: 2px solid whitesmoke;
+    border-right: 2px solid whitesmoke;
     padding: 10px;
 }
 
@@ -355,6 +389,7 @@ footer{
 #report_recipe_button{
     background-color: white;
     color: red;
+    border: 2px solid red;
 
 }
 
@@ -368,6 +403,8 @@ footer{
     font-family: 'Courgette', cursive;
     font-size: 18px;
 }
+
+
 
 #step, #step_method{
     display: inline;
@@ -422,7 +459,12 @@ footer{
     border-left: 5px solid #6666ff;
     border-bottom: 2px solid whitesmoke;
     border-top: 2px solid whitesmoke;
+    border-right: 2px solid whitesmoke;
     padding: 10px;
+}
+
+#delete_recipe{
+    text-align: center;
 }
 
 #rate_star{
@@ -431,7 +473,7 @@ footer{
 }
 
 #ratee{
-    color: #6666ff;
+    color: #ffc107;
     font-family: 'Courgette', cursive;
 }
 
@@ -480,6 +522,7 @@ td{
 
 .star_rating{
     height: 50px;
+    cursor: pointer;
 }
 
 .comment_star{

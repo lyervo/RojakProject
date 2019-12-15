@@ -14,7 +14,7 @@ $result = getReviews($recipe_id);
 
 $response = "";
 if (empty($result)) {
-    echo 'Be the first one to comment!';
+    echo '<p id="recom">Be the first one to comment!</p>';
 } else {
     foreach ($result as $res) {
         

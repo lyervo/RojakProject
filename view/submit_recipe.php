@@ -36,7 +36,7 @@ include 'header.php';
                 } else
                 {
 
-                    document.getElementById("nameWarning").innerHTML = "Duplicate recipe name, please use a different name.";
+                    document.getElementById("nameWarning").innerHTML = "* Duplicate recipe name, please use a different name.";
 
                     return true;
                 }
@@ -405,7 +405,7 @@ include 'header.php';
 
         stepImageInput.setAttribute("type", "file");
 
-        var removeButton = createElement("button", null, "btn btn-warning", "click", function () {
+        var removeButton = createElement("button", null, "btn btn-dark", "click", function () {
             removeStep(i);
         });
 
@@ -471,6 +471,8 @@ include 'header.php';
         });
         nameInput.setAttribute("type", "text");
         nameInput.setAttribute("placeholder", "Enter new Ingredient " + i + "...");
+        
+        
 
 
         if (value1 != null)
@@ -647,6 +649,8 @@ include 'header.php';
                     removed = true;
                 } else if (!removed)
                 {
+                    
+                   
 
                     doms.push(createIngredientInputGroup(i, ingredientName, ingredientAmount, ingredientUnit, ingredientMod));
 
@@ -984,37 +988,39 @@ include 'header.php';
             <div class="part">
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Submit an image for the recipe</h5>
                 <img id="previewImageMain">
-                <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)">
+                <input type="file" name="image_file" id="image_file" onchange="loadPreview(this)" required="true">
+                <p style="font-size: 13px;color: red;">* Required</p>
             </div>
             <br>
             <div class="part">
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter Recipe Name:</h5>
-                <input type="text" placeholder="" id="recipeName" onchange="checkDuplicateName()">
+                <input type="text" placeholder="" id="recipeName" onchange="checkDuplicateName()" required="true">
                 <p id="nameWarning"></p>
+                <p style="font-size: 13px;color: red;">* Required</p>
+            </div>
+            <br>
+            <div class="part">
+                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter Recipe Description:</h5>
+                <textarea type="text" placeholder="..." id="recipeDesc" required="true"></textarea>
+                <p style="font-size: 13px;color: red;">* Required</p>
             </div>
             <br>
             <div class="part">
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Recommended Servings:</h5>
-                <input  type="number" placeholder="1, 2, 3" id="recipeServing" min="1">
+                <input  type="number" placeholder="1, 2, 3" id="recipeServing" min="1" required="true">
+                <p style="font-size: 13px;color: red;">* Required</p>
             </div>
             <br>
 
             <div class="part">
+                <p style="font-size: 13px;color: red;">* Required</p>
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter ingredient(s):</h5>
                 <div id="ingredientSpace"></div>
                 <br>
                 <button type="button" onclick="addIngredientTab()" class="btn btn-primary">Add new Ingredient</button>
-
+                
             </div>
-         
-            
-           
 
-            <br>
-            <div class="part">
-                <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter Recipe Description:</h5>
-                <textarea type="text" placeholder="..." id="recipeDesc"></textarea>
-            </div>
             <br>
 
             <div class="part">
@@ -1024,25 +1030,30 @@ include 'header.php';
                     <option value="Medium">Chef(Medium)</option>
                     <option value="Hard">Michelin Chef(Hard)</option>
                 </select>
+               <p style="font-size: 13px;color: red;">* Required</p>
             </div>
             <br>
             <div class="part">
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Cooking time:</h5>
-                <input type="number" placeholder="(Minutes)" id="recipeTime" min="1">
+                <input type="number" placeholder="(Minutes)" id="recipeTime" min="1" required="true">
+                <p style="font-size: 13px;color: red;">* Required</p>
             </div>
             <br>
 
 
             <div class="part">
+                <p style="font-size: 13px;color: red;">* Required</p>
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter a step(s):</h5>
                 <div id="stepSpace"></div>
 
                 <br>
                 <button type="button" onclick="addStepTab()" class="btn btn-primary">Add Step</button>
+                
             </div>
 
             <br>
             <div class="part">
+                <p style="font-size: 13px;color: red;">* Required</p>
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Enter a tag(s):</h5>
                 <div id="tagSpace"></div>
                 <br>
@@ -1053,8 +1064,6 @@ include 'header.php';
             <div class="part tagz" >
 
                 <h5 style="font-family: 'Courgette', cursive; color: #6666ff;">Exclude(s):</h5>
-
-
                 <p style="color:red; font-size: 1em;"><u>Attention:</u> Please check the following check boxes to warn users of allergen risks, recipes without correct allergen warning is a threat to other user's health and safety and therefore any recipe without correct allergen warning will be taken down by the Admin.</p>
 
                 <input type="checkbox"  value="no_wheat" class="noTag">&nbsp;&nbsp;Wheat<br>
@@ -1085,7 +1094,7 @@ include 'header.php';
     </div>
 </div>
 </div>
-
+<br><br><br><br><br><br><br>
 <?php
 include 'footer.php';
 ?>

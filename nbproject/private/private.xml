@@ -3,9 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/RojakProject/view/submit_recipe.html</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/view/about.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/view/index.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/model/db_connect.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/recommendRecipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/css/report_recipe_modal.css</file>
             <file>file:/C:/xampp/htdocs/RojakProject/recipe/recipe_db.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/review/submit_comment.php</file>
@@ -16,36 +15,55 @@
             <file>file:/C:/xampp/htdocs/RojakProject/recipe/getUserListOfRecipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/recipe/getAllRecipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/submit_recipe.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/model/css/style.css</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/view/footer.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/css/login_style.css</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/create_recipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/user/editUser.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/review/refreshRating.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/user/uploadUserImage.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/css/shop-homepage.css</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/JS/JavaScript.js</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/view/search.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/recipe/getEditRecipeStepForm.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/login_session/session.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/recipe/getEditRecipeTagForm.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/images/p1.jpg</file>
             <file>file:/C:/xampp/htdocs/RojakProject/css/style.css</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/create_recipe_step.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/css/submit_recipe.css</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/like/getLikes.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/print_unit_select.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/edit_user.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/recipe.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/ticket/submitTicket.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/getUserListOfRecipeVisitor.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/like/like.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/like/like_db.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/review/getReviews.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/like/checkLiked.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/about.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/model/get_database_size.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/checkRecipeName.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/index.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/create_recipe_ingredient.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/create_recipe_tag.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/ticket/ticket_db.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/footer.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/css/shop-homepage.css</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/JS/JavaScript.js</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/view/search.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/getEditRecipeTagForm.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/JS/login.js</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/edit_recipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/search.html</file>
             <file>file:/C:/xampp/htdocs/RojakProject/css/about.css</file>
             <file>file:/C:/xampp/htdocs/RojakProject/controller/index.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/editRecipe.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/view_recipe.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/recipe/getUserListOfRecipeVisitor.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/header.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/admin_page.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/css/boxs.css</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/css/footer.css</file>
             <file>file:/C:/xampp/htdocs/RojakProject/view/user_profile.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/review/review_db.php</file>
             <file>file:/C:/xampp/htdocs/RojakProject/review/getReviewByID.php</file>
-            <file>file:/C:/xampp/htdocs/RojakProject/review/getReviews.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/recipe/suggest_ingredient.php</file>
+            <file>file:/C:/xampp/htdocs/RojakProject/css/report_comment_modal.css</file>
         </group>
     </open-files>
 </project-private>

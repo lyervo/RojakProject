@@ -1,5 +1,5 @@
 <?php
-$current = 'home';
+$current = 'user';
 include 'header.php';
 include '../user/editUser.php';
 $user = getUserByID($_SESSION['user_id']);
@@ -90,7 +90,7 @@ $user = getUserByID($_SESSION['user_id']);
     <div class="row">
 
         <!--        side div-->
-        <div class="col-lg-7">
+        <div class="col-lg-8 formInput">
 
             <h2 style="color: #6666ff;"><i class="fas fa-user-cog"></i>&nbsp;Account Settings</h2>
             <br><br>

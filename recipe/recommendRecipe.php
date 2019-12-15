@@ -41,7 +41,7 @@
     }
 
     
-    $response = "<h3>Recommending:". getTagNameById($resultA[$randIndex]['tag_id'])."</h3>";
+    $response = "<h4 id='recom'>Recommending: ". getTagNameById($resultA[$randIndex]['tag_id'])."</h4>";
     
     foreach ($result as $res)
     {

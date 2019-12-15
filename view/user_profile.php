@@ -2,6 +2,11 @@
 $current = 'user';
 include 'header.php';
 include "../model/db_connect.php";
+include '../recipe/recipe_db.php';
+
+$recipe_id = $_REQUEST['recipe_id'];
+
+$recipe = getRecipeByID($recipe_id);
 
 
 $id = $_REQUEST['user_id'];
@@ -93,6 +98,7 @@ $user = getUserByID($id);
             if (this.readyState == 4 && this.status == 200)
             {
                 alert(this.responseText);
+                location.reload();
             }
         };
         xmlhttp.open("GET", "../ticket/submitTicket.php?action=2&recipe_id=0&review_id=0&user_id=" +<?php echo $id ?> + "&type=" + type + "&detail=" + detail, true);
@@ -115,11 +121,6 @@ $user = getUserByID($id);
         xmlhttp.open("GET", "../ticket/deleteRecipe.php?recipe_id=" + recipe_id, true);
         xmlhttp.send();
     }
-
-
-
-
-
 
 </script>
 
@@ -147,14 +148,16 @@ $user = getUserByID($id);
 
             </div>
             <br>
-            
+
             <?php
-            if (!isset($_SESSION['user_id'])){
-                echo '<button id="report_recipe_button"><a role="button" data-toggle="modal" data-target="#report_recipe" ><i class="fas fa-flag"></i>&nbsp;Report this user</a></button>';
+            if (isset($_SESSION['user_id'])) {
+                if ($_SESSION['user_id'] != $user['user_id']) {
+                    echo '<button id="report_recipe_button"><a role="button" data-toggle="modal" data-target="#report_recipe" ><i class="fas fa-flag"></i>&nbsp;Report this user</a></button>';
+                }
             }
             ?>
-             
-            
+
+
             <div class="modal fade" id="report_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 
 
@@ -214,7 +217,7 @@ $user = getUserByID($id);
             </div>
 
         </div>
-
+        <a id="top_button"></a>
 
         <div class="col-lg-9">
             <h1><?php echo $user['username']; ?></h1>
@@ -224,7 +227,7 @@ $user = getUserByID($id);
             <?php
             if (isset($_SESSION['user_id'])) {
                 if ($_SESSION['user_id'] == $user['user_id']) {
-                    echo '<button><a href="../controller/?action=submit_recipe">Upload a recipe</a></button>';
+                    echo '<button class="btn btn-success"><a style="text-decoration: none; color: white;" href="../controller/?action=submit_recipe">Upload a recipe</a></button>';
                 }
             }
 
@@ -244,11 +247,57 @@ $user = getUserByID($id);
 
             </div>
 
+            <div class="modal fade" id="delete_recipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 
+
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <i style="font-size: 3em; color: red; text-align: center;" class='fas fa-trash-alt'></i>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span  aria-hidden="true"> <i class="fas fa-times"></i></span>
+                            </button>
+                        </div>
+
+                        <!-- Begin # DIV Form -->
+                        <div id="div-forms">
+
+                            <!-- Begin # Login Form -->
+
+                            <div class="modal-body">
+                                <h4 id="form_title_report">Sure you want to delete this recipe?</h4>
+
+
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <div>
+                                    <?php echo "<button onclick='deleteRecipe(" . $recipe['recipe_id'] . ")' >click</button>" ?>
+                                </div>
+
+                            </div>
+
+
+                            <!-- End # Login Form -->
+
+
+                            <!-- End | Register Form -->
+
+                        </div>
+                        <!-- End # DIV Form -->
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- onclick='deleteRecipe(" . $recipe['recipe_id'] . ")'-->
             <br>
 
 
-            
+
 
 
 
@@ -258,7 +307,22 @@ $user = getUserByID($id);
 
 </div>
 <br><br><br>
+<script>
+    var btn = $('#top_button');
 
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop: 0}, '300');
+    });
+</script>
 
 <?php
 include 'footer.php';

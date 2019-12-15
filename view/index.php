@@ -734,7 +734,7 @@ function changeColourOnHoverButton()
                             Medium
                         </td>
                         <td>
-                            <i id="iconEasy"class="fas fa-utensils"></i>
+                            <i id="iconEasy"class="fas fa-utensils"></i>&nbsp;
                             <i id="iconEasy"class="fas fa-utensils"></i>
                         </td>
                     </tr>
@@ -743,8 +743,8 @@ function changeColourOnHoverButton()
                             Hard
                         </td>
                         <td>
-                            <i id="iconEasy"class="fas fa-utensils"></i>
-                            <i id="iconEasy"class="fas fa-utensils"></i>
+                            <i id="iconEasy"class="fas fa-utensils"></i>&nbsp;
+                            <i id="iconEasy"class="fas fa-utensils"></i>&nbsp;
                             <i id="iconEasy"class="fas fa-utensils"></i>
                         </td>
                     </tr>
