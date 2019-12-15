@@ -4,12 +4,12 @@ include "../model/db_connect.php";
 
 require "recipe_db.php";
 
-$term = $_REQUEST['term'];
-$sort = $_REQUEST['sort'];
-$order = $_REQUEST['order'];
+$term = filter_var($_GET['term'],FILTER_SANITIZE_STRING);
+$sort = filter_var($_GET['sort'],FILTER_SANITIZE_STRING);
+$order = filter_var($_GET['order'],FILTER_SANITIZE_STRING);
 
-$tag = $_REQUEST['tag'];
-$noTag = $_REQUEST['noTag'];
+$tag = filter_var($_GET['tag'],FILTER_SANITIZE_STRING);
+$noTag = filter_var($_GET['noTag'],FILTER_SANITIZE_STRING);
 
 $result = searchRecipe($term, $sort, $order);
 

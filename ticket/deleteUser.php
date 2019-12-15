@@ -6,10 +6,10 @@
     require "../user/user_db.php";
     
     
-    $user_id = $_REQUEST['user_id'];
+    $user_id = filter_var($_GET['user_id'], FILTER_SANITIZE_NUMBER_INT);
     
     
     deleteUser($user_id);
     deleteTicketByUserID($user_id);
     
-    
+    ?>

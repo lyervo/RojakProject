@@ -5,7 +5,7 @@
     require 'review_db.php';
     require '../user/user_db.php';
     
-    $review_id = $_REQUEST['review_id'];
+    $review_id = filter_var($_GET['review_id'],FILTER_SANITIZE_NUMBER_INT);
     $res = getReviewByID($review_id);
     
     $star = "";

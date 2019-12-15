@@ -10,17 +10,17 @@
     
     require 'mailto_format.php';
     
-    $order = $_REQUEST['order'];
+    $order = filter_var($_GET['order'], FILTER_SANITIZE_STRING);
     
     
     
     $response = "";
     
-    $type = $_REQUEST['type'];
+    $type = filter_var($_GET['type'], FILTER_SANITIZE_STRING);
    
-    $asc  = $_REQUEST['asc'];
+    $asc  = filter_var($_GET['asc'], FILTER_SANITIZE_STRING);
     
-    $content = $_REQUEST['content'];
+    $content = filter_var($_GET['content'], FILTER_SANITIZE_STRING);
     
     
     $result = getTickets($order,$type,$content,$asc);
@@ -92,3 +92,5 @@
     }
     
     echo $response;
+    
+    ?>

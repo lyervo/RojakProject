@@ -4,7 +4,7 @@
     include "../model/db_connect.php";
     require "user_db.php";
 
-    $user_id = $_POST['user_id'];
+    $user_id = filter_var($_POST['user_id'], FILTER_SANITIZE_NUMBER_INT);
 
     if(isset($_FILES['image_file']))
     {

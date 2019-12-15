@@ -3,8 +3,8 @@
     include "../model/db_connect.php";
     require "recipe_db.php";
 
-    $tagName = $_REQUEST['tag'];
-    $recipe_id = $_REQUEST['recipe_id'];
+    $tagName = filter_var($_GET['tag'],FILTER_SANITIZE_STRING);
+    $recipe_id = filter_var($_GET['recipe_id'],FILTER_SANITIZE_NUMBER_INT);
     
     echo $tagName;
     

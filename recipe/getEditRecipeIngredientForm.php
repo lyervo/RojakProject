@@ -27,4 +27,4 @@
                 ."<input type='hidden' id='ingredientCount' value='".$count."'>";
     }
     
-    
+    ?>

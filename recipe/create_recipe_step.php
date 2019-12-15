@@ -6,9 +6,9 @@
     
     
 
-    $step = $_POST["step"];
-    $recipe_id = $_POST["recipe_id"];
-    $step_order = $_POST['step_order'];
+    $step = filter_var($_POST['step'],FILTER_SANITIZE_STRING);
+    $recipe_id = filter_var($_POST['recipe_id'],FILTER_SANITIZE_NUMBER_INT);
+    $step_order = filter_var($_POST['step_order'],FILTER_SANITIZE_NUMBER_INT);
     
     $step = ucfirst($step);
     

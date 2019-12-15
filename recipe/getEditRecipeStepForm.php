@@ -29,3 +29,5 @@
                 . '<button onclick="removeStep(1)">Remove Step 1</button></div>'
                 ."<input type='hidden' id='stepCount' value='".$count."'>";
     }
+    
+    ?>

@@ -3,9 +3,9 @@
     include "../model/db_connect.php";
     require "user_db.php";
     
-    $username = $_REQUEST['username'];
+    $username = filter_var($_GET['username'], FILTER_SANITIZE_STRING);
     
-    $action = $_REQUEST['action'];
+    $action = filter_var($_GET['action'], FILTER_SANITIZE_NUMBER_INT);
     
     $user = getUserByName($username);
     

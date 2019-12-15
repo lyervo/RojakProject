@@ -4,20 +4,16 @@
     
     require 'review_db.php';
     
-    $review = $_REQUEST['review'];
+
     
-    $review = filter_var($review, FILTER_SANITIZE_STRING);
+    $review = filter_var($_GET['review'], FILTER_SANITIZE_STRING);
     
-    $user_id = $_REQUEST['user_id'];
+    $user_id = filter_var($_GET['user_id'], FILTER_SANITIZE_NUMBER_INT);
     
-    $recipe_id = $_REQUEST['recipe_id'];
+    $recipe_id = filter_var($_GET['recipe_id'], FILTER_SANITIZE_NUMBER_INT);
     
-    $rating = $_REQUEST['rating'];
+    $rating = filter_var($_GET['rating'], FILTER_SANITIZE_NUMBER_INT);
     
-    if($rating>5)
-    {
-        return;
-    }
     
     $result = getReviewByUserIDRecipeID($user_id,$recipe_id);
     if(empty($result))

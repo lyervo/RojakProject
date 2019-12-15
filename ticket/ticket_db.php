@@ -3,8 +3,14 @@
 function create_ticket($detail,$type,$link,$review_id,$recipe_id,$user_id)
 {
     global $db;
-    $query = "insert into ticket values(null,null,'".$type."','".$detail."','".$link."','".$review_id."','".$recipe_id."','".$user_id."',null);";
+    $query = "insert into ticket values(null,null,:type,:detail,:link,:review_id,:recipe_id,:user_id,null);";
     $statement = $db->prepare($query);
+    $statement->bindParam(':detail', $detail);
+    $statement->bindParam(':type', $type);
+    $statement->bindParam(':link', $link);
+    $statement->bindParam(':review_id', $review_id);
+    $statement->bindParam(':recipe_id', $recipe_id);
+    $statement->bindParam(':user_id', $user_id);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -62,8 +68,9 @@ function getTickets($order,$type,$content,$asc)
 function deleteTicketByID($ticket_id)
 {
     global $db;
-    $query = "delete from ticket where ticket_id=".$ticket_id;
+    $query = "delete from ticket where ticket_id=:ticket_id";
     $statement = $db->prepare($query);
+    $statement->bindParam(':ticket_id', $ticket_id);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -71,8 +78,9 @@ function deleteTicketByID($ticket_id)
 function deleteTicketByUserID($user_id)
 {
     global $db;
-    $query = "delete from ticket where user_id=".$user_id;
+    $query = "delete from ticket where user_id=:user_id";
     $statement = $db->prepare($query);
+    $statement->bindParam(':user_id', $user_id);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -80,8 +88,9 @@ function deleteTicketByUserID($user_id)
 function deleteTicketByReviewID($review_id)
 {
     global $db;
-    $query = "delete from ticket where review_id=".$review_id;
+    $query = "delete from ticket where review_id=:review_id";
     $statement = $db->prepare($query);
+    $statement->bindParam(':review_id', $review_id);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -89,8 +98,9 @@ function deleteTicketByReviewID($review_id)
 function deleteTicketByRecipeID($recipe_id)
 {
     global $db;
-    $query = "delete from ticket where recipe_id=".$recipe_id;
+    $query = "delete from ticket where recipe_id=:recipe_id";
     $statement = $db->prepare($query);
+    $statement->bindParam(':recipe_id', $recipe_id);
     $statement->execute();
     $statement->closeCursor();
 }
@@ -98,8 +108,9 @@ function deleteTicketByRecipeID($recipe_id)
 function getTicketByID($ticket_id)
 {
     global $db;
-    $query = "select * from ticket where ticket_id=".$ticket_id;
+    $query = "select * from ticket where ticket_id=:ticket_id";
     $statement = $db->prepare($query);
+    $statement->bindParam(':ticket_id', $ticket_id);
     $statement->execute();
     $result = $statement->fetch();
     $statement->closeCursor();
@@ -109,7 +120,8 @@ function getTicketByID($ticket_id)
 function setTicketDeadline($ticket_id)
 {
     global $db;
-    $query = "update ticket set deadline = DATE_ADD(NOW(), INTERVAL 3 DAY) where ticket_id=".$ticket_id;
+    $query = "update ticket set deadline = DATE_ADD(NOW(), INTERVAL 3 DAY) where ticket_id=:ticket_id";
+    $statement->bindParam(':ticket_id', $ticket_id);
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -120,7 +132,9 @@ function setRecipeWarning($ticket)
 {
     global $db;
     $warning = "Warning: This recipe has been mark by the admin for the following reason - ".$ticket['ticket_type']." - ".$ticket['detail'].", caution is adviced for users who intend to follow this recipe.";
-    $query = "update recipe set warning = '".$warning."' where recipe_id=".$ticket['recipe_id'];
+    $query = "update recipe set warning = :warning where recipe_id=:recipe_id";
+    $statement->bindParam(':warning', $warning);
+    $statement->bindParam(':recipe_id', $ticket['recipe_id']);
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();
@@ -129,8 +143,10 @@ function setRecipeWarning($ticket)
 function removeRecipeWarning($ticket)
 {
     global $db;
-    $query = "update recipe set warning = null where recipe_id=".$ticket['recipe_id'];
+    $query = "update recipe set warning = null where recipe_id=:recipe_id";
     $statement = $db->prepare($query);
+    $statement->bindParam(':recipe_id', $ticket['recipe_id']);
     $statement->execute();
     $statement->closeCursor();
 }
+?>

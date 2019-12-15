@@ -6,7 +6,7 @@ require 'review_db.php';
 require '../user/user_db.php';
 
 
-$recipe_id = $_REQUEST['recipe_id'];
+$recipe_id = filter_var($_GET['recipe_id'],FILTER_SANITIZE_NUMBER_INT);
 
 $result = getReviews($recipe_id);
 
@@ -14,7 +14,7 @@ $result = getReviews($recipe_id);
 
 $response = "";
 if (empty($result)) {
-    echo '<p id="recom">Be the first one to comment!</p>';
+    echo 'Be the first one to comment!';
 } else {
     foreach ($result as $res) {
         

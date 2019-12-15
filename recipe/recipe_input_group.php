@@ -51,3 +51,5 @@ function generateTagInputGroup($i,$tag)
             . '<button onclick="removeTag('.$i.')">Remove Tag</button><br></div>';
     return $response;
 }
+
+?>

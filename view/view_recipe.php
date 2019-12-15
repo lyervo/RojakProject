@@ -130,7 +130,7 @@ $user = getUserByID($recipe['author']);
                 break;
         }
 
-        document.getElementById("amount" + i).innerHTML = result;
+        document.getElementById("amount" + i).innerHTML = result.toFixed(2);
 
     }
 
@@ -189,13 +189,39 @@ $user = getUserByID($recipe['author']);
         xmlhttp.send();
 
     }
+    
+    function refreshRating()
+    {
+       
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function ()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    var rating = this.responseText;
+  
+                    document.getElementById("star_div").innerHTML = "";
+                    for(var i = 0;i<rating;i++)
+                    {
+                        var img = document.createElement("img");
+                        img.id="rate_star" 
+                        img.src="../images/star_active.png"
+                        
+                        document.getElementById("star_div").appendChild(img);
+                    }
+                }
+            };
+
+            xmlhttp.open("GET", "../recipe/get_recipe_rating.php?recipe_id=" +<?php echo $id ?>, true);
+            xmlhttp.send();
+        
+    }
 
     function comment()
     {
 
         var comment = document.getElementById("commentInput").value;
 
-        alert(comment);
 
         if (comment.length === 0)
         {
@@ -210,6 +236,7 @@ $user = getUserByID($recipe['author']);
 
                     document.getElementById("commentInput").value = "";
                     refreshComments();
+                    refreshRating();
 
                 }
             };
@@ -466,10 +493,11 @@ $user = getUserByID($recipe['author']);
                 echo '<img id="recipe_picture" src="data:image/jpeg;base64,' . base64_encode($recipe['image_blob']) . '" height="280px" width="400px"/>';
             }
             echo "<br><br>";
-            echo "<div class='rev_div'><u style='color: #ffc107;'><h4 id='ratee'>Rating: </h4></u>";
+            echo "<div class='rev_div'><u style='color: #ffc107;'><h4 id='ratee'>Rating: </h4></u><div id='star_div'>";
             for ($i = 1; $i <= $recipe['rating']; $i++) {
                 echo '<img id="rate_star" src="../images/star_active.png"/>';
             }
+            echo "</div>";
             echo "<br><br><a  href='#comment_a'>Write a Review...</a></div>";
             ?>
 

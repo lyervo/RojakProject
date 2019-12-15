@@ -6,8 +6,8 @@
     require_once "../user/user_db.php";
     require_once '../recipe/recipe_db.php';
     
-    $review_id = $_REQUEST['review_id'];
-    $recipe_id = $_REQUEST['recipe_id'];
+    $review_id = filter_var($_GET['review_id'], FILTER_SANITIZE_NUMBER_INT);
+    $recipe_id = filter_var($_GET['recipe_id'], FILTER_SANITIZE_NUMBER_INT);
     
     if($review_id==0)
     {
@@ -26,5 +26,5 @@
 
         deleteTicketByReviewID($review_id);
     }
-
+?>
     

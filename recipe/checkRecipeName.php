@@ -4,7 +4,7 @@
     include "../model/db_connect.php";
     require "recipe_db.php";
 
-    $recipe_name = filter_var($_REQUEST["recipe_name"], FILTER_SANITIZE_STRING);
+    $recipe_name = filter_var($_GET["recipe_name"], FILTER_SANITIZE_STRING);
 
     if(isset($_REQUEST['original_name']))
     {
@@ -24,3 +24,5 @@
     
     
     echo $result;
+    
+?>

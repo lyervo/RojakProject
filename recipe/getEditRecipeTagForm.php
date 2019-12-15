@@ -24,3 +24,5 @@
         echo '<div><input id="tag1" type="text"><div id="suggestTag1"></div><button>Remove Tag</button><br></div>'
             ."<input type='hidden' id='tagCount' value='".$count."'>";
     }
+    
+    ?>

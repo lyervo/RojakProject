@@ -6,7 +6,7 @@
     require_once "../user/user_db.php";
     require_once "../like/like_db.php";
     require_once "../review/review_db.php";
-    $recipe_id = $_REQUEST['recipe_id'];
+    $recipe_id = filter_var($_GET['recipe_id'],FILTER_SANITIZE_NUMBER_INT);
     
     deleteLikeByID($recipe_id);
     deleteReviewByRecipeID($recipe_id);
@@ -16,3 +16,5 @@
     deleteRecipeByID($recipe_id);
 
     deleteTicketByRecipeID($recipe_id);
+    
+    ?>

@@ -3,19 +3,19 @@
     include "../model/db_connect.php";
     require "ticket_db.php";
     
-    $type = $_REQUEST['type'];
+    $type = filter_var($_GET['type'], FILTER_SANITIZE_STRING);
     
-    if(!isset($_REQUEST['detail']))
+    if(!isset($_GET['detail']))
     {
         $detail = "null";
     }else
     {
-        $detail = $_REQUEST['detail'];
+        $detail = filter_var($_GET['detail'], FILTER_SANITIZE_STRING);
     }
     
-    $user_id = $_REQUEST['user_id'];
-    $recipe_id = $_REQUEST['recipe_id'];
-    $review_id = $_REQUEST['review_id'];
+    $user_id = filter_var($_GET['user_id'], FILTER_SANITIZE_NUMBER_INT);
+    $recipe_id = filter_var($_GET['recipe_id'], FILTER_SANITIZE_NUMBER_INT);
+    $review_id = filter_var($_GET['review_id'], FILTER_SANITIZE_NUMBER_INT);
     
     if($user_id!=0)
     {
@@ -29,6 +29,8 @@
     }
     create_ticket($detail,$type,$link,$review_id,$recipe_id,$user_id);
     echo "Report Submitted";
+    
+    ?>d
     
     
     

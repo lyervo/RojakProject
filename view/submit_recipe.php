@@ -115,7 +115,7 @@ include 'header.php';
         
         setTimeout(function(){
            alert("Operation complete");
-           window.location.href("../controller/index.php?action=user_profile")
+           window.location.href = "../controller/index.php?action=home";
         });
         
     }

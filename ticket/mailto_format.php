@@ -9,3 +9,5 @@ function createMailLink($ticket,$user)
             . ' and we hope you have a good day.%0d%0a%0d%0aSincerely,%0d%0a%0d%0aUniMeals Admin">Send Mail</a>';
     return $email;
 }
+
+?>

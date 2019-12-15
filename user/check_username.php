@@ -3,7 +3,7 @@
     
     
     
-    $username = $_REQUEST["username"];
+    $username = filter_var($_GET['username'], FILTER_SANITIZE_STRING);
     
     
     

@@ -4,9 +4,6 @@ include 'header.php';
 include "../model/db_connect.php";
 include '../recipe/recipe_db.php';
 
-$recipe_id = $_REQUEST['recipe_id'];
-
-$recipe = getRecipeByID($recipe_id);
 
 
 $id = $_REQUEST['user_id'];
